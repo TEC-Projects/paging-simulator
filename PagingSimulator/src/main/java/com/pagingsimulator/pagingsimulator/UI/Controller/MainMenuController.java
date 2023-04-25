@@ -1,6 +1,7 @@
 package com.pagingsimulator.pagingsimulator.UI.Controller;
 
 import com.pagingsimulator.pagingsimulator.UI.Model.SimulationRequest;
+import com.pagingsimulator.pagingsimulator.UI.Utils.FileUtil;
 import com.pagingsimulator.pagingsimulator.UI.Utils.ValidatorUtil;
 
 import javafx.animation.KeyFrame;
@@ -14,6 +15,9 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -24,11 +28,14 @@ public class MainMenuController extends ScreenController implements Initializabl
     private FileChooser fileChooser = new FileChooser();
 
     private ValidatorUtil validatorUtil = new ValidatorUtil();
+    private FileUtil fileUtil = new FileUtil();
 
     @FXML
     private Button loadOperationsFileButton;
     @FXML
     private Button startSimulationButton;
+    @FXML
+    private Button downloadSimulationFileButton;
     @FXML
     private ComboBox<String> pagingAlgorithmsComboBox;
     @FXML
@@ -61,29 +68,54 @@ public class MainMenuController extends ScreenController implements Initializabl
 
     }
 
-    @FXML
-    private void loadOperationsFileButtonEvent(){
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
-        simulationRequest.setOperationsFile(fileChooser.showOpenDialog(null));
-        operationsFileNameTextField.setText(simulationRequest.getOperationsFile().getName());
-    }
+
 
     @FXML
     private void loadFileCheckEvent(){
         if(loadFileCheckBox.isSelected()){
             numberOfProcessesComboBox.setDisable(true);
             numberOfOperationsComboBox.setDisable(true);
+            downloadSimulationFileButton.setDisable(true);
             loadOperationsFileButton.setDisable(false);
         }else{
             numberOfProcessesComboBox.setDisable(false);
             numberOfOperationsComboBox.setDisable(false);
+            downloadSimulationFileButton.setDisable(false);
             loadOperationsFileButton.setDisable(true);
         };
     }
 
     @FXML
-    private void startSimulationButtonEvent(ActionEvent event)throws InterruptedException {
+    private void loadOperationsFileButtonEvent(){
+        try{
+            simulationRequest.setOperationsFile(fileUtil.loadSimulationFile(fileChooser));
+            operationsFileNameTextField.setText(simulationRequest.getOperationsFile().getName());
+        }catch (Exception e){
+            warningLabelPane.setVisible(true);
+            warningLabelText.setText(e.getMessage());
+            Timeline timer = new Timeline(
+                    new KeyFrame(Duration.seconds(2), (ActionEvent aEvent)  -> warningLabelPane.setVisible(false))
+            );
+            timer.play();
+        }
+    }
 
+    @FXML
+    private void downloadSimulationFileButtonEvent() {
+        try{
+            fileUtil.generateSimulationFile(fileChooser);
+        }catch (Exception e){
+            warningLabelPane.setVisible(true);
+            warningLabelText.setText(e.getMessage());
+            Timeline timer = new Timeline(
+                    new KeyFrame(Duration.seconds(2), (ActionEvent aEvent)  -> warningLabelPane.setVisible(false))
+            );
+            timer.play();
+        }
+    }
+
+    @FXML
+    private void startSimulationButtonEvent(ActionEvent event)throws InterruptedException {
         try{
             validatorUtil.simulationRequestValidator(randomSeedTextField.getText(), simulationRequest.getOperationsFile(), loadFileCheckBox.isSelected() );
 
@@ -107,10 +139,11 @@ public class MainMenuController extends ScreenController implements Initializabl
                     new KeyFrame(Duration.seconds(2), (ActionEvent aEvent)  -> warningLabelPane.setVisible(false))
             );
             timer.play();
-            ;
         }
 
     }
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

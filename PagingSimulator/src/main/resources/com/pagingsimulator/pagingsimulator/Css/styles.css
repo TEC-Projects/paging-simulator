@@ -307,6 +307,56 @@ a.bg-danger:focused {
     -fx-fill: #337ab7;
     -fx-background-color: #fff; }
 
+
+.btn-primary-outlined {
+    -fx-text-fill: #212ecc;
+    -fx-fill: #212ecc;
+    -fx-background-color: #fff;
+    -fx-border-style: solid;
+    -fx-border-width: 2;
+    -fx-border-color: #212ecc; }
+.btn-primary-outlined:focused, .btn-primary-outlined.focused {
+    -fx-text-fill: #212ecc;
+    -fx-fill: #212ecc;
+    -fx-background-color: #fff;
+    -fx-border-color: #212ecc; }
+.btn-primary-outlined:hover {
+    -fx-text-fill: #212ecc;
+    -fx-fill: #212ecc;
+    -fx-background-color: #fff;
+    -fx-border-color: #212ecc; }
+.btn-primary-outlined:pressed, .btn-primary-outlined.pressed, .open > .btn-primary-outlined.dropdown-toggle {
+    -fx-text-fill: #212ecc;
+    -fx-fill: #212ecc;
+    -fx-background-color: #e6e7ff;
+    -fx-border-color: #1a2aa0; }
+.btn-primary-outlined:pressed:hover, .btn-primary-outlined:pressed:focused, .btn-primary-outlined:pressed.focused, .btn-primary-outlined.pressed:hover, .btn-primary-outlined.pressed:focused, .btn-primary-outlined.pressed.focused, .open > .btn-primary-outlined.dropdown-toggle:hover, .open > .btn-primary-outlined.dropdown-toggle:focused, .open > .btn-primary-outlined.dropdown-toggle.focused {
+    -fx-text-fill: #212ecc;
+    -fx-fill: #212ecc;
+    -fx-background-color: #e6e7ff;
+    -fx-border-color: #1a2aa0; }
+.btn-primary-outlined:selected, .btn-primary-outlined.selected {
+    -fx-text-fill: #212ecc;
+    -fx-fill: #212ecc;
+    -fx-background-color: #e6e7ff;
+    -fx-border-color: #1a2aa0; }
+.btn-primary-outlined:selected:hover, .btn-primary-outlined:selected:focused, .btn-primary-outlined:selected.focused, .btn-primary-outlined.selected:hover, .btn-primary-outlined.selected:focused, .btn-primary-outlined.selected.focused {
+    -fx-text-fill: #212ecc;
+    -fx-fill: #212ecc;
+    -fx-background-color: #e6e7ff;
+    -fx-border-color: #1a2aa0; }
+.btn-primary-outlined:pressed, .btn-primary-outlined.pressed, .open > .btn-primary-outlined.dropdown-toggle {
+    background-image: none; }
+.btn-primary-outlined.disabled, .btn-primary-outlined.disabled:hover, .btn-primary-outlined.disabled:focused, .btn-primary-outlined.disabled.focused, .btn-primary-outlined.disabled:pressed, .btn-primary-outlined.disabled.pressed, .btn-primary-outlined[disabled], .btn-primary-outlined[disabled]:hover, .btn-primary-outlined[disabled]:focused, .btn-primary-outlined[disabled].focused, .btn-primary-outlined[disabled]:pressed, .btn-primary-outlined[disabled].pressed, fieldset[disabled] .btn-primary-outlined, fieldset[disabled] .btn-primary-outlined:hover, fieldset[disabled] .btn-primary-outlined:focused, fieldset[disabled] .btn-primary-outlined.focused, fieldset[disabled] .btn-primary-outlined:pressed, fieldset[disabled] .btn-primary-outlined.pressed {
+    -fx-text-fill: #337ab7;
+    -fx-fill: #337ab7;
+    -fx-border-color: #2e6da4; }
+.btn-primary-outlined .badge {
+    -fx-text-fill: #337ab7;
+    -fx-fill: #337ab7;
+    -fx-background-color: #fff; }
+
+
 .btn-success {
     -fx-text-fill: #fff;
     -fx-fill: #fff;

@@ -82,9 +82,9 @@
                <String fx:value="btn" />
             </styleClass>
          </Button>
-         <Button fx:id="startSimulationButton1" layoutX="10.0" layoutY="10.0" onAction="#startSimulationButtonEvent" text="START SIMULATION">
+         <Button fx:id="downloadSimulationFileButton" disable="true" layoutX="10.0" layoutY="10.0" onAction="#downloadSimulationFileButtonEvent" text="DOWNLOAD FILE">
             <styleClass>
-               <String fx:value="btn-primary" />
+               <String fx:value="btn-primary-outlined" />
                <String fx:value="btn" />
             </styleClass>
          </Button>
