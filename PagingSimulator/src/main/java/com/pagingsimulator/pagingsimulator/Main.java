@@ -4,9 +4,6 @@ import com.pagingsimulator.pagingsimulator.UI.Controllers.MainMenuController;
 import com.pagingsimulator.pagingsimulator.UI.Controllers.SimulationController;
 import com.pagingsimulator.pagingsimulator.UI.Utils.SceneManager;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;

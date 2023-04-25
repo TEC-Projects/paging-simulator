@@ -966,7 +966,7 @@ a.badge:hover, a.badge:focused {
     -fx-padding: 15px;
     -fx-border-width: 1px;
     -fx-border-style: solid;
-    -fx-border-color: black;
+    -fx-border-color: transparent;
     -fx-border-radius: 4px;
     -fx-background-radius: 4px; }
 
@@ -991,14 +991,13 @@ a.badge:hover, a.badge:focused {
     -fx-fill: #31708f; }
 
 .alert-warning {
-    -fx-background-color: linear-gradient(to bottom, #fcf8e3 0px, #f8efc0 100%);
-    -fx-border-color: #faebcc;
-    -fx-text-fill: #8a6d3b;
-    -fx-fill: #8a6d3b; }
+    -fx-background-color: #ffecb3;
+    -fx-text-fill: #f57c00;
+    -fx-fill: #f57c00; }
 .alert-warning * {
     -fx-background-color: transparent;
-    -fx-text-fill: #8a6d3b;
-    -fx-fill: #8a6d3b; }
+    -fx-text-fill: #f57c00;
+    -fx-fill: #f57c00; }
 
 .alert-danger {
     -fx-background-color: linear-gradient(to bottom, #f2dede 0px, #e7c3c3 100%);
@@ -1327,6 +1326,8 @@ a.badge:hover, a.badge:focused {
     -fx-background-color: #f3f3f3;
     -fx-background-insets: 0 ;
 }
+
+
 
 
 /*# sourceMappingURL=bootstrapfx.css.map */

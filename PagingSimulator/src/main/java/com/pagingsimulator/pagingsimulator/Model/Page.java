@@ -1,4 +1,4 @@
 package com.pagingsimulator.pagingsimulator.Model;
 
-public class Simulation {
+public class Page {
 }
