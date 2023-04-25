@@ -34,15 +34,15 @@ public class OperationsFileManager {
                 operations.add(new Operation("new", processes.get(random.nextInt(processes.size())).getPid() + "," +newSize));
                 ptrs.add(ptrCount++);
             } else {
-                int NEW_PTR = 40;
-                int USE_PTR = 75;
-                int DELETE_PTR = 90;
+                int NEW_PTR = 45;
+                int USE_PTR = 85;
+                int DELETE_PTR = 95;
                 int selection = random.nextInt(0, 100);
                 if (selection <= NEW_PTR){
                     int newSize = random.nextInt(1, 2000);
                     operations.add(new Operation("new", processes.get(random.nextInt(processes.size())).getPid() + "," + newSize));
                     ptrs.add(ptrCount++);
-                }else if (selection <= USE_PTR){
+                }else if (selection <= USE_PTR || processes.size() == 1){
                     operations.add(new Operation("use", ptrs.get(random.nextInt(ptrs.size()))));
                 }else if (selection <= DELETE_PTR){
                     int ptr = ptrs.remove(random.nextInt(ptrs.size()));
