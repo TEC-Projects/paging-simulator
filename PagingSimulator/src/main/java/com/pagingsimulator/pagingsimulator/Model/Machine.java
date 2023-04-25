@@ -8,7 +8,7 @@ public class Machine {
     private int ptrCount;
     private HashMap<Integer, Allocation> memoryMap;
     private Page[] realMemory;
-    private ArrayList<Page> virtualMemory;
+    private HashMap<Integer, Page> virtualMemory;
     private HashMap<Integer, Page> pages;
     private ArrayList<Process> processes;
 
@@ -44,11 +44,11 @@ public class Machine {
         this.realMemory = realMemory;
     }
 
-    public ArrayList<Page> getVirtualMemory() {
+    public HashMap<Integer, Page> getVirtualMemory() {
         return virtualMemory;
     }
 
-    public void setVirtualMemory(ArrayList<Page> virtualMemory) {
+    public void setVirtualMemory(HashMap<Integer, Page> virtualMemory) {
         this.virtualMemory = virtualMemory;
     }
 
