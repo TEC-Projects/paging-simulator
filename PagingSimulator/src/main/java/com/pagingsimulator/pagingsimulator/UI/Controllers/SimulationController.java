@@ -11,11 +11,6 @@ import java.io.IOException;
 
 public class SimulationController extends ScreenController {
 
-    @FXML
-    private Label welcomeText;
-
-    @FXML
-    private Button buttonHello;
 
     @FXML
     protected void navigateToMainMenuButtonEvent(ActionEvent event) throws IOException {

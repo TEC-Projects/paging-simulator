@@ -14,6 +14,8 @@ public class Main extends Application {
     public static SimulationController simulationController;
     public static SceneManager sceneManager = new SceneManager();
 
+    public static OnGoingSimulation onGoingSimulation;
+
     @Override
     public void start(Stage stage) throws IOException {
         sceneManager.loadScene(stage, "/com/pagingsimulator/pagingsimulator/screens/mainMenu.fxml");
