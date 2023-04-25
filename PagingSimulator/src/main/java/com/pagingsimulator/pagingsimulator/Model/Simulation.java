@@ -5,7 +5,6 @@ import java.util.LinkedList;
 public class Simulation {
 
     private boolean paused;
-    private String pagingAlgorithm;
     private int numberOfOperations;
     private int numberOfProcesses;
     private PagingAlgorithmSimulationStatus optimalAlgorithmStatus;
@@ -13,7 +12,6 @@ public class Simulation {
 
     public Simulation(String pagingAlgorithm, int numberOfOperations, int numberOfProcesses, PagingAlgorithmSimulationStatus optimalAlgorithmStatus, PagingAlgorithmSimulationStatus otherAlgorithmStatus) {
         this.paused = false;
-        this.pagingAlgorithm = pagingAlgorithm;
         this.numberOfOperations = numberOfOperations;
         this.numberOfProcesses = numberOfProcesses;
         this.optimalAlgorithmStatus = optimalAlgorithmStatus;
