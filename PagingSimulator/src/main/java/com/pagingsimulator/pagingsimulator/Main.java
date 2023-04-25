@@ -1,7 +1,7 @@
 package com.pagingsimulator.pagingsimulator;
 
-import com.pagingsimulator.pagingsimulator.UI.Controllers.MainMenuController;
-import com.pagingsimulator.pagingsimulator.UI.Controllers.SimulationController;
+import com.pagingsimulator.pagingsimulator.UI.Controller.MainMenuController;
+import com.pagingsimulator.pagingsimulator.UI.Controller.SimulationController;
 import com.pagingsimulator.pagingsimulator.UI.Utils.SceneManager;
 import javafx.application.Application;
 import javafx.stage.Stage;

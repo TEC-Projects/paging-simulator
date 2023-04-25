@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox minHeight="550.0" minWidth="950.0" style="-fx-background-color: FFFFFF;" stylesheets="@../Css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pagingsimulator.pagingsimulator.UI.Controllers.MainMenuController">
+<VBox minHeight="550.0" minWidth="950.0" style="-fx-background-color: FFFFFF;" stylesheets="@../Css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pagingsimulator.pagingsimulator.UI.Controller.MainMenuController">
     <padding>
         <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
     </padding>

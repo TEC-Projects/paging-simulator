@@ -7,6 +7,7 @@ public class Simulation {
     private boolean paused;
     private int numberOfOperations;
     private int numberOfProcesses;
+    private Machine machine;
     private PagingAlgorithmSimulationStatus optimalAlgorithmStatus;
     private PagingAlgorithmSimulationStatus otherAlgorithmStatus;
 
@@ -27,8 +28,8 @@ public class Simulation {
     }
 
 
-    public void updateOptimalAlgorithmStatus(LinkedList<OperationDetail> operations, int simulationElapsedTime, int thrashingTime, int ramUsage, int vRamUsage, int internalFragmentationVolume){
-        optimalAlgorithmStatus.setOperations(operations);
+    public void updateOptimalAlgorithmStatus(LinkedList<Page> pages, int simulationElapsedTime, int thrashingTime, int ramUsage, int vRamUsage, int internalFragmentationVolume){
+        optimalAlgorithmStatus.setOperations(pages);
         optimalAlgorithmStatus.setSimulationElapsedTime(simulationElapsedTime);
         optimalAlgorithmStatus.setThrashingTime(thrashingTime);
         optimalAlgorithmStatus.setRamUsage(ramUsage);
@@ -36,8 +37,8 @@ public class Simulation {
         optimalAlgorithmStatus.setInternalFragmentationVolume(internalFragmentationVolume);
     }
 
-    public void updateOtherAlgorithmStatus(LinkedList<OperationDetail> operations, int simulationElapsedTime, int thrashingTime, int ramUsage, int vRamUsage, int internalFragmentationVolume){
-        otherAlgorithmStatus.setOperations(operations);
+    public void updateOtherAlgorithmStatus(LinkedList<Page> pages, int simulationElapsedTime, int thrashingTime, int ramUsage, int vRamUsage, int internalFragmentationVolume){
+        otherAlgorithmStatus.setOperations(pages);
         otherAlgorithmStatus.setSimulationElapsedTime(simulationElapsedTime);
         otherAlgorithmStatus.setThrashingTime(thrashingTime);
         otherAlgorithmStatus.setRamUsage(ramUsage);

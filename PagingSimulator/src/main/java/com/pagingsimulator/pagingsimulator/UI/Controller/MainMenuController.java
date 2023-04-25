@@ -1,4 +1,4 @@
-package com.pagingsimulator.pagingsimulator.UI.Controllers;
+package com.pagingsimulator.pagingsimulator.UI.Controller;
 
 import com.pagingsimulator.pagingsimulator.UI.Model.SimulationRequest;
 import com.pagingsimulator.pagingsimulator.UI.Utils.ValidatorUtil;

@@ -3,15 +3,15 @@ package com.pagingsimulator.pagingsimulator.Model;
 import java.util.LinkedList;
 
 public class PagingAlgorithmSimulationStatus {
-    private LinkedList<OperationDetail> operations;
+    private LinkedList<Page> pages;
     private int simulationElapsedTime;
     private int thrashingTime;
     private int ramUsage;
     private int vRamUsage;
     private int internalFragmentationVolume;
 
-    public PagingAlgorithmSimulationStatus(LinkedList<OperationDetail> operations) {
-        this.operations = operations;
+    public PagingAlgorithmSimulationStatus(LinkedList<Page> pages) {
+        this.pages = pages;
         this.simulationElapsedTime = 0;
         this.thrashingTime = 0;
         this.ramUsage = 0;
@@ -19,12 +19,12 @@ public class PagingAlgorithmSimulationStatus {
         this.internalFragmentationVolume = 0;
     }
 
-    public LinkedList<OperationDetail> getOperations() {
-        return operations;
+    public LinkedList<Page> getOperations() {
+        return pages;
     }
 
-    public void setOperations(LinkedList<OperationDetail> operations) {
-        this.operations = operations;
+    public void setOperations(LinkedList<Page> pages) {
+        this.pages = pages;
     }
 
     public int getSimulationElapsedTime() {
