@@ -2,10 +2,10 @@ package com.pagingsimulator.pagingsimulator.UI.Controllers;
 
 import com.pagingsimulator.pagingsimulator.UI.Model.SimulationRequest;
 import com.pagingsimulator.pagingsimulator.UI.Utils.ValidatorUtil;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
-import javafx.event.EventTarget;
 import javafx.fxml.FXML;
 import com.pagingsimulator.pagingsimulator.Main;
 import javafx.fxml.Initializable;
@@ -14,10 +14,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 public class MainMenuController extends ScreenController implements Initializable {
 
