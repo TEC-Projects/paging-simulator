@@ -1,6 +1,6 @@
 package com.pagingsimulator.pagingsimulator.UI.Utils;
 
-import com.pagingsimulator.pagingsimulator.UI.Controllers.ScreenController;
+import com.pagingsimulator.pagingsimulator.UI.Controller.ScreenController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

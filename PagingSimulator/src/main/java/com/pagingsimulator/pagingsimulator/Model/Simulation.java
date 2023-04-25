@@ -8,6 +8,7 @@ public class Simulation {
     private String pagingAlgorithm;
     private int numberOfOperations;
     private int numberOfProcesses;
+    private Machine machine;
     private PagingAlgorithmSimulationStatus optimalAlgorithmStatus;
     private PagingAlgorithmSimulationStatus otherAlgorithmStatus;
 

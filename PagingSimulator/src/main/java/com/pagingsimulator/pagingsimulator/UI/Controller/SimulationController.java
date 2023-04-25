@@ -1,11 +1,8 @@
-package com.pagingsimulator.pagingsimulator.UI.Controllers;
+package com.pagingsimulator.pagingsimulator.UI.Controller;
 
 import com.pagingsimulator.pagingsimulator.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 
 import java.io.IOException;
 

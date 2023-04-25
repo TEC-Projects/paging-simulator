@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox stylesheets="@../Css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pagingsimulator.pagingsimulator.UI.Controllers.SimulationController">
+<VBox stylesheets="@../Css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pagingsimulator.pagingsimulator.UI.Controller.SimulationController">
    <children>
       <HBox alignment="CENTER_LEFT">
          <children>

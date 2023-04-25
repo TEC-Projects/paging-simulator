@@ -1,4 +1,4 @@
-package com.pagingsimulator.pagingsimulator.UI.Controllers;
+package com.pagingsimulator.pagingsimulator.UI.Controller;
 
 public class ScreenController {
 }

@@ -7,6 +7,6 @@ module com.pagingsimulator.pagingsimulator {
 
     opens com.pagingsimulator.pagingsimulator to javafx.fxml;
     exports com.pagingsimulator.pagingsimulator;
-    exports com.pagingsimulator.pagingsimulator.UI.Controllers;
-    opens com.pagingsimulator.pagingsimulator.UI.Controllers to javafx.fxml;
+    exports com.pagingsimulator.pagingsimulator.UI.Controller;
+    opens com.pagingsimulator.pagingsimulator.UI.Controller to javafx.fxml;
 }
