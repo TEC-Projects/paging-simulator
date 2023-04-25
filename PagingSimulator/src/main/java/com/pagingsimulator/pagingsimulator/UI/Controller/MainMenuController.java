@@ -87,7 +87,7 @@ public class MainMenuController extends ScreenController implements Initializabl
         try{
             validatorUtil.simulationRequestValidator(randomSeedTextField.getText(), simulationRequest.getOperationsFile(), loadFileCheckBox.isSelected() );
 
-            simulationRequest.setRandomSeed(randomSeedTextField.getText());
+            simulationRequest.setRandomSeed(Long.parseLong(randomSeedTextField.getText()));
             simulationRequest.setPagingAlgorithm(pagingAlgorithmsComboBox.getValue());
 
             if(loadFileCheckBox.isSelected()){

@@ -4,7 +4,7 @@ import java.io.File;
 
 public class SimulationRequest {
     private String pagingAlgorithm;
-    private String randomSeed;
+    private Long randomSeed;
     private Boolean simulationThroughOperationFile;
     private File operationsFile;
     private int numberOfProcesses;
@@ -22,11 +22,11 @@ public class SimulationRequest {
         this.pagingAlgorithm = pagingAlgorithm;
     }
 
-    public String getRandomSeed() {
+    public Long getRandomSeed() {
         return randomSeed;
     }
 
-    public void setRandomSeed(String randomSeed) {
+    public void setRandomSeed(Long randomSeed) {
         this.randomSeed = randomSeed;
     }
 
