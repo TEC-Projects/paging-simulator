@@ -5,6 +5,7 @@ import java.util.LinkedList;
 public class Simulation {
 
     private boolean paused;
+    private int randomSeed;
     private int numberOfOperations;
     private int numberOfProcesses;
     private Machine machine;

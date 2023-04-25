@@ -8,7 +8,7 @@ public class ValidatorUtil {
 
     public void simulationRequestValidator(String randomSeed, File simulationFileRoute, Boolean isFileLoaded) throws Exception {
         try{
-            Integer.parseInt(randomSeed);
+            Long.parseLong(randomSeed);
         }catch (Exception e){
             throw new Exception("Invalid random seed.");
         }
