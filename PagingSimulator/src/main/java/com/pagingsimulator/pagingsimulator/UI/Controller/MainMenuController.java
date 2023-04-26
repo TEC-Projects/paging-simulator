@@ -2,6 +2,7 @@ package com.pagingsimulator.pagingsimulator.UI.Controller;
 
 import com.pagingsimulator.pagingsimulator.UI.Model.SimulationRequest;
 import com.pagingsimulator.pagingsimulator.UI.Utils.FileUtil;
+import com.pagingsimulator.pagingsimulator.UI.Utils.SnackBarUtil;
 import com.pagingsimulator.pagingsimulator.UI.Utils.ValidatorUtil;
 
 import javafx.animation.KeyFrame;
@@ -25,34 +26,31 @@ public class MainMenuController extends ScreenController implements Initializabl
 
     private SimulationRequest simulationRequest = new SimulationRequest();
 
-    private FileChooser fileChooser = new FileChooser();
-
     private ValidatorUtil validatorUtil = new ValidatorUtil();
     private FileUtil fileUtil = new FileUtil();
+    private SnackBarUtil snackBarUtil = new SnackBarUtil();
 
     @FXML
-    private Button loadOperationsFileButton;
+    private Button
+            loadOperationsFileButton,
+            startSimulationButton,
+            downloadSimulationFileButton;
     @FXML
-    private Button startSimulationButton;
-    @FXML
-    private Button downloadSimulationFileButton;
-    @FXML
-    private ComboBox<String> pagingAlgorithmsComboBox;
-    @FXML
-    private ComboBox<String> numberOfOperationsComboBox;
-    @FXML
-    private ComboBox<String> numberOfProcessesComboBox;
+    private ComboBox<String>
+            pagingAlgorithmsComboBox,
+            numberOfOperationsComboBox,
+            numberOfProcessesComboBox;
 
     @FXML
-    private TextField randomSeedTextField;
-    @FXML
-    private TextField operationsFileNameTextField;
+    private TextField
+            randomSeedTextField,
+            operationsFileNameTextField;
     @FXML
     private CheckBox loadFileCheckBox;
     @FXML
-    private Label warningLabelText;
+    private Label snackBarMessage;
     @FXML
-    private StackPane warningLabelPane;
+    private StackPane snackBarPane;
 
     private void initializeComboBoxes() {
         pagingAlgorithmsComboBox.getItems().addAll("FIFO", "Second Chance", "Most recently used", "Random");
@@ -68,8 +66,6 @@ public class MainMenuController extends ScreenController implements Initializabl
 
     }
 
-
-
     @FXML
     private void loadFileCheckEvent(){
         if(loadFileCheckBox.isSelected()){
@@ -77,79 +73,79 @@ public class MainMenuController extends ScreenController implements Initializabl
             numberOfOperationsComboBox.setDisable(true);
             downloadSimulationFileButton.setDisable(true);
             loadOperationsFileButton.setDisable(false);
+            randomSeedTextField.setDisable(!pagingAlgorithmsComboBox.getValue().equals("Random"));
         }else{
             numberOfProcessesComboBox.setDisable(false);
             numberOfOperationsComboBox.setDisable(false);
             downloadSimulationFileButton.setDisable(false);
+            randomSeedTextField.setDisable(false);
             loadOperationsFileButton.setDisable(true);
         };
     }
 
     @FXML
+    private void pagingAlgorithmsComboBoxSelected(){
+        randomSeedTextField.setDisable(!pagingAlgorithmsComboBox.getValue().equals("Random") && loadFileCheckBox.isSelected());
+    }
+
+    @FXML
     private void loadOperationsFileButtonEvent(){
         try{
-            simulationRequest.setOperationsFile(fileUtil.loadSimulationFile(fileChooser));
+            simulationRequest.setOperationsFile(fileUtil.loadSimulationFile());
             operationsFileNameTextField.setText(simulationRequest.getOperationsFile().getName());
         }catch (Exception e){
-            warningLabelPane.setVisible(true);
-            warningLabelText.setText(e.getMessage());
-            Timeline timer = new Timeline(
-                    new KeyFrame(Duration.seconds(2), (ActionEvent aEvent)  -> warningLabelPane.setVisible(false))
-            );
-            timer.play();
+            snackBarUtil.showSnackBar(e.getMessage(), "warning", snackBarPane, snackBarMessage);
         }
     }
 
     @FXML
     private void downloadSimulationFileButtonEvent() {
         try{
-            fileUtil.generateSimulationFile(fileChooser);
-        }catch (Exception e){
-            warningLabelPane.setVisible(true);
-            warningLabelText.setText(e.getMessage());
-            Timeline timer = new Timeline(
-                    new KeyFrame(Duration.seconds(2), (ActionEvent aEvent)  -> warningLabelPane.setVisible(false))
+            fileUtil.generateSimulationFile(
+                    Integer.parseInt(numberOfOperationsComboBox.getValue()),
+                    Integer.parseInt(numberOfProcessesComboBox.getValue()),
+                    randomSeedTextField.getText()
             );
-            timer.play();
+            snackBarUtil.showSnackBar("Document generated successfully.", "success", snackBarPane, snackBarMessage);
+        }catch (Exception e){
+            snackBarUtil.showSnackBar(e.getMessage(), "warning", snackBarPane, snackBarMessage);
         }
     }
 
     @FXML
     private void startSimulationButtonEvent(ActionEvent event)throws InterruptedException {
         try{
-            validatorUtil.simulationRequestValidator(randomSeedTextField.getText(), simulationRequest.getOperationsFile(), loadFileCheckBox.isSelected() );
-
-            simulationRequest.setRandomSeed(Long.parseLong(randomSeedTextField.getText()));
             simulationRequest.setPagingAlgorithm(pagingAlgorithmsComboBox.getValue());
 
             if(loadFileCheckBox.isSelected()){
+                validatorUtil.fileLoadValidator(simulationRequest.getOperationsFile());
                 simulationRequest.setSimulationThroughOperationFile(true);
+
+                if(pagingAlgorithmsComboBox.getValue().equals("Random")){
+                    validatorUtil.randomSeedValidator(randomSeedTextField.getText());
+                    simulationRequest.setRandomSeed(Long.valueOf(randomSeedTextField.getText()));
+                }
+
+            }else{
+                validatorUtil.randomSeedValidator(randomSeedTextField.getText());
                 simulationRequest.setNumberOfProcesses(Integer.parseInt((numberOfProcessesComboBox.getValue())));
                 simulationRequest.setNumberOfOperations(Integer.parseInt((numberOfOperationsComboBox.getValue())));
-            }else{
+                simulationRequest.setRandomSeed(Long.valueOf(randomSeedTextField.getText()));
                 simulationRequest.setSimulationThroughOperationFile(false);
             }
 
             Main.sceneManager.navigate(event, "/com/pagingsimulator/pagingsimulator/screens/simulation.fxml", Main.simulationController);
 
         }catch (Exception e){
-            warningLabelPane.setVisible(true);
-            warningLabelText.setText(e.getMessage());
-            Timeline timer = new Timeline(
-                    new KeyFrame(Duration.seconds(2), (ActionEvent aEvent)  -> warningLabelPane.setVisible(false))
-            );
-            timer.play();
+            snackBarUtil.showSnackBar(e.getMessage(), "warning", snackBarPane, snackBarMessage);
         }
 
     }
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeComboBoxes();
         loadFileCheckBox.fire();
     }
-
 
 }

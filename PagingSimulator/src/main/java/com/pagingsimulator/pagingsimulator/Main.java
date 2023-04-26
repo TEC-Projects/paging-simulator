@@ -1,5 +1,6 @@
 package com.pagingsimulator.pagingsimulator;
 
+import com.pagingsimulator.pagingsimulator.Controller.Utils.OperationsFileManager;
 import com.pagingsimulator.pagingsimulator.UI.Controller.MainMenuController;
 import com.pagingsimulator.pagingsimulator.UI.Controller.SimulationController;
 import com.pagingsimulator.pagingsimulator.UI.Utils.SceneManager;
@@ -13,7 +14,7 @@ public class Main extends Application {
     public static MainMenuController mainMenuController;
     public static SimulationController simulationController;
     public static SceneManager sceneManager = new SceneManager();
-
+    public static OperationsFileManager operationsFileManager = new OperationsFileManager();
 
 
     @Override

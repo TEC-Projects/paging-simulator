@@ -1021,8 +1021,7 @@ a.badge:hover, a.badge:focused {
     -fx-background-radius: 4px; }
 
 .alert-success {
-    -fx-background-color: linear-gradient(to bottom, #dff0d8 0px, #c8e5bc 100%);
-    -fx-border-color: #d6e9c6;
+    -fx-background-color: #d6e9c6;
     -fx-text-fill: #3c763d;
     -fx-fill: #3c763d; }
 .alert-success * {
