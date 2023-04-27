@@ -24,11 +24,10 @@ import java.util.ResourceBundle;
 
 public class MainMenuController extends ScreenController implements Initializable {
 
-    private SimulationRequest simulationRequest = new SimulationRequest();
-
-    private ValidatorUtil validatorUtil = new ValidatorUtil();
-    private FileUtil fileUtil = new FileUtil();
-    private SnackBarUtil snackBarUtil = new SnackBarUtil();
+    private final SimulationRequest simulationRequest = new SimulationRequest();
+    private final ValidatorUtil validatorUtil = new ValidatorUtil();
+    private final FileUtil fileUtil = new FileUtil();
+    private final SnackBarUtil snackBarUtil = new SnackBarUtil();
 
     @FXML
     private Button
