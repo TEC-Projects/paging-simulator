@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox stylesheets="@../Css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pagingsimulator.pagingsimulator.UI.Controller.SimulationController">
+<VBox style="-fx-background-color: fff;" stylesheets="@../Css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pagingsimulator.pagingsimulator.UI.Controller.SimulationController">
    <children>
       <HBox alignment="CENTER_LEFT">
          <children>
@@ -31,53 +31,227 @@
             </Button>
          </children>
       </HBox>
-      <HBox prefHeight="550.0" prefWidth="950.0">
-         <children>
-            <VBox spacing="20.0">
-                <padding>
-                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                </padding>
-               <Label text="Optimal algorithm">
-                  <styleClass>
-                     <String fx:value="h4" />
-                     <String fx:value="strong" />
-                  </styleClass>
-               </Label>
-               <AreaChart fx:id="optimalRAMChart" maxHeight="150.0" prefHeight="150.0">
-                 <xAxis>
-                   <NumberAxis fx:id="optimalXAxis" />
-                 </xAxis>
-                 <yAxis>
-                   <NumberAxis side="LEFT" />
-                 </yAxis>
-               </AreaChart>
-            </VBox>
-            <VBox layoutX="10.0" layoutY="10.0" spacing="20.0">
-               <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </padding>
-               <children>
-                  <Label text="Second chance algorithm">
-                     <styleClass>
-                        <String fx:value="h4" />
-                        <String fx:value="strong" />
-                     </styleClass>
-                  </Label>
-                  <AreaChart fx:id="otherRAMChart" maxHeight="150.0" prefHeight="150.0">
-                     <xAxis>
-                        <NumberAxis fx:id="otherXAxis" side="BOTTOM" />
-                     </xAxis>
-                     <yAxis>
-                        <NumberAxis side="LEFT" />
-                     </yAxis>
-                  </AreaChart>
-               </children>
-            </VBox>
-         </children>
+      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="scroll-bar">
          <VBox.margin>
             <Insets top="25.0" />
          </VBox.margin>
-      </HBox>
+         <content>
+            <HBox prefHeight="550.0" prefWidth="950.0">
+               <children>
+                  <VBox spacing="25.0">
+                      <padding>
+                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                      </padding>
+                     <Label text="Optimal algorithm">
+                        <styleClass>
+                           <String fx:value="h4" />
+                           <String fx:value="strong" />
+                        </styleClass>
+                     </Label>
+                     <VBox alignment="CENTER">
+                        <children>
+                           <Label text="RAM usage mapping">
+                              <styleClass>
+                                 <String fx:value="strong" />
+                                 <String fx:value="h5" />
+                              </styleClass></Label>
+                           <HBox fx:id="optimalRAMDistribution" alignment="CENTER" maxWidth="435.0" prefHeight="20.0" prefWidth="435.0">
+                              <VBox.margin>
+                                 <Insets bottom="50.0" top="15.0" />
+                              </VBox.margin>
+                           </HBox>
+                           <Label layoutX="168.0" layoutY="10.0" text="RAM usage timeline">
+                              <VBox.margin>
+                                 <Insets />
+                              </VBox.margin>
+                              <styleClass>
+                                 <String fx:value="strong" />
+                                 <String fx:value="h5" />
+                              </styleClass>
+                           </Label>
+                           <AreaChart fx:id="optimalRAMChart" maxHeight="150.0" prefHeight="150.0">
+                             <xAxis>
+                               <NumberAxis fx:id="optimalXAxis" />
+                             </xAxis>
+                             <yAxis>
+                               <NumberAxis side="LEFT" />
+                             </yAxis>
+                           </AreaChart>
+                        </children>
+                        <VBox.margin>
+                           <Insets />
+                        </VBox.margin>
+                     </VBox>
+                     <HBox spacing="50.0">
+                        <children>
+                           <VBox alignment="CENTER" prefHeight="200.0" spacing="25.0">
+                              <children>
+                                 <VBox>
+                                    <children>
+                                       <Label text="Simulation time">
+                                          <styleClass>
+                                             <String fx:value="strong" />
+                                             <String fx:value="h5" />
+                                          </styleClass>
+                                       </Label>
+                                       <Label text="Label" />
+                                    </children>
+                                 </VBox>
+                                 <VBox>
+                                    <children>
+                                       <Label text="RAM usage (KB)">
+                                          <styleClass>
+                                             <String fx:value="strong" />
+                                             <String fx:value="h5" />
+                                          </styleClass>
+                                       </Label>
+                                       <Label text="Label" />
+                                    </children>
+                                 </VBox>
+                                 <VBox>
+                                    <children>
+                                       <Label text="Virtual RAM usage (KB)">
+                                          <styleClass>
+                                             <String fx:value="strong" />
+                                             <String fx:value="h5" />
+                                          </styleClass>
+                                       </Label>
+                                       <Label text="Label" />
+                                    </children>
+                                 </VBox>
+                                 <VBox>
+                                    <children>
+                                       <Label text="RAM usage (KB)">
+                                          <styleClass>
+                                             <String fx:value="strong" />
+                                             <String fx:value="h5" />
+                                          </styleClass>
+                                       </Label>
+                                       <Label text="Label" />
+                                    </children>
+                                 </VBox>
+                                 <VBox layoutX="10.0" layoutY="178.0">
+                                    <children>
+                                       <Label text="Loaded pages">
+                                          <styleClass>
+                                             <String fx:value="strong" />
+                                             <String fx:value="h5" />
+                                          </styleClass>
+                                       </Label>
+                                       <Label text="Label" />
+                                    </children>
+                                 </VBox>
+                                 <VBox layoutX="10.0" layoutY="234.0">
+                                    <children>
+                                       <Label text="Thrashing level">
+                                          <styleClass>
+                                             <String fx:value="strong" />
+                                             <String fx:value="h5" />
+                                          </styleClass>
+                                       </Label>
+                                       <Label text="Label" />
+                                    </children>
+                                 </VBox>
+                              </children>
+                              <HBox.margin>
+                                 <Insets />
+                              </HBox.margin>
+                           </VBox>
+                           <VBox alignment="CENTER" prefHeight="200.0" spacing="25.0">
+                              <children>
+                                 <VBox>
+                                    <children>
+                                       <Label text="Simulated processes">
+                                          <styleClass>
+                                             <String fx:value="strong" />
+                                             <String fx:value="h5" />
+                                          </styleClass>
+                                       </Label>
+                                       <Label text="Label" />
+                                    </children>
+                                 </VBox>
+                                 <VBox>
+                                    <children>
+                                       <Label text="RAM usage (%)">
+                                          <styleClass>
+                                             <String fx:value="strong" />
+                                             <String fx:value="h5" />
+                                          </styleClass>
+                                       </Label>
+                                       <Label text="Label" />
+                                    </children>
+                                 </VBox>
+                                 <VBox>
+                                    <children>
+                                       <Label text="Virtual RAM usage (%)">
+                                          <styleClass>
+                                             <String fx:value="strong" />
+                                             <String fx:value="h5" />
+                                          </styleClass>
+                                       </Label>
+                                       <Label text="Label" />
+                                    </children>
+                                 </VBox>
+                                 <VBox>
+                                    <children>
+                                       <Label text="RAM usage (%)">
+                                          <styleClass>
+                                             <String fx:value="strong" />
+                                             <String fx:value="h5" />
+                                          </styleClass>
+                                       </Label>
+                                       <Label text="Label" />
+                                    </children>
+                                 </VBox>
+                              </children>
+                           </VBox>
+                        </children>
+                     </HBox>
+                  </VBox>
+                  <VBox layoutX="10.0" layoutY="10.0" spacing="25.0">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                     <children>
+                        <Label text="Second chance algorithm">
+                           <styleClass>
+                              <String fx:value="h4" />
+                              <String fx:value="strong" />
+                           </styleClass>
+                        </Label>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label text="RAM usage mapping">
+                                 <styleClass>
+                                    <String fx:value="strong" />
+                                    <String fx:value="h5" />
+                                 </styleClass></Label>
+                              <HBox fx:id="otherRAMDistribution" alignment="CENTER" maxWidth="435.0" prefHeight="20.0" prefWidth="435.0">
+                                 <VBox.margin>
+                                    <Insets bottom="50.0" top="15.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <Label text="RAM usage timeline">
+                                 <styleClass>
+                                    <String fx:value="strong" />
+                                    <String fx:value="h5" />
+                                 </styleClass></Label>
+                              <AreaChart fx:id="otherRAMChart" maxHeight="150.0" prefHeight="150.0">
+                                 <xAxis>
+                                    <NumberAxis fx:id="otherXAxis" side="BOTTOM" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis side="LEFT" />
+                                 </yAxis>
+                              </AreaChart>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </content>
+      </ScrollPane>
    </children>
    <padding>
       <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />

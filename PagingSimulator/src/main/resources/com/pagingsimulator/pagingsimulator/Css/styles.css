@@ -1368,7 +1368,21 @@ a.badge:hover, a.badge:focused {
     -fx-background-insets: 0 ;
 }
 
+.scroll-bar .viewport{
+    -fx-hbar-policy: NEVER;
+    -fx-vbar-policy: NEVER;
+    -fx-background-color: transparent;
+    -fx-border-width: 0px;
+    -fx-border-color: #ffffff;
+}
 
+.scroll-bar{
+    -fx-hbar-policy: NEVER;
+    -fx-vbar-policy: NEVER;
+    -fx-background-color: transparent;
+    -fx-border-width: 0px;
+    -fx-border-color: #ffffff;
+}
 
 
 /*# sourceMappingURL=bootstrapfx.css.map */

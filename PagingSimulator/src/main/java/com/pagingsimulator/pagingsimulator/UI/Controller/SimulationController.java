@@ -1,22 +1,22 @@
 package com.pagingsimulator.pagingsimulator.UI.Controller;
 
-import com.pagingsimulator.pagingsimulator.Main;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
+import com.pagingsimulator.pagingsimulator.UI.Utils.SimulationUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.AreaChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.chart.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.shape.Rectangle;
 
-import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class SimulationController extends ScreenController implements Initializable {
+
+    private SimulationUtil simulationUtil = new SimulationUtil();
+    private ArrayList<String> processColors = new ArrayList<>();
 
     @FXML
     private Label
@@ -36,6 +36,11 @@ public class SimulationController extends ScreenController implements Initializa
             optimalRAMChart,
             otherRAMChart;
 
+    @FXML
+    private HBox
+            optimalRAMDistribution,
+            otherRAMDistribution;
+
 
 
     @FXML
@@ -44,8 +49,6 @@ public class SimulationController extends ScreenController implements Initializa
     }
 
     private void initializeRamUsageCharts(){
-        optimalRAMChart.setTitle("RAM usage");
-        otherRAMChart.setTitle("RAM usage");
 
         optimalXAxis.setAutoRanging(false);
         optimalXAxis.setLowerBound(0);
@@ -56,6 +59,39 @@ public class SimulationController extends ScreenController implements Initializa
         otherXAxis.setLowerBound(0);
         otherXAxis.setUpperBound(60);
         otherXAxis.setTickUnit(5);
+
+        otherXAxis.setAutoRanging(false);
+        otherXAxis.setLowerBound(0);
+        otherXAxis.setUpperBound(60);
+        otherXAxis.setTickUnit(5);
+
+        ArrayList<Integer> procedures = new ArrayList<Integer>();
+
+
+        Random rand = new Random();
+
+        for (int i = 1; i < 101; i++) {
+            procedures.add(rand.nextInt(50) - 25);
+        }
+
+        for (int i = 1; i < procedures.size(); i++) {
+            Rectangle tempPane = new Rectangle(3, 20);
+            if(procedures.get(i) > 0){
+                tempPane.setStyle("-fx-fill:" + processColors.get(procedures.get(i)-1) + "; -fx-opacity: 0.8;");
+            }else{
+                tempPane.setStyle("-fx-fill: #e1e1e1;");
+            }
+            optimalRAMDistribution.getChildren().add(tempPane);
+        }
+
+        for (int i = 1; i < 101; i++) {
+            Rectangle tempPane = new Rectangle(3, 20);
+            if(i % 5 == 0){
+                tempPane.getStyleClass().setAll("test");
+            }
+            otherRAMDistribution.getChildren().add(tempPane);
+        }
+
 
 
 //        XYChart.Series seriesApril= new XYChart.Series();
@@ -74,6 +110,7 @@ public class SimulationController extends ScreenController implements Initializa
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        processColors = simulationUtil.getProcessesColors(50);
         initializeRamUsageCharts();
     }
 }
