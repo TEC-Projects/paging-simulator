@@ -495,43 +495,35 @@ a.bg-danger:focused {
 .btn-danger {
     -fx-text-fill: #fff;
     -fx-fill: #fff;
-    -fx-background-color: #d9534f;
-    -fx-border-color: #d43f3a; }
+    -fx-background-color: #d9534f;}
 .btn-danger:focused, .btn-danger.focused {
     -fx-text-fill: #fff;
     -fx-fill: #fff;
-    -fx-background-color: #c9302c;
-    -fx-border-color: #761c19; }
+    -fx-background-color: #c9302c;}
 .btn-danger:hover {
     -fx-text-fill: #fff;
     -fx-fill: #fff;
-    -fx-background-color: #c9302c;
-    -fx-border-color: #ac2925; }
+    -fx-background-color: #c9302c; }
 .btn-danger:pressed, .btn-danger.pressed, .open > .btn-danger.dropdown-toggle {
     -fx-text-fill: #fff;
     -fx-fill: #fff;
-    -fx-background-color: #c9302c;
-    -fx-border-color: #ac2925; }
+    -fx-background-color: #c9302c;}
 .btn-danger:pressed:hover, .btn-danger:pressed:focused, .btn-danger:pressed.focused, .btn-danger.pressed:hover, .btn-danger.pressed:focused, .btn-danger.pressed.focused, .open > .btn-danger.dropdown-toggle:hover, .open > .btn-danger.dropdown-toggle:focused, .open > .btn-danger.dropdown-toggle.focused {
     -fx-text-fill: #fff;
     -fx-fill: #fff;
-    -fx-background-color: #ac2925;
-    -fx-border-color: #761c19; }
+    -fx-background-color: #ac2925;}
 .btn-danger:selected, .btn-danger.selected {
     -fx-text-fill: #fff;
     -fx-fill: #fff;
-    -fx-background-color: #c9302c;
-    -fx-border-color: #ac2925; }
+    -fx-background-color: #c9302c;}
 .btn-danger:selected:hover, .btn-danger:selected:focused, .btn-danger:selected.focused, .btn-danger.selected:hover, .btn-danger.selected:focused, .btn-danger.selected.focused {
     -fx-text-fill: #fff;
     -fx-fill: #fff;
-    -fx-background-color: #ac2925;
-    -fx-border-color: #761c19; }
+    -fx-background-color: #ac2925;}
 .btn-danger:pressed, .btn-danger.pressed, .open > .btn-danger.dropdown-toggle {
     background-image: none; }
 .btn-danger.disabled, .btn-danger.disabled:hover, .btn-danger.disabled:focused, .btn-danger.disabled.focused, .btn-danger.disabled:pressed, .btn-danger.disabled.pressed, .btn-danger[disabled], .btn-danger[disabled]:hover, .btn-danger[disabled]:focused, .btn-danger[disabled].focused, .btn-danger[disabled]:pressed, .btn-danger[disabled].pressed, fieldset[disabled] .btn-danger, fieldset[disabled] .btn-danger:hover, fieldset[disabled] .btn-danger:focused, fieldset[disabled] .btn-danger.focused, fieldset[disabled] .btn-danger:pressed, fieldset[disabled] .btn-danger.pressed {
-    -fx-background-color: #d9534f;
-    -fx-border-color: #d43f3a; }
+    -fx-background-color: #d9534f;}
 .btn-danger .badge {
     -fx-text-fill: #d9534f;
     -fx-fill: #d9534f;

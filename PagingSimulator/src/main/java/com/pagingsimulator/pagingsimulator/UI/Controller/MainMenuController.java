@@ -112,7 +112,7 @@ public class MainMenuController extends ScreenController implements Initializabl
     }
 
     @FXML
-    private void startSimulationButtonEvent(ActionEvent event)throws InterruptedException {
+    private void startSimulationButtonEvent(ActionEvent event) throws InterruptedException, IOException {
         try{
             simulationRequest.setPagingAlgorithm(pagingAlgorithmsComboBox.getValue());
 
@@ -133,11 +133,13 @@ public class MainMenuController extends ScreenController implements Initializabl
                 simulationRequest.setSimulationThroughOperationFile(false);
             }
 
-            Main.sceneManager.navigate(event, "/com/pagingsimulator/pagingsimulator/screens/simulation.fxml", Main.simulationController);
 
         }catch (Exception e){
             snackBarUtil.showSnackBar(e.getMessage(), "warning", snackBarPane, snackBarMessage);
         }
+
+        Main.sceneManager.navigate(event, "/com/pagingsimulator/pagingsimulator/screens/simulation.fxml", Main.simulationController);
+
 
     }
 
