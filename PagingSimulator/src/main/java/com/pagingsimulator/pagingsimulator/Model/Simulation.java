@@ -30,7 +30,7 @@ public class Simulation {
 
 
     public void updateOptimalAlgorithmStatus(LinkedList<Page> pages, int simulationElapsedTime, int thrashingTime, int ramUsage, int vRamUsage, int internalFragmentationVolume){
-        optimalAlgorithmStatus.setOperations(pages);
+        optimalAlgorithmStatus.setPages(pages);
         optimalAlgorithmStatus.setSimulationElapsedTime(simulationElapsedTime);
         optimalAlgorithmStatus.setThrashingTime(thrashingTime);
         optimalAlgorithmStatus.setRamUsage(ramUsage);
@@ -39,7 +39,7 @@ public class Simulation {
     }
 
     public void updateOtherAlgorithmStatus(LinkedList<Page> pages, int simulationElapsedTime, int thrashingTime, int ramUsage, int vRamUsage, int internalFragmentationVolume){
-        otherAlgorithmStatus.setOperations(pages);
+        otherAlgorithmStatus.setPages(pages);
         otherAlgorithmStatus.setSimulationElapsedTime(simulationElapsedTime);
         otherAlgorithmStatus.setThrashingTime(thrashingTime);
         otherAlgorithmStatus.setRamUsage(ramUsage);
