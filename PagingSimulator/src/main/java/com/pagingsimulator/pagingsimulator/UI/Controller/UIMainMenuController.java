@@ -23,6 +23,8 @@ public class UIMainMenuController extends ScreenController implements Initializa
     private final FileUtil fileUtil = new FileUtil();
     private final SnackBarUtil snackBarUtil = new SnackBarUtil();
 
+    private boolean isPaused;
+
     @FXML
     private Button
             loadOperationsFileButton,
@@ -128,10 +130,13 @@ public class UIMainMenuController extends ScreenController implements Initializa
             }
 
 
-
         }catch (Exception e){
             snackBarUtil.showSnackBar(e.getMessage(), "warning", snackBarPane, snackBarMessage);
         }
+
+        simulationRequest.setNumberOfProcesses(10);
+        simulationRequest.setNumberOfOperations(5000);
+        simulationRequest.setRandomSeed(1L);
 
         //TODO: Move the following lines to try block
         Main.sceneManager.navigate(event, "/com/pagingsimulator/pagingsimulator/screens/simulation.fxml");
@@ -141,6 +146,7 @@ public class UIMainMenuController extends ScreenController implements Initializa
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        isPaused = false;
         initializeComboBoxes();
         loadFileCheckBox.fire();
     }

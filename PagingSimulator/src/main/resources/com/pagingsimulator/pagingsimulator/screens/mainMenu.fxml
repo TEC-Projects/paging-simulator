@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox minHeight="550.0" minWidth="950.0" style="-fx-background-color: FFFFFF;" stylesheets="@../Css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pagingsimulator.pagingsimulator.UI.Controller.UIMainMenuController">
+<VBox minHeight="550.0" minWidth="1200.0" style="-fx-background-color: FFFFFF;" stylesheets="@../Css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pagingsimulator.pagingsimulator.UI.Controller.UIMainMenuController">
     <padding>
         <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
     </padding>
@@ -23,7 +23,7 @@
                <Label fx:id="snackBarMessage" text="Label" />
             </children>
             <HBox.margin>
-               <Insets left="350.0" />
+               <Insets left="600.0" />
             </HBox.margin>
             <styleClass>
                <String fx:value="alert-warning" />

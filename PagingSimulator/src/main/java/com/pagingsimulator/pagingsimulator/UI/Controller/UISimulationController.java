@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.TextAlignment;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -22,6 +23,10 @@ public class UISimulationController extends ScreenController implements Initiali
     private SimulationUtil simulationUtil = new SimulationUtil();
     private DummyDataUtil dummyDataUtil = new DummyDataUtil();
     private ArrayList<String> processColors = new ArrayList<>();
+    private int numberOfProcesses;
+
+    private boolean isPaused;
+    private boolean hasStarted;
 
 
     @FXML
@@ -69,20 +74,40 @@ public class UISimulationController extends ScreenController implements Initiali
             otherXAxis,
             optimalXAxis;
     @FXML
-    private Button
-            pauseSimulationButton,
-            testFillButton;
+    private Button generalSimulationButton;
 
 
     @FXML
-    private void pauseSimulationButtonEvent(){
+    private void generalSimulationButtonEvent(){
+        if(isPaused){
+            isPaused = false;
+            generalSimulationButton.getStyleClass().setAll("btn-danger", "btn");
+            generalSimulationButton.setText("PAUSE SIMULATION");
+        }else{
+            isPaused = true;
+            generalSimulationButton.getStyleClass().setAll("btn-primary", "btn");
+            generalSimulationButton.setText("RESUME SIMULATION");
+        }
+
+        updateOtherSimulationData(dummyDataUtil.getDummyOtherSimulationStatus());
+        updateOptimalSimulationData(dummyDataUtil.getDummyOptimalSimulationStatus());
 
     }
 
-    @FXML
-    private void testFillButtonButtonEvent(){
-        updateOtherSimulationData(dummyDataUtil.getDummyOtherSimulationStatus());
-        updateOptimalSimulationData(dummyDataUtil.getDummyOptimalSimulationStatus());
+    public void handleSimulationCompleted(){
+
+    }
+
+    private void handlePauseSimulation(){
+
+    }
+
+    private void handleStartSimulation(){
+
+    }
+
+    private void handleResumeSimulation(){
+
     }
 
 
@@ -91,10 +116,10 @@ public class UISimulationController extends ScreenController implements Initiali
     }
 
     private void updateOptimalSimulationData(PagingAlgorithmSimulationStatus simulationStatus){
-        optimalRAMUsageKB.setText(String.valueOf(simulationStatus.getRamUsage()));
-        optimalFragmentation.setText(String.valueOf(simulationStatus.getInternalFragmentationVolume()));
-        optimalVirtualRAMUsageKB.setText(String.valueOf(simulationStatus.getVRamUsage()));
-        optimalThrashingLevelSeconds.setText(String.valueOf(simulationStatus.getThrashingTime()));
+//        optimalRAMUsageKB.setText(String.valueOf(simulationStatus.getRamUsage()));
+//        optimalFragmentation.setText(String.valueOf(simulationStatus.getInternalFragmentationVolume()));
+//        optimalVirtualRAMUsageKB.setText(String.valueOf(simulationStatus.getVRamUsage()));
+//        optimalThrashingLevelSeconds.setText(String.valueOf(simulationStatus.getThrashingTime()));
     }
 
     private void setMMUTableColumns(TableView<Page> table){
@@ -159,7 +184,7 @@ public class UISimulationController extends ScreenController implements Initiali
 
         Random rand = new Random();
 
-        for (int i = 1; i < 101; i++) {
+        for (int i = 1; i < numberOfProcesses + 1; i++) {
             procedures.add(rand.nextInt(50) - 25);
         }
 
@@ -197,6 +222,7 @@ public class UISimulationController extends ScreenController implements Initiali
     }
 
     public void initializeSimulationDetails(String pagingAlgorithm, int numberOfOperations, int numberOfProcesses){
+        this.numberOfProcesses = numberOfProcesses;
         pagingAlgorithmLabel.setText(pagingAlgorithm);
         simulationSizeLabel.setText(simulationUtil.simulationSizeFormatter(numberOfOperations, numberOfProcesses));
     }
@@ -204,7 +230,9 @@ public class UISimulationController extends ScreenController implements Initiali
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        processColors = simulationUtil.getProcessesColors(50);
+        isPaused = true;
+        hasStarted = false;
+        processColors = simulationUtil.getProcessesColors(numberOfProcesses);
         initializeRAMUsageCharts();
         initializeMMUTables();
     }
