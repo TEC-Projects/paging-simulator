@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 
-public class SimulationController extends ScreenController implements Initializable {
+public class UISimulationController extends ScreenController implements Initializable {
 
     private SimulationUtil simulationUtil = new SimulationUtil();
     private DummyDataUtil dummyDataUtil = new DummyDataUtil();
@@ -38,8 +38,8 @@ public class SimulationController extends ScreenController implements Initializa
             optimalRAMDistribution;
     @FXML
     private Label
-            simulationDetailLabel,
-            simulationTitleLabel,
+            pagingAlgorithmLabel,
+            simulationSizeLabel,
             otherRAMUsageKB,
             otherRAMUsagePercentage,
             otherSimulatedProcesses,
@@ -91,7 +91,10 @@ public class SimulationController extends ScreenController implements Initializa
     }
 
     private void updateOptimalSimulationData(PagingAlgorithmSimulationStatus simulationStatus){
-
+        optimalRAMUsageKB.setText(String.valueOf(simulationStatus.getRamUsage()));
+        optimalFragmentation.setText(String.valueOf(simulationStatus.getInternalFragmentationVolume()));
+        optimalVirtualRAMUsageKB.setText(String.valueOf(simulationStatus.getVRamUsage()));
+        optimalThrashingLevelSeconds.setText(String.valueOf(simulationStatus.getThrashingTime()));
     }
 
     private void setMMUTableColumns(TableView<Page> table){
@@ -191,6 +194,11 @@ public class SimulationController extends ScreenController implements Initializa
 //        seriesApril.getData().add(new XYChart.Data(7, 460));
 //
 //        optimalRAMChart.getData().addAll(seriesApril);
+    }
+
+    public void initializeSimulationDetails(String pagingAlgorithm, int numberOfOperations, int numberOfProcesses){
+        pagingAlgorithmLabel.setText(pagingAlgorithm);
+        simulationSizeLabel.setText(simulationUtil.simulationSizeFormatter(numberOfOperations, numberOfProcesses));
     }
 
 

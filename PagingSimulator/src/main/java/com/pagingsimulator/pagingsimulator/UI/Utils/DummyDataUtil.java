@@ -17,7 +17,6 @@ public class DummyDataUtil {
 
         fillSimulationDummy(false, dummyOptimalSimulationStatus);
         fillSimulationDummy(true, dummyOtherSimulationStatus);
-
     }
 
     private void fillSimulationDummy(boolean withMark, PagingAlgorithmSimulationStatus simulationStatus){
@@ -47,6 +46,7 @@ public class DummyDataUtil {
         simulationStatus.setRamUsage(rand.nextInt(500));
         simulationStatus.setVRamUsage(rand.nextInt(1000));
         simulationStatus.setInternalFragmentationVolume(rand.nextInt(500));
+
     }
 
     public PagingAlgorithmSimulationStatus getDummyOptimalSimulationStatus() {

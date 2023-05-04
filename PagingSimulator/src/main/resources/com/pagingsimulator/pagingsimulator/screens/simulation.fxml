@@ -6,18 +6,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefWidth="1052.0" style="-fx-background-color: fff;" stylesheets="@../Css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pagingsimulator.pagingsimulator.UI.Controller.SimulationController">
+<VBox prefWidth="1052.0" style="-fx-background-color: fff;" stylesheets="@../Css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pagingsimulator.pagingsimulator.UI.Controller.UISimulationController">
    <children>
       <HBox alignment="CENTER_LEFT">
          <children>
             <VBox alignment="CENTER_LEFT">
                <children>
-                  <Label fx:id="simulationTitleLabel" text="SIMULATION">
+                  <Label text="SIMULATION">
                      <styleClass>
                         <String fx:value="h1" />
                         <String fx:value="strong" />
                      </styleClass></Label>
-                  <Label fx:id="simulationDetailLabel" layoutX="10.0" layoutY="10.0" styleClass="h4" text="50 processes &amp; 5000 operations" />
+                  <Label fx:id="simulationSizeLabel" layoutX="10.0" layoutY="10.0" styleClass="h4" text="50 processes &amp; 5000 operations" />
                </children>
                <HBox.margin>
                   <Insets right="375.0" />
@@ -261,7 +261,7 @@
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </padding>
                      <children>
-                        <Label text="Second chance algorithm">
+                        <Label fx:id="pagingAlgorithmLabel" text="Second chance algorithm">
                            <styleClass>
                               <String fx:value="h4" />
                               <String fx:value="strong" />

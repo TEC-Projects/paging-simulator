@@ -22,18 +22,18 @@ public class SceneManagerUtil {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(screenRoute));
         stage.setTitle("Paging simulator");
         Parent root = loader.load();
-        Main.mainMenuController = loader.getController();
+        Main.UIMainMenuController = loader.getController();
         stage.getIcons().add(new Image(getClass().getResource("/com/pagingsimulator/pagingsimulator/img/isotype.png").toString()));
-        stage.setScene(new Scene(root, 1024, 600));
+        stage.setScene(new Scene(root, 1200, 600));
         stage.show();
     }
 
-    public void navigate(ActionEvent event, String screenRoute, ScreenController controller) throws IOException {
+    public void navigate(ActionEvent event, String screenRoute) throws IOException {
         FXMLLoader viewHandler = new FXMLLoader(getClass().getResource(screenRoute));
         Parent root = viewHandler.load();
-        controller = viewHandler.getController();
+        Main.UISimulationController = viewHandler.getController();
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(new Scene(root, 1024, 600));
+        window.setScene(new Scene(root, 1200, 600));
         window.show();
     }
 
