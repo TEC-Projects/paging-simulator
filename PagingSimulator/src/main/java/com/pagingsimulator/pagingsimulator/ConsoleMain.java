@@ -4,6 +4,7 @@ import com.pagingsimulator.pagingsimulator.Controller.Utils.OperationsFileManage
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Instant;
 
 public class ConsoleMain {
     public static void main(String[] args) throws IOException {
