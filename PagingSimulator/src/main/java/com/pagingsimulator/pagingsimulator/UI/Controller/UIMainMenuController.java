@@ -5,24 +5,18 @@ import com.pagingsimulator.pagingsimulator.UI.Utils.FileUtil;
 import com.pagingsimulator.pagingsimulator.UI.Utils.SnackBarUtil;
 import com.pagingsimulator.pagingsimulator.UI.Utils.ValidatorUtil;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import com.pagingsimulator.pagingsimulator.Main;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
-import javafx.util.Duration;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainMenuController extends ScreenController implements Initializable {
+public class UIMainMenuController extends ScreenController implements Initializable {
 
     private final SimulationRequest simulationRequest = new SimulationRequest();
     private final ValidatorUtil validatorUtil = new ValidatorUtil();
@@ -134,12 +128,14 @@ public class MainMenuController extends ScreenController implements Initializabl
             }
 
 
+
         }catch (Exception e){
             snackBarUtil.showSnackBar(e.getMessage(), "warning", snackBarPane, snackBarMessage);
         }
 
-        Main.sceneManager.navigate(event, "/com/pagingsimulator/pagingsimulator/screens/simulation.fxml", Main.simulationController);
-
+        //TODO: Move the following lines to try block
+        Main.sceneManager.navigate(event, "/com/pagingsimulator/pagingsimulator/screens/simulation.fxml");
+        Main.simulationController.initializeSimulation(simulationRequest);
 
     }
 

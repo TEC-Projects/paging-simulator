@@ -22,4 +22,8 @@ public class SimulationUtil {
 
     };
 
+    public String simulationSizeFormatter(int numberOfOperations, int numberOfProcesses){
+        return numberOfProcesses + " processes & " + numberOfOperations + " operations";
+    }
+
 }
