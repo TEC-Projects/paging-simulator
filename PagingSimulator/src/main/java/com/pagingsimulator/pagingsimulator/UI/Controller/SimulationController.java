@@ -91,7 +91,10 @@ public class SimulationController extends ScreenController implements Initializa
     }
 
     private void updateOptimalSimulationData(PagingAlgorithmSimulationStatus simulationStatus){
-
+        optimalRAMUsageKB.setText(String.valueOf(simulationStatus.getRamUsage()));
+        optimalFragmentation.setText(String.valueOf(simulationStatus.getInternalFragmentationVolume()));
+        optimalVirtualRAMUsageKB.setText(String.valueOf(simulationStatus.getVRamUsage()));
+        optimalThrashingLevelSeconds.setText(String.valueOf(simulationStatus.getThrashingTime()));
     }
 
     private void setMMUTableColumns(TableView<Page> table){
