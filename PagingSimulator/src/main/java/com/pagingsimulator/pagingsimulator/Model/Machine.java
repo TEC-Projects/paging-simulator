@@ -12,7 +12,6 @@ abstract class Machine {
     protected ArrayList<Integer> virtualMemory;
     protected HashMap<Integer, Page> pages;
     protected HashMap<Integer, Process> processes;
-    protected long baseMarking;
 
     private void addPtrToProcess(int pid, int ptr){
         Process process = processes.get(pid);
@@ -32,7 +31,7 @@ abstract class Machine {
         }
     }
 
-    public Machine(int totalMemory, int pageSize, int baseMarking) {
+    public Machine(int totalMemory, int pageSize) {
         ptrCount = 0;
         pageCount = 0;
         usedRam = 0;
@@ -41,7 +40,6 @@ abstract class Machine {
         virtualMemory = new ArrayList<>();
         pages = new HashMap<>();
         processes = new HashMap<>();
-        this.baseMarking = baseMarking;
     }
 
     abstract int selectPageToVRAM();
@@ -110,7 +108,8 @@ abstract class Machine {
         this.processes = processes;
     }
 
-    public abstract long getBaseMarking(boolean is);
+    public abstract long getNewMark();
+    public abstract long getUsedMark(long currentMark);
 
     public int newAlloc(int pid, int allocSize, int simTime) {
         double pagesCount = Math.ceil(allocSize*1.0/4000.0);
@@ -123,19 +122,18 @@ abstract class Machine {
                 virtualMemory.add(pageReplacedId);
                 createdPages.add(pageCount);
                 realMemory.set(pageReplacedIndex, pageCount);
-                pages.put(pageCount, new Page(pageCount++, pid, pageReplacedIndex, simTime, getBaseMarking()));
+                pages.put(pageCount, new Page(pageCount++, pid, pageReplacedIndex, simTime, getNewMark()));
             }else{
                 for (int j = 0; j < realMemory.size(); j++) {
                     if(realMemory.get(j) == -1){
                         createdPages.add(pageCount);
                         realMemory.set(j, pageCount);
-                        pages.put(pageCount, new Page(pageCount++, pid, j, simTime, getBaseMarking(true)));
+                        pages.put(pageCount, new Page(pageCount++, pid, j, simTime, getNewMark()));
                     }
                 }
             }
             usedRam++;
         }
-
         memoryMap.put(ptrCount, new Allocation(ptrCount, pid , createdPages));
         addPtrToProcess(pid, ptrCount);
         return ptrCount++;
@@ -147,7 +145,9 @@ abstract class Machine {
         for(int pageId : allocation.getPageIds()){
             if (!realMemory.contains(pageId)){
                 notFoundPages.add(pageId);
-            }
+            };
+            Page page = pages.get(pageId);
+            page.setMark(getUsedMark(page.getMark()));
         }
         if(!notFoundPages.isEmpty()){
             for(int notFoundPageId : notFoundPages){

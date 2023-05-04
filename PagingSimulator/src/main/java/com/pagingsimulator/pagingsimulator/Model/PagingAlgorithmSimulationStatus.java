@@ -19,11 +19,11 @@ public class PagingAlgorithmSimulationStatus {
         this.internalFragmentationVolume = 0;
     }
 
-    public LinkedList<Page> getOperations() {
+    public LinkedList<Page> getPages() {
         return pages;
     }
 
-    public void setOperations(LinkedList<Page> pages) {
+    public void setPages(LinkedList<Page> pages) {
         this.pages = pages;
     }
 

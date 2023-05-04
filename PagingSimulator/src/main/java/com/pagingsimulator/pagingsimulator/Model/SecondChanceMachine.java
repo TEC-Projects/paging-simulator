@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class SecondChanceMachine extends Machine {
     public SecondChanceMachine(int totalMemory, int pageSize) {
-        super(totalMemory, pageSize, 1);
+        super(totalMemory, pageSize);
     }
 
     @Override
@@ -22,7 +22,12 @@ public class SecondChanceMachine extends Machine {
     }
 
     @Override
-    public long getBaseMarking(boolean isUse) {
-        return baseMarking;
+    public long getUsedMark(long currentMark) {
+        return 1;
+    }
+
+    @Override
+    public long getNewMark() {
+        return 1;
     }
 }

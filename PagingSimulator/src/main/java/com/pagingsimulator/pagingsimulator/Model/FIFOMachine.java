@@ -5,8 +5,8 @@ import java.time.Instant;
 import java.util.Date;
 
 public class FIFOMachine extends Machine{
-    public FIFOMachine(int totalMemory, int pageSize, int baseMarking) {
-        super(totalMemory, pageSize, baseMarking);
+    public FIFOMachine(int totalMemory, int pageSize) {
+        super(totalMemory, pageSize);
     }
 
     @Override
@@ -24,9 +24,12 @@ public class FIFOMachine extends Machine{
     }
 
     @Override
-    public long getBaseMarking() {
+    public long getNewMark() {
         return Instant.now().getEpochSecond();
     }
 
-
+    @Override
+    public long getUsedMark(long currentMark) {
+        return currentMark;
+    }
 }

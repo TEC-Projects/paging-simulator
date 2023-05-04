@@ -6,7 +6,7 @@ public class RandomMachine extends Machine{
     private Random random;
 
     public RandomMachine(int totalMemory, int pageSize, long randomSeed) {
-        super(totalMemory, pageSize, -1);
+        super(totalMemory, pageSize);
         random = new Random(randomSeed);
     }
 
@@ -16,7 +16,12 @@ public class RandomMachine extends Machine{
     }
 
     @Override
-    public long getBaseMarking() {
-        return baseMarking;
+    public long getNewMark() {
+        return -1;
+    }
+
+    @Override
+    public long getUsedMark(long currentMark) {
+        return -1;
     }
 }

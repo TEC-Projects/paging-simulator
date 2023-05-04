@@ -13,9 +13,9 @@ import com.pagingsimulator.pagingsimulator.Main;
 
 import java.io.IOException;
 
-public class SceneManager {
+public class SceneManagerUtil {
 
-    public SceneManager() {
+    public SceneManagerUtil() {
     }
 
     public void loadScene(Stage stage, String screenRoute) throws IOException {
@@ -24,7 +24,7 @@ public class SceneManager {
         Parent root = loader.load();
         Main.mainMenuController = loader.getController();
         stage.getIcons().add(new Image(getClass().getResource("/com/pagingsimulator/pagingsimulator/img/isotype.png").toString()));
-        stage.setScene(new Scene(root, 900, 550));
+        stage.setScene(new Scene(root, 1024, 600));
         stage.show();
     }
 
@@ -33,7 +33,7 @@ public class SceneManager {
         Parent root = viewHandler.load();
         controller = viewHandler.getController();
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(new Scene(root, 900, 550));
+        window.setScene(new Scene(root, 1024, 600));
         window.show();
     }
 

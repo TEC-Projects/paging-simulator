@@ -3,7 +3,7 @@ package com.pagingsimulator.pagingsimulator;
 import com.pagingsimulator.pagingsimulator.Controller.Utils.OperationsFileManager;
 import com.pagingsimulator.pagingsimulator.UI.Controller.MainMenuController;
 import com.pagingsimulator.pagingsimulator.UI.Controller.SimulationController;
-import com.pagingsimulator.pagingsimulator.UI.Utils.SceneManager;
+import com.pagingsimulator.pagingsimulator.UI.Utils.SceneManagerUtil;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -13,7 +13,7 @@ public class Main extends Application {
 
     public static MainMenuController mainMenuController;
     public static SimulationController simulationController;
-    public static SceneManager sceneManager = new SceneManager();
+    public static SceneManagerUtil sceneManager = new SceneManagerUtil();
     public static OperationsFileManager operationsFileManager = new OperationsFileManager();
 
 
