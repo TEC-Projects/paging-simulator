@@ -6,9 +6,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefWidth="1052.0" style="-fx-background-color: fff;" stylesheets="@../Css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pagingsimulator.pagingsimulator.UI.Controller.UISimulationController">
+<VBox prefWidth="1200.0" style="-fx-background-color: fff;" stylesheets="@../Css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pagingsimulator.pagingsimulator.UI.Controller.UISimulationController">
    <children>
-      <HBox alignment="CENTER_LEFT">
+      <HBox alignment="CENTER_LEFT" spacing="25.0">
          <children>
             <VBox alignment="CENTER_LEFT">
                <children>
@@ -20,26 +20,26 @@
                   <Label fx:id="simulationSizeLabel" layoutX="10.0" layoutY="10.0" styleClass="h4" text="50 processes &amp; 5000 operations" />
                </children>
                <HBox.margin>
-                  <Insets right="375.0" />
+                  <Insets />
                </HBox.margin>
             </VBox>
-            <Button fx:id="pauseSimulationButton" mnemonicParsing="false" onAction="#pauseSimulationButtonEvent" text="PAUSE SIMULATION">
+            <Pane maxHeight="35.0" minWidth="200.0">
+               <HBox.margin>
+                  <Insets right="300.0" />
+               </HBox.margin>
                <styleClass>
-                  <String fx:value="btn-danger" />
+                  <String fx:value="alert" />
+                  <String fx:value="alert-danger" />
+               </styleClass>
+            </Pane>
+            <Button fx:id="generalSimulationButton" mnemonicParsing="false" onAction="#generalSimulationButtonEvent" text="START SIMULATION" textAlignment="CENTER">
+               <styleClass>
+                  <String fx:value="btn-success" />
                   <String fx:value="btn" />
                </styleClass>
             </Button>
          </children>
       </HBox>
-      <Button fx:id="testFillButton" mnemonicParsing="false" onAction="#testFillButtonButtonEvent" text="TEST FILL">
-         <styleClass>
-            <String fx:value="btn-primary" />
-            <String fx:value="btn" />
-         </styleClass>
-         <VBox.margin>
-            <Insets top="25.0" />
-         </VBox.margin>
-      </Button>
       <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="scroll-bar">
          <VBox.margin>
             <Insets top="25.0" />
