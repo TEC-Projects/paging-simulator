@@ -31,17 +31,21 @@ public class OperationsFileManager {
                 killedProcesses.add(pid.getPid());
             }else if (ptrs.isEmpty()){
                 int newSize = random.nextInt(1, 2000);
-                operations.add(new Operation("new", processes.get(random.nextInt(processes.size())).getPid() + "," +newSize));
-                ptrs.add(ptrCount++);
+                ProcessTemp processTemp = processes.get(random.nextInt(processes.size()));
+                operations.add(new Operation("new", processTemp.getPid() + "," + newSize));
+                ptrs.add(ptrCount);
+                processTemp.addPtr(ptrCount++);
             } else {
-                int NEW_PTR = 45;
-                int USE_PTR = 85;
-                int DELETE_PTR = 95;
+                int NEW_PTR = 50;
+                int USE_PTR = 88;
+                int DELETE_PTR = 97;
                 int selection = random.nextInt(0, 100);
                 if (selection <= NEW_PTR){
                     int newSize = random.nextInt(1, 2000);
-                    operations.add(new Operation("new", processes.get(random.nextInt(processes.size())).getPid() + "," + newSize));
-                    ptrs.add(ptrCount++);
+                    ProcessTemp processTemp = processes.get(random.nextInt(processes.size()));
+                    operations.add(new Operation("new", processTemp.getPid() + "," + newSize));
+                    ptrs.add(ptrCount);
+                    processTemp.addPtr(ptrCount++);
                 }else if (selection <= USE_PTR || processes.size() == 1){
                     operations.add(new Operation("use", ptrs.get(random.nextInt(ptrs.size()))));
                 }else if (selection <= DELETE_PTR){

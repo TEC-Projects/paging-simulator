@@ -14,6 +14,15 @@ public class SimulationRequest {
         simulationThroughOperationFile = true;
     };
 
+    public SimulationRequest(String pagingAlgorithm, Long randomSeed, Boolean simulationThroughOperationFile, File operationsFile, int numberOfProcesses, int numberOfOperations) {
+        this.pagingAlgorithm = pagingAlgorithm;
+        this.randomSeed = randomSeed;
+        this.simulationThroughOperationFile = simulationThroughOperationFile;
+        this.operationsFile = operationsFile;
+        this.numberOfProcesses = numberOfProcesses;
+        this.numberOfOperations = numberOfOperations;
+    }
+
     public String getPagingAlgorithm() {
         return pagingAlgorithm;
     }

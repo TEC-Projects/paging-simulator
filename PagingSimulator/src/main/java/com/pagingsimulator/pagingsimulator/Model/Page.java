@@ -99,4 +99,18 @@ public class Page {
         memoryAddress = -1;
         logicalAddress = -1;
     }
+
+    @Override
+    public String toString() {
+        return "Page{" +
+                "pageId=" + pageId +
+                ", PID=" + PID +
+                ", loaded=" + loaded +
+                ", logicalAddress=" + logicalAddress +
+                ", memoryAddress=" + memoryAddress +
+                ", diskAddress=" + diskAddress +
+                ", loadedAt=" + loadedAt +
+                ", mark=" + mark +
+                '}';
+    }
 }
