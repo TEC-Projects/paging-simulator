@@ -198,6 +198,7 @@ a.bg-danger:focused {
 .btn {
     -fx-font-weight: bold;
     -fx-text-alignment: center;
+    -fx-alignment: center;
     -fx-cursor: default;
     -fx-border-color: transparent;
     -fx-border-width: 1px;
@@ -264,6 +265,7 @@ a.bg-danger:focused {
 
 .btn-primary {
     -fx-text-fill: #fff;
+    -fx-text-alignment: center;
     -fx-fill: #fff;
     -fx-background-color: #212ecc;
     -fx-border-color: #212ecc; }
@@ -359,6 +361,7 @@ a.bg-danger:focused {
 
 .btn-success {
     -fx-text-fill: #fff;
+    -fx-text-alignment: center;
     -fx-fill: #fff;
     -fx-background-color: #5cb85c; }
 .btn-success:focused, .btn-success.focused {
@@ -486,6 +489,7 @@ a.bg-danger:focused {
 
 .btn-danger {
     -fx-text-fill: #fff;
+    -fx-text-alignment: center;
     -fx-fill: #fff;
     -fx-background-color: #d9534f;}
 .btn-danger:focused, .btn-danger.focused {
@@ -1014,8 +1018,7 @@ a.badge:hover, a.badge:focused {
     -fx-fill: #3c763d; }
 
 .alert-info {
-    -fx-background-color: linear-gradient(to bottom, #d9edf7 0px, #b9def0 100%);
-    -fx-border-color: #bce8f1;
+    -fx-background-color: #b9def0;
     -fx-text-fill: #31708f;
     -fx-fill: #31708f; }
 .alert-info * {

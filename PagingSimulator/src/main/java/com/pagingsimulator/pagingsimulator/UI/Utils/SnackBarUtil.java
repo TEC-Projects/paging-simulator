@@ -13,18 +13,27 @@ public class SnackBarUtil {
 
     public SnackBarUtil(){}
 
-    public void showSnackBar(String message, String type, StackPane snackBarPane, Label snackBarLabel){
-        if(Objects.equals(type, "warning")){
-            snackBarPane.getStyleClass().setAll("alert-warning", "alert");
-        }else{
-            snackBarPane.getStyleClass().setAll("alert-success", "alert");
+    public void showSnackBar(String message, String type, StackPane snackBarPane, Label snackBarLabel, boolean autoHide){
+
+        switch (type) {
+            case "warning" -> snackBarPane.getStyleClass().setAll("alert-warning", "alert");
+            case "success" -> snackBarPane.getStyleClass().setAll("alert-success", "alert");
+            case "danger" -> snackBarPane.getStyleClass().setAll("alert-danger", "alert");
+            case "info" -> snackBarPane.getStyleClass().setAll("alert-info", "alert");
         }
+
         snackBarPane.setVisible(true);
         snackBarLabel.setText(message);
-        Timeline timer = new Timeline(
-                new KeyFrame(Duration.seconds(2), (ActionEvent aEvent)  -> snackBarPane.setVisible(false))
-        );
-        timer.play();
+        if(autoHide){
+            Timeline timer = new Timeline(
+                    new KeyFrame(Duration.seconds(2), (ActionEvent aEvent)  -> hideSnackBar(snackBarPane))
+            );
+            timer.play();
+        }
+    }
+
+    public void hideSnackBar(StackPane snackBarPane){
+        snackBarPane.setVisible(false);
     }
 
 
