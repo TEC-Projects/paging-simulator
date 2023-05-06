@@ -18,7 +18,7 @@
                <Image url="@../img/logo.png" />
             </image>
          </ImageView>
-         <StackPane fx:id="snackBarPane" alignment="CENTER_LEFT" maxHeight="35.0" prefWidth="250.0" visible="false">
+         <StackPane fx:id="snackBarPane" alignment="CENTER_LEFT" maxHeight="25.0" prefWidth="250.0" visible="false">
             <children>
                <Label fx:id="snackBarMessage" text="Label" />
             </children>

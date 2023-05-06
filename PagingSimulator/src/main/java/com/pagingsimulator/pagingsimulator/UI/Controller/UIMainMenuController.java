@@ -89,7 +89,7 @@ public class UIMainMenuController extends ScreenController implements Initializa
             simulationRequest.setOperationsFile(fileUtil.loadSimulationFile());
             operationsFileNameTextField.setText(simulationRequest.getOperationsFile().getName());
         }catch (Exception e){
-            snackBarUtil.showSnackBar(e.getMessage(), "warning", snackBarPane, snackBarMessage);
+            snackBarUtil.showSnackBar(e.getMessage(), "warning", snackBarPane, snackBarMessage, true);
         }
     }
 
@@ -101,9 +101,9 @@ public class UIMainMenuController extends ScreenController implements Initializa
                     Integer.parseInt(numberOfProcessesComboBox.getValue()),
                     randomSeedTextField.getText()
             );
-            snackBarUtil.showSnackBar("Document generated successfully.", "success", snackBarPane, snackBarMessage);
+            snackBarUtil.showSnackBar("Document generated successfully.", "success", snackBarPane, snackBarMessage, true);
         }catch (Exception e){
-            snackBarUtil.showSnackBar(e.getMessage(), "warning", snackBarPane, snackBarMessage);
+            snackBarUtil.showSnackBar(e.getMessage(), "warning", snackBarPane, snackBarMessage, true);
         }
     }
 
@@ -131,9 +131,10 @@ public class UIMainMenuController extends ScreenController implements Initializa
 
 
         }catch (Exception e){
-            snackBarUtil.showSnackBar(e.getMessage(), "warning", snackBarPane, snackBarMessage);
+            snackBarUtil.showSnackBar(e.getMessage(), "warning", snackBarPane, snackBarMessage, true);
         }
 
+        //TODO: Remove these hardcoded parameters
         simulationRequest.setNumberOfProcesses(10);
         simulationRequest.setNumberOfOperations(5000);
         simulationRequest.setRandomSeed(1L);

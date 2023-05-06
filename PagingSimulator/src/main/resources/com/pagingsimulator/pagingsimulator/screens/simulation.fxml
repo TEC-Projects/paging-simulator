@@ -23,15 +23,18 @@
                   <Insets />
                </HBox.margin>
             </VBox>
-            <Pane maxHeight="35.0" minWidth="200.0">
+            <StackPane fx:id="snackBarPane" alignment="CENTER_LEFT" maxHeight="25.0" prefWidth="250.0" visible="false">
                <HBox.margin>
-                  <Insets right="300.0" />
+                  <Insets right="250.0" />
                </HBox.margin>
+               <children>
+                  <Label fx:id="snackBarMessage" text="Label" />
+               </children>
                <styleClass>
                   <String fx:value="alert" />
                   <String fx:value="alert-danger" />
                </styleClass>
-            </Pane>
+            </StackPane>
             <Button fx:id="generalSimulationButton" mnemonicParsing="false" onAction="#generalSimulationButtonEvent" text="START SIMULATION" textAlignment="CENTER">
                <styleClass>
                   <String fx:value="btn-success" />
@@ -80,11 +83,28 @@
                            </Label>
                            <AreaChart fx:id="optimalRAMChart" maxHeight="150.0" prefHeight="150.0">
                              <xAxis>
-                               <NumberAxis fx:id="optimalXAxis" />
+                               <NumberAxis fx:id="optimalRAMXAxis" />
                              </xAxis>
                              <yAxis>
-                               <NumberAxis side="LEFT" />
+                               <NumberAxis fx:id="optimalRAMYAxis" side="LEFT" />
                              </yAxis>
+                              <VBox.margin>
+                                 <Insets bottom="25.0" />
+                              </VBox.margin>
+                           </AreaChart>
+                           <Label layoutX="193.0" layoutY="91.0" text="Virtual RAM usage timeline">
+                              <styleClass>
+                                 <String fx:value="strong" />
+                                 <String fx:value="h5" />
+                              </styleClass>
+                           </Label>
+                           <AreaChart fx:id="optimalVirtualRAMChart" layoutX="10.0" layoutY="107.0" maxHeight="150.0" prefHeight="150.0">
+                              <xAxis>
+                                 <NumberAxis fx:id="optimalVirtualRAMXAxis" />
+                              </xAxis>
+                              <yAxis>
+                                 <NumberAxis fx:id="optimalVirtualRAMYAxis" side="LEFT" />
+                              </yAxis>
                               <VBox.margin>
                                  <Insets bottom="25.0" />
                               </VBox.margin>
@@ -286,10 +306,27 @@
                                  </styleClass></Label>
                               <AreaChart fx:id="otherRAMChart" maxHeight="150.0" prefHeight="150.0">
                                  <xAxis>
-                                    <NumberAxis fx:id="otherXAxis" side="BOTTOM" />
+                                    <NumberAxis fx:id="otherRAMXAxis" side="BOTTOM" />
                                  </xAxis>
                                  <yAxis>
-                                    <NumberAxis side="LEFT" />
+                                    <NumberAxis fx:id="otherRAMYAxis" side="LEFT" />
+                                 </yAxis>
+                                 <VBox.margin>
+                                    <Insets bottom="25.0" />
+                                 </VBox.margin>
+                              </AreaChart>
+                              <Label layoutX="193.0" layoutY="111.0" text="Virtual RAM usage timeline">
+                                 <styleClass>
+                                    <String fx:value="strong" />
+                                    <String fx:value="h5" />
+                                 </styleClass>
+                              </Label>
+                              <AreaChart fx:id="otherVirtualRAMChart" layoutX="10.0" layoutY="127.0" maxHeight="150.0" prefHeight="150.0">
+                                 <xAxis>
+                                    <NumberAxis fx:id="otherVirtualRAMXAxis" side="BOTTOM" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis fx:id="otherVirtualRAMYAxis" side="LEFT" />
                                  </yAxis>
                                  <VBox.margin>
                                     <Insets bottom="25.0" />

@@ -2,14 +2,18 @@ package com.pagingsimulator.pagingsimulator.UI.Controller;
 
 import com.pagingsimulator.pagingsimulator.Model.Page;
 import com.pagingsimulator.pagingsimulator.Model.PagingAlgorithmSimulationStatus;
+import com.pagingsimulator.pagingsimulator.UI.Model.SimulationUpdate;
 import com.pagingsimulator.pagingsimulator.UI.Utils.DummyDataUtil;
 import com.pagingsimulator.pagingsimulator.UI.Utils.SimulationUtil;
+import com.pagingsimulator.pagingsimulator.UI.Utils.SnackBarUtil;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 
@@ -22,13 +26,11 @@ public class UISimulationController extends ScreenController implements Initiali
 
     private SimulationUtil simulationUtil = new SimulationUtil();
     private DummyDataUtil dummyDataUtil = new DummyDataUtil();
+    private final SnackBarUtil snackBarUtil = new SnackBarUtil();
     private ArrayList<String> processColors = new ArrayList<>();
     private int numberOfProcesses;
-
     private boolean isPaused;
     private boolean hasStarted;
-
-
     @FXML
     private TableView<Page>
             optimalMMUTable,
@@ -36,11 +38,17 @@ public class UISimulationController extends ScreenController implements Initiali
     @FXML
     private AreaChart<NumberAxis, NumberAxis>
             optimalRAMChart,
-            otherRAMChart;
+            otherRAMChart,
+            optimalVirtualRAMChart,
+            otherVirtualRAMChart;
     @FXML
     private HBox
             otherRAMDistribution,
             optimalRAMDistribution;
+
+    @FXML
+    private StackPane snackBarPane;
+
     @FXML
     private Label
             pagingAlgorithmLabel,
@@ -68,58 +76,83 @@ public class UISimulationController extends ScreenController implements Initiali
             optimalVirtualRAMUsagePercentage,
             optimalFragmentation,
             optimalFragmentationPercentage,
-            optimalLoadedPages;
+            optimalLoadedPages,
+            snackBarMessage;
     @FXML
     private NumberAxis
-            otherXAxis,
-            optimalXAxis;
+            optimalRAMXAxis,
+            optimalRAMYAxis,
+            optimalVirtualRAMXAxis,
+            optimalVirtualRAMYAxis,
+            otherRAMXAxis,
+            otherRAMYAxis,
+            otherVirtualRAMXAxis,
+            otherVirtualRAMYAxis;
     @FXML
     private Button generalSimulationButton;
 
 
     @FXML
     private void generalSimulationButtonEvent(){
-        if(isPaused){
-            isPaused = false;
-            generalSimulationButton.getStyleClass().setAll("btn-danger", "btn");
-            generalSimulationButton.setText("PAUSE SIMULATION");
+        if(!hasStarted){
+            handleStartSimulation();
         }else{
-            isPaused = true;
-            generalSimulationButton.getStyleClass().setAll("btn-primary", "btn");
-            generalSimulationButton.setText("RESUME SIMULATION");
+            if(isPaused){
+                handleResumeSimulation();
+            }else{
+                handlePauseSimulation();
+            }
         }
 
-        updateOtherSimulationData(dummyDataUtil.getDummyOtherSimulationStatus());
-        updateOptimalSimulationData(dummyDataUtil.getDummyOptimalSimulationStatus());
+        updateOptimalSimulationData(dummyDataUtil.getDummyOptimalSimulationUpdate());
+        updateOtherSimulationData(dummyDataUtil.getDummyOtherSimulationUpdate());
 
     }
 
     public void handleSimulationCompleted(){
-
+        snackBarUtil.showSnackBar("Simulation completed", "success", snackBarPane, snackBarMessage, false);
+        generalSimulationButton.setVisible(false);
     }
 
     private void handlePauseSimulation(){
-
+        //TODO: Call simulation pause function
+        snackBarUtil.showSnackBar("Simulation paused", "info", snackBarPane, snackBarMessage, false);
+        isPaused = true;
+        generalSimulationButton.getStyleClass().setAll("btn", "btn-primary");
+        generalSimulationButton.setText("RESUME SIMULATION");
     }
 
     private void handleStartSimulation(){
-
+        //TODO: Call simulation start function
+        hasStarted = true;
+        generalSimulationButton.getStyleClass().setAll("btn", "btn-danger");
+        generalSimulationButton.setText("PAUSE SIMULATION");
     }
 
     private void handleResumeSimulation(){
-
+        //TODO: Call simulation resume function
+        snackBarUtil.hideSnackBar(snackBarPane);
+        isPaused = false;
+        generalSimulationButton.getStyleClass().setAll("btn", "btn-danger");
+        generalSimulationButton.setText("PAUSE SIMULATION");
     }
 
 
-    private void updateOtherSimulationData(PagingAlgorithmSimulationStatus simulationStatus){
+    private void updateOtherSimulationData(SimulationUpdate simulationUpdate){
 
     }
 
-    private void updateOptimalSimulationData(PagingAlgorithmSimulationStatus simulationStatus){
-//        optimalRAMUsageKB.setText(String.valueOf(simulationStatus.getRamUsage()));
-//        optimalFragmentation.setText(String.valueOf(simulationStatus.getInternalFragmentationVolume()));
-//        optimalVirtualRAMUsageKB.setText(String.valueOf(simulationStatus.getVRamUsage()));
-//        optimalThrashingLevelSeconds.setText(String.valueOf(simulationStatus.getThrashingTime()));
+    private void updateOptimalSimulationData(SimulationUpdate simulationUpdate){
+//        optimalRAMUsageKB.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getRamUsage()));
+//        optimalFragmentation.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getInternalFragmentationVolume()));
+//        optimalVirtualRAMUsageKB.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getVRamUsage()));
+//        optimalThrashingLevelSeconds.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getThrashingTime()));
+
+        optimalRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getRAMUsageTimeline()));
+        optimalVirtualRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getVirtualRAMUsageTimeline()));
+
+        optimalRAMDistribution.getChildren().addAll(simulationUtil.RAMUsageMappingFormatter(simulationUpdate.getRAMUsageMapping()));
+
     }
 
     private void setMMUTableColumns(TableView<Page> table){
@@ -169,56 +202,18 @@ public class UISimulationController extends ScreenController implements Initiali
 
     private void initializeRAMUsageCharts(){
 
-        optimalXAxis.setAutoRanging(false);
-        optimalXAxis.setLowerBound(0);
-        optimalXAxis.setUpperBound(60);
-        optimalXAxis.setTickUnit(5);
+        configurePlotXAxis(optimalRAMXAxis);
+        configurePlotXAxis(optimalVirtualRAMXAxis);
+        configurePlotXAxis(otherRAMXAxis);
+        configurePlotXAxis(otherVirtualRAMXAxis);
 
-        otherXAxis.setAutoRanging(false);
-        otherXAxis.setLowerBound(0);
-        otherXAxis.setUpperBound(60);
-        otherXAxis.setTickUnit(5);
+    }
 
-
-        ArrayList<Integer> procedures = new ArrayList<Integer>();
-
-        Random rand = new Random();
-
-        for (int i = 1; i < numberOfProcesses + 1; i++) {
-            procedures.add(rand.nextInt(50) - 25);
-        }
-
-        for (int i = 1; i < procedures.size(); i++) {
-            Rectangle tempPane = new Rectangle(3, 20);
-            if(procedures.get(i) > 0){
-                tempPane.setStyle("-fx-fill:" + processColors.get(procedures.get(i)-1) + "; -fx-opacity: 0.8;");
-            }else{
-                tempPane.setStyle("-fx-fill: #e1e1e1;");
-            }
-            optimalRAMDistribution.getChildren().add(tempPane);
-        }
-
-        for (int i = 1; i < 101; i++) {
-            Rectangle tempPane = new Rectangle(3, 20);
-            if(i % 5 == 0){
-                tempPane.getStyleClass().setAll("test");
-            }
-            otherRAMDistribution.getChildren().add(tempPane);
-        }
-
-
-
-//        XYChart.Series seriesApril= new XYChart.Series();
-//        seriesApril.setName("April");
-//        seriesApril.getData().add(new XYChart.Data(1, 102));
-//        seriesApril.getData().add(new XYChart.Data(2, 340));
-//        seriesApril.getData().add(new XYChart.Data(3, 405));
-//        seriesApril.getData().add(new XYChart.Data(4, 408));
-//        seriesApril.getData().add(new XYChart.Data(5, 415));
-//        seriesApril.getData().add(new XYChart.Data(6, 400));
-//        seriesApril.getData().add(new XYChart.Data(7, 460));
-//
-//        optimalRAMChart.getData().addAll(seriesApril);
+    private void configurePlotXAxis(NumberAxis axis){
+        axis.setAutoRanging(false);
+        axis.setLowerBound(0);
+        axis.setUpperBound(60);
+        axis.setTickUnit(5);
     }
 
     public void initializeSimulationDetails(String pagingAlgorithm, int numberOfOperations, int numberOfProcesses){
@@ -230,7 +225,7 @@ public class UISimulationController extends ScreenController implements Initiali
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        isPaused = true;
+        isPaused = false;
         hasStarted = false;
         processColors = simulationUtil.getProcessesColors(numberOfProcesses);
         initializeRAMUsageCharts();

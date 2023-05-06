@@ -17,7 +17,7 @@ public class SimulationController {
     }
     public void initializeSimulation(SimulationRequest simulationRequest) throws IOException {
 
-//        Main.UISimulationController.initializeSimulationDetails(simulationRequest.getPagingAlgorithm(), simulationRequest.getNumberOfOperations(), simulationRequest.getNumberOfProcesses());
+        Main.UISimulationController.initializeSimulationDetails(simulationRequest.getPagingAlgorithm(), simulationRequest.getNumberOfOperations(), simulationRequest.getNumberOfProcesses());
         ArrayList<Operation> operations;
         if(simulationRequest.getOperationsFile() == null){
             operations = operationsFileManager.generateOperations(simulationRequest.getRandomSeed(), simulationRequest.getNumberOfOperations(), simulationRequest.getNumberOfProcesses());
