@@ -1,5 +1,6 @@
 package com.pagingsimulator.pagingsimulator.Controller;
 
+import com.pagingsimulator.pagingsimulator.Controller.Utils.DummyDataUtil;
 import com.pagingsimulator.pagingsimulator.Controller.Utils.OperationsFileManager;
 import com.pagingsimulator.pagingsimulator.Main;
 import com.pagingsimulator.pagingsimulator.Model.Operation;
@@ -12,12 +13,14 @@ import java.util.ArrayList;
 public class SimulationController {
     private Simulation simulation;
     private OperationsFileManager operationsFileManager;
+    private DummyDataUtil dummyDataUtil;
+
     public SimulationController(){
         operationsFileManager = new OperationsFileManager();
+        dummyDataUtil = new DummyDataUtil();
     }
     public void initializeSimulation(SimulationRequest simulationRequest) throws IOException {
 
-        Main.UISimulationController.initializeSimulationDetails(simulationRequest.getPagingAlgorithm(), simulationRequest.getNumberOfOperations(), simulationRequest.getNumberOfProcesses());
         ArrayList<Operation> operations;
         if(simulationRequest.getOperationsFile() == null){
             operations = operationsFileManager.generateOperations(simulationRequest.getRandomSeed(), simulationRequest.getNumberOfOperations(), simulationRequest.getNumberOfProcesses());
@@ -31,6 +34,14 @@ public class SimulationController {
                 simulationRequest.getNumberOfProcesses(),
                 operations,
                 simulationRequest.getOperationsFile() == null);
+
+        //TODO: Extract the list of PIDs to initialize GUI. Right now filled by dummy data.
+        Main.UISimulationController.initializeSimulationDetails(
+                simulationRequest.getPagingAlgorithm(),
+                simulationRequest.getNumberOfOperations(),
+                simulationRequest.getNumberOfProcesses(),
+                dummyDataUtil.getPIDs());
+
     }
 
     public void startSimulation(){

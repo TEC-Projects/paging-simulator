@@ -19,6 +19,7 @@ import javafx.scene.text.TextAlignment;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -27,7 +28,7 @@ public class UISimulationController extends ScreenController implements Initiali
     private SimulationUtil simulationUtil = new SimulationUtil();
     private DummyDataUtil dummyDataUtil = new DummyDataUtil();
     private final SnackBarUtil snackBarUtil = new SnackBarUtil();
-    private ArrayList<String> processColors = new ArrayList<>();
+    private HashMap<Integer, String> processColors = new HashMap<>();
     private int numberOfProcesses;
     private boolean isPaused;
     private boolean hasStarted;
@@ -151,7 +152,7 @@ public class UISimulationController extends ScreenController implements Initiali
         optimalRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getRAMUsageTimeline()));
         optimalVirtualRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getVirtualRAMUsageTimeline()));
 
-        optimalRAMDistribution.getChildren().addAll(simulationUtil.RAMUsageMappingFormatter(simulationUpdate.getRAMUsageMapping()));
+        optimalRAMDistribution.getChildren().addAll(simulationUtil.RAMUsageMappingFormatter(simulationUpdate.getRAMUsageMapping(), processColors));
 
     }
 
@@ -216,8 +217,9 @@ public class UISimulationController extends ScreenController implements Initiali
         axis.setTickUnit(5);
     }
 
-    public void initializeSimulationDetails(String pagingAlgorithm, int numberOfOperations, int numberOfProcesses){
+    public void initializeSimulationDetails(String pagingAlgorithm, int numberOfOperations, int numberOfProcesses, ArrayList<Integer> PIDs){
         this.numberOfProcesses = numberOfProcesses;
+        processColors = simulationUtil.generateProcessesColors(PIDs);
         pagingAlgorithmLabel.setText(pagingAlgorithm);
         simulationSizeLabel.setText(simulationUtil.simulationSizeFormatter(numberOfOperations, numberOfProcesses));
     }
@@ -227,7 +229,6 @@ public class UISimulationController extends ScreenController implements Initiali
     public void initialize(URL url, ResourceBundle resourceBundle) {
         isPaused = false;
         hasStarted = false;
-        processColors = simulationUtil.getProcessesColors(numberOfProcesses);
         initializeRAMUsageCharts();
         initializeMMUTables();
     }
