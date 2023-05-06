@@ -107,6 +107,10 @@
 .text-justify {
     -fx-text-alignment: justify; }
 
+.text-default {
+    -fx-text-fill: #000;
+    -fx-fill: #000; }
+
 .text-muted {
     -fx-text-fill: #777777;
     -fx-fill: #777777; }

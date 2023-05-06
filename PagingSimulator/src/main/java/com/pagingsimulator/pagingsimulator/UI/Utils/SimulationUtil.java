@@ -1,9 +1,11 @@
 package com.pagingsimulator.pagingsimulator.UI.Utils;
 
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -44,7 +46,7 @@ public class SimulationUtil {
 
         for (int i = 1; i < RAMUsage.size(); i++) {
             Rectangle memorySector = new Rectangle(3, 20);
-            if(RAMUsage.get(i) > 0){
+            if(RAMUsage.get(i) != -1){
                 memorySector.setStyle("-fx-fill:" + processColors.get(RAMUsage.get(i)) + "; -fx-opacity: 0.8;");
             }else{
                 memorySector.setStyle("-fx-fill: #e1e1e1;");
@@ -55,6 +57,24 @@ public class SimulationUtil {
         }
 
         return RAMMapping;
+    }
+
+    public String percentageStringFormatter(double number){
+        return new DecimalFormat("#.##").format(number * 100) + "%";
+    }
+
+    public void thrashingColorFormatter(int thrashingLevel, int simulationElapsedTime, Label thrashingTime, Label thrashingPercentage, Label thrashingTimeTitle, Label thrashingPercentageTitle){
+        if((double) thrashingLevel / simulationElapsedTime > 0.49){
+            thrashingTime.getStyleClass().addAll("text-danger");
+            thrashingTimeTitle.getStyleClass().addAll("text-danger");
+            thrashingPercentage.getStyleClass().addAll("text-danger");
+            thrashingPercentageTitle.getStyleClass().addAll("text-danger");
+        }else{
+            thrashingTime.getStyleClass().addAll("text-default");
+            thrashingTimeTitle.getStyleClass().addAll("text-default");
+            thrashingPercentage.getStyleClass().addAll("text-default");
+            thrashingPercentageTitle.getStyleClass().addAll("text-default");
+        }
     }
 
 }

@@ -115,7 +115,7 @@
                                  <String fx:value="h5" />
                               </styleClass>
                            </Label>
-                           <TableView fx:id="optimalMMUTable" prefHeight="200.0" prefWidth="200.0">
+                           <TableView fx:id="optimalMMUTable" minHeight="250.0" prefHeight="200.0" prefWidth="200.0">
                               <VBox.margin>
                                  <Insets bottom="25.0" top="15.0" />
                               </VBox.margin>
@@ -140,7 +140,7 @@
                                              <String fx:value="h5" />
                                           </styleClass>
                                        </Label>
-                                       <Label fx:id="optimalSimulationTime" text="Label" />
+                                       <Label fx:id="optimalSimulationTime" text="0 s" />
                                     </children>
                                  </VBox>
                                  <VBox>
@@ -151,7 +151,7 @@
                                              <String fx:value="h5" />
                                           </styleClass>
                                        </Label>
-                                       <Label fx:id="optimalRAMUsageKB" text="Label" />
+                                       <Label fx:id="optimalRAMUsageKB" text="0 KB" />
                                     </children>
                                  </VBox>
                                  <VBox>
@@ -162,7 +162,7 @@
                                              <String fx:value="h5" />
                                           </styleClass>
                                        </Label>
-                                       <Label fx:id="optimalVirtualRAMUsageKB" text="Label" />
+                                       <Label fx:id="optimalVirtualRAMUsageKB" text="0%" />
                                     </children>
                                  </VBox>
                                  <VBox layoutX="10.0" layoutY="178.0">
@@ -173,18 +173,18 @@
                                              <String fx:value="h5" />
                                           </styleClass>
                                        </Label>
-                                       <Label fx:id="optimalLoadedPages" text="Label" />
+                                       <Label fx:id="optimalLoadedPages" text="0" />
                                     </children>
                                  </VBox>
                                  <VBox layoutX="10.0" layoutY="234.0">
                                     <children>
-                                       <Label text="Thrashing level (s)">
+                                       <Label fx:id="optimalThrashingLevelSecondsTitle" text="Thrashing level (s)">
                                           <styleClass>
                                              <String fx:value="strong" />
                                              <String fx:value="h5" />
                                           </styleClass>
                                        </Label>
-                                       <Label fx:id="optimalThrashingLevelSeconds" text="Label" />
+                                       <Label fx:id="optimalThrashingLevelSeconds" text="0 s" />
                                     </children>
                                  </VBox>
                                  <VBox layoutX="10.0" layoutY="234.0">
@@ -195,7 +195,7 @@
                                              <String fx:value="h5" />
                                           </styleClass>
                                        </Label>
-                                       <Label fx:id="optimalFragmentation" text="Label" />
+                                       <Label fx:id="optimalFragmentation" text="0 KB" />
                                     </children>
                                  </VBox>
                               </children>
@@ -213,7 +213,7 @@
                                              <String fx:value="h5" />
                                           </styleClass>
                                        </Label>
-                                       <Label fx:id="optimalSimulatedProcesses" text="Label" />
+                                       <Label fx:id="optimalSimulatedProcesses" text="0" />
                                     </children>
                                  </VBox>
                                  <VBox>
@@ -224,7 +224,7 @@
                                              <String fx:value="h5" />
                                           </styleClass>
                                        </Label>
-                                       <Label fx:id="optimalRAMUsagePercentage" text="Label" />
+                                       <Label fx:id="optimalRAMUsagePercentage" text="0%" />
                                     </children>
                                  </VBox>
                                  <VBox>
@@ -235,7 +235,7 @@
                                              <String fx:value="h5" />
                                           </styleClass>
                                        </Label>
-                                       <Label fx:id="optimalVirtualRAMUsagePercentage" text="Label" />
+                                       <Label fx:id="optimalVirtualRAMUsagePercentage" text="0%" />
                                     </children>
                                  </VBox>
                                  <VBox>
@@ -246,18 +246,18 @@
                                              <String fx:value="h5" />
                                           </styleClass>
                                        </Label>
-                                       <Label fx:id="optimalUnloadedPages" text="Label" />
+                                       <Label fx:id="optimalUnloadedPages" text="0" />
                                     </children>
                                  </VBox>
                                  <VBox layoutX="10.0" layoutY="206.0">
                                     <children>
-                                       <Label text="Thrashing (%)">
+                                       <Label fx:id="optimalThrashingLevelPercentageTitle" text="Thrashing level (%)">
                                           <styleClass>
                                              <String fx:value="strong" />
                                              <String fx:value="h5" />
                                           </styleClass>
                                        </Label>
-                                       <Label fx:id="optimalThrashingPercentage" text="Label" />
+                                       <Label fx:id="optimalThrashingLevelPercentage" text="0%" />
                                     </children>
                                  </VBox>
                                  <VBox layoutX="10.0" layoutY="234.0">
@@ -268,7 +268,7 @@
                                              <String fx:value="h5" />
                                           </styleClass>
                                        </Label>
-                                       <Label fx:id="optimalFragmentationPercentage" text="Label" />
+                                       <Label fx:id="optimalFragmentationPercentage" text="0%" />
                                     </children>
                                  </VBox>
                               </children>
@@ -360,7 +360,7 @@
                                                 <String fx:value="h5" />
                                              </styleClass>
                                           </Label>
-                                          <Label fx:id="otherSimulationTime" text="Label" />
+                                          <Label fx:id="otherSimulationTime" text="0 s" />
                                        </children>
                                     </VBox>
                                     <VBox>
@@ -371,7 +371,7 @@
                                                 <String fx:value="h5" />
                                              </styleClass>
                                           </Label>
-                                          <Label fx:id="otherRAMUsageKB" text="Label" />
+                                          <Label fx:id="otherRAMUsageKB" text="0 KB" />
                                        </children>
                                     </VBox>
                                     <VBox>
@@ -382,7 +382,7 @@
                                                 <String fx:value="h5" />
                                              </styleClass>
                                           </Label>
-                                          <Label fx:id="otherVirtualRAMUsageKB" text="Label" />
+                                          <Label fx:id="otherVirtualRAMUsageKB" text="0 KB" />
                                        </children>
                                     </VBox>
                                     <VBox layoutX="10.0" layoutY="178.0">
@@ -393,18 +393,18 @@
                                                 <String fx:value="h5" />
                                              </styleClass>
                                           </Label>
-                                          <Label fx:id="otherLoadedPages" text="Label" />
+                                          <Label fx:id="otherLoadedPages" text="0" />
                                        </children>
                                     </VBox>
                                     <VBox layoutX="10.0" layoutY="234.0">
                                        <children>
-                                          <Label text="Thrashing level (s)">
+                                          <Label fx:id="otherThrashingLevelSecondsTitle" text="Thrashing level (s)">
                                              <styleClass>
                                                 <String fx:value="strong" />
                                                 <String fx:value="h5" />
                                              </styleClass>
                                           </Label>
-                                          <Label fx:id="otherThrashingLevelSeconds" text="Label" />
+                                          <Label fx:id="otherThrashingLevelSeconds" text="0 s" />
                                        </children>
                                     </VBox>
                                     <VBox layoutX="10.0" layoutY="234.0">
@@ -415,7 +415,7 @@
                                                 <String fx:value="h5" />
                                              </styleClass>
                                           </Label>
-                                          <Label fx:id="otherFragmentation" text="Label" />
+                                          <Label fx:id="otherFragmentation" text="0 KB" />
                                        </children>
                                     </VBox>
                                  </children>
@@ -433,7 +433,7 @@
                                                 <String fx:value="h5" />
                                              </styleClass>
                                           </Label>
-                                          <Label fx:id="otherSimulatedProcesses" text="Label" />
+                                          <Label fx:id="otherSimulatedProcesses" text="0" />
                                        </children>
                                     </VBox>
                                     <VBox>
@@ -444,7 +444,7 @@
                                                 <String fx:value="h5" />
                                              </styleClass>
                                           </Label>
-                                          <Label fx:id="otherRAMUsagePercentage" text="Label" />
+                                          <Label fx:id="otherRAMUsagePercentage" text="0%" />
                                        </children>
                                     </VBox>
                                     <VBox>
@@ -455,7 +455,7 @@
                                                 <String fx:value="h5" />
                                              </styleClass>
                                           </Label>
-                                          <Label fx:id="otherVirtualRAMUsagePercentage" text="Label" />
+                                          <Label fx:id="otherVirtualRAMUsagePercentage" text="0%" />
                                        </children>
                                     </VBox>
                                     <VBox>
@@ -466,18 +466,18 @@
                                                 <String fx:value="h5" />
                                              </styleClass>
                                           </Label>
-                                          <Label fx:id="otherUnloadedPages" text="Label" />
+                                          <Label fx:id="otherUnloadedPages" text="0" />
                                        </children>
                                     </VBox>
                                     <VBox layoutX="10.0" layoutY="206.0">
                                        <children>
-                                          <Label text="Thrashing (%)">
+                                          <Label fx:id="otherThrashingLevelPercentageTitle" text="Thrashing level (%)">
                                              <styleClass>
                                                 <String fx:value="strong" />
                                                 <String fx:value="h5" />
                                              </styleClass>
                                           </Label>
-                                          <Label fx:id="otherThrashingPercentage" text="Label" />
+                                          <Label fx:id="otherThrashingLevelPercentage" text="0%" />
                                        </children>
                                     </VBox>
                                     <VBox layoutX="10.0" layoutY="234.0">
@@ -488,7 +488,7 @@
                                                 <String fx:value="h5" />
                                              </styleClass>
                                           </Label>
-                                          <Label fx:id="otherFragmentationPercentage" text="Label" />
+                                          <Label fx:id="otherFragmentationPercentage" text="0%" />
                                        </children>
                                     </VBox>
                                  </children>

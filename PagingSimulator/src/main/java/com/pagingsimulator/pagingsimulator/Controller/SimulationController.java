@@ -23,9 +23,10 @@ public class SimulationController {
 
         ArrayList<Operation> operations;
         if(simulationRequest.isSimulationThroughOperationFile()){
-            operations = operationsFileManager.generateOperations(simulationRequest.getRandomSeed(), simulationRequest.getNumberOfOperations(), simulationRequest.getNumberOfProcesses());
-        }else{
             operations = operationsFileManager.retrieveOperationsFromFile(simulationRequest.getOperationsFile());
+        }else{
+            operations = operationsFileManager.generateOperations(simulationRequest.getRandomSeed(), simulationRequest.getNumberOfOperations(), simulationRequest.getNumberOfProcesses());
+
         }
         simulation = new Simulation(
                 simulationRequest.getPagingAlgorithm(),
@@ -55,7 +56,7 @@ public class SimulationController {
         }).start();
     }
 
-    public void pauseSimulation(){
+    public void pauseResumeSimulation(){
         simulation.setPaused(!simulation.isPaused());
     }
 }

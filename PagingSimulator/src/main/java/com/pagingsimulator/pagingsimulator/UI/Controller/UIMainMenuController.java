@@ -141,6 +141,7 @@ public class UIMainMenuController extends ScreenController implements Initializa
         }
 
         //TODO: Remove these hardcoded parameters
+        simulationRequest.setSimulationThroughOperationFile(false);
         simulationRequest.setNumberOfProcesses(10);
         simulationRequest.setNumberOfOperations(5000);
         simulationRequest.setRandomSeed(1L);

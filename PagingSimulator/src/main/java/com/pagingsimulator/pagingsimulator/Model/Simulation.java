@@ -103,6 +103,9 @@ public class Simulation {
                 default -> {
                 }
             }
+
+            //TODO: Add simulated processes count to the status update. Attribute already included in model.
+
             updateOtherAlgorithmStatus(
                     otherMachine.getPages().values(),
                     otherMachine.getTime(),

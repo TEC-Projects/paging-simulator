@@ -50,8 +50,9 @@ public class DummyDataUtil {
         }
 
         PagingAlgorithmSimulationStatus simulationStatus = new PagingAlgorithmSimulationStatus(dummySimulationPages);
-        simulationStatus.setSimulationElapsedTime(rand.nextInt(500));
-        simulationStatus.setThrashingTime(rand.nextInt(200));
+        simulationStatus.setSimulationElapsedTime(rand.nextInt(400,500));
+        simulationStatus.setSimulatedProcesses(rand.nextInt(150));
+        simulationStatus.setThrashingTime(rand.nextInt(300));
         simulationStatus.setRamUsage(rand.nextInt(500));
         simulationStatus.setVRamUsage(rand.nextInt(1000));
         simulationStatus.setInternalFragmentationVolume(rand.nextInt(300));
@@ -64,7 +65,7 @@ public class DummyDataUtil {
             VirtualRAMTimeline.add(new Pair<>(i, i+1));
         }
 
-        ArrayList<Integer> RAMMapping = new ArrayList<Integer>(Collections.nCopies(100, 0));
+        ArrayList<Integer> RAMMapping = new ArrayList<Integer>(Collections.nCopies(100, -1));
 
         RAMMapping.set(10,5);
         RAMMapping.set(15,5);

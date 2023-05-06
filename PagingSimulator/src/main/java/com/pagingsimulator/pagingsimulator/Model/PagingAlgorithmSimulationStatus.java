@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 public class PagingAlgorithmSimulationStatus {
     private Collection<Page> pages;
+    private int simulatedProcesses;
     private int simulationElapsedTime;
     private int thrashingTime;
     private int ramUsage;
@@ -13,6 +14,7 @@ public class PagingAlgorithmSimulationStatus {
 
     public PagingAlgorithmSimulationStatus(Collection<Page> pages) {
         this.pages = pages;
+        this.simulatedProcesses = 0;
         this.simulationElapsedTime = 0;
         this.thrashingTime = 0;
         this.ramUsage = 0;
@@ -22,6 +24,7 @@ public class PagingAlgorithmSimulationStatus {
 
     public PagingAlgorithmSimulationStatus() {
         this.pages = null;
+        this.simulatedProcesses = 0;
         this.simulationElapsedTime = 0;
         this.thrashingTime = 0;
         this.ramUsage = 0;
@@ -77,10 +80,19 @@ public class PagingAlgorithmSimulationStatus {
         this.internalFragmentationVolume = internalFragmentationVolume;
     }
 
+    public int getSimulatedProcesses() {
+        return simulatedProcesses;
+    }
+
+    public void setSimulatedProcesses(int simulatedProcesses) {
+        this.simulatedProcesses = simulatedProcesses;
+    }
+
     @Override
     public String toString() {
         return "PagingAlgorithmSimulationStatus{" +
                 "pages=" + pages +
+                ", simulatedProcesses=" + simulatedProcesses +
                 ", simulationElapsedTime=" + simulationElapsedTime +
                 ", thrashingTime=" + thrashingTime +
                 ", ramUsage=" + ramUsage +
