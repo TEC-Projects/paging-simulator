@@ -107,23 +107,26 @@ public class Simulation {
                     otherMachine.getPages().values(),
                     otherMachine.getTime(),
                     otherMachine.getTrashing(),
-                    otherMachine.getUsedRam(),
+                    otherMachine.getPages().size() - otherMachine.getVirtualMemory().size(),
                     otherMachine.getVirtualMemory().size(),
-                    100-otherMachine.getUsedRam()
+                    otherMachine.getRealMemory().size()-otherMachine.getPages().size() - otherMachine.getVirtualMemory().size()
             );
-                System.out.println("Other " + otherAlgorithmStatus);
+            System.out.println("Other " + otherAlgorithmStatus);
 
             updateOptimalAlgorithmStatus(
                     OPTMachine.getPages().values(),
                     OPTMachine.getTime(),
                     OPTMachine.getTrashing(),
-                    OPTMachine.getUsedRam(),
+                    OPTMachine.getPages().size() - OPTMachine.getVirtualMemory().size(),
                     OPTMachine.getVirtualMemory().size(),
-                    100-OPTMachine.getUsedRam()
+                    OPTMachine.getRealMemory().size()-OPTMachine.getPages().size() - OPTMachine.getVirtualMemory().size()
             );
+
+
 
             System.out.println("OPT " + optimalAlgorithmStatus);
 
+            Thread.sleep(1000);
         }
     }
 

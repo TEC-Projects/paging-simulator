@@ -106,10 +106,7 @@ public class Page {
                 "pageId=" + pageId +
                 ", PID=" + PID +
                 ", loaded=" + loaded +
-                ", logicalAddress=" + logicalAddress +
-                ", memoryAddress=" + memoryAddress +
                 ", diskAddress=" + diskAddress +
-                ", loadedAt=" + loadedAt +
                 ", mark=" + mark +
                 '}';
     }

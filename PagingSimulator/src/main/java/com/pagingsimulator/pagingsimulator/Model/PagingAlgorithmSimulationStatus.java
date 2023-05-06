@@ -79,13 +79,13 @@ public class PagingAlgorithmSimulationStatus {
 
     @Override
     public String toString() {
-        return "PagingAlgorithmSimulationStatus{" +
+        return "PagingAlgorithmSimulationStatus{\n" +
                 "pages=" + pages +
-                ", simulationElapsedTime=" + simulationElapsedTime +
-                ", thrashingTime=" + thrashingTime +
-                ", ramUsage=" + ramUsage +
-                ", vRamUsage=" + vRamUsage +
-                ", internalFragmentationVolume=" + internalFragmentationVolume +
-                '}';
+                ",\n simulationElapsedTime=" + simulationElapsedTime +
+                ",\n thrashingTime=" + thrashingTime +
+                ",\n ramUsage=" + ramUsage +
+                ",\n vRamUsage=" + vRamUsage +
+                ",\n internalFragmentationVolume=" + internalFragmentationVolume +
+                "}\n\n";
     }
 }
