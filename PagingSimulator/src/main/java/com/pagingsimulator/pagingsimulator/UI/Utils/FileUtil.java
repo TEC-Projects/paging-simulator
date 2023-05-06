@@ -19,19 +19,24 @@ public class FileUtil {
         validatorUtil = new ValidatorUtil();
     }
 
-    public File loadSimulationFile(){
-        fileChooser.setTitle("Load simulation file");
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
-        return fileChooser.showOpenDialog(null);
+    public File loadSimulationFile() throws Exception{
+        try{
+            fileChooser.setTitle("Load simulation file");
+            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
+            return fileChooser.showOpenDialog(null);
+        }catch (Exception e){
+            throw new Exception("Error loading simulation file");
+        }
+
     }
 
     public void generateSimulationFile(int numberOfOperations, int numberOfProcesses, String randomSeed) throws Exception {
 
         fileChooser.setTitle("Save simulation file");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
+        validatorUtil.randomSeedValidator(randomSeed);
 
         try{
-            validatorUtil.randomSeedValidator(randomSeed);
             FileWriter simulationFileWriter = new FileWriter(fileChooser.showSaveDialog(null).getAbsolutePath());
             ArrayList<Operation> simulationOperations = Main.operationsFileManager.generateOperations(
                     Long.parseLong(randomSeed),

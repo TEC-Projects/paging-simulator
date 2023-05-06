@@ -144,10 +144,10 @@ public class UISimulationController extends ScreenController implements Initiali
     }
 
     private void updateOptimalSimulationData(SimulationUpdate simulationUpdate){
-//        optimalRAMUsageKB.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getRamUsage()));
-//        optimalFragmentation.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getInternalFragmentationVolume()));
-//        optimalVirtualRAMUsageKB.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getVRamUsage()));
-//        optimalThrashingLevelSeconds.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getThrashingTime()));
+        optimalRAMUsageKB.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getRamUsage()));
+        optimalFragmentation.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getInternalFragmentationVolume()));
+        optimalVirtualRAMUsageKB.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getVRamUsage()));
+        optimalThrashingLevelSeconds.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getThrashingTime()));
 
         optimalRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getRAMUsageTimeline()));
         optimalVirtualRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getVirtualRAMUsageTimeline()));
@@ -217,11 +217,15 @@ public class UISimulationController extends ScreenController implements Initiali
         axis.setTickUnit(5);
     }
 
-    public void initializeSimulationDetails(String pagingAlgorithm, int numberOfOperations, int numberOfProcesses, ArrayList<Integer> PIDs){
+    public void initializeSimulationDetails(String pagingAlgorithm, boolean isOperationsFileLoaded, int numberOfOperations, int numberOfProcesses, ArrayList<Integer> PIDs){
         this.numberOfProcesses = numberOfProcesses;
         processColors = simulationUtil.generateProcessesColors(PIDs);
         pagingAlgorithmLabel.setText(pagingAlgorithm);
-        simulationSizeLabel.setText(simulationUtil.simulationSizeFormatter(numberOfOperations, numberOfProcesses));
+        if(isOperationsFileLoaded){
+            simulationSizeLabel.setText("Custom file simulation");
+        }else{
+            simulationSizeLabel.setText(simulationUtil.simulationSizeFormatter(numberOfOperations, numberOfProcesses));
+        }
     }
 
 

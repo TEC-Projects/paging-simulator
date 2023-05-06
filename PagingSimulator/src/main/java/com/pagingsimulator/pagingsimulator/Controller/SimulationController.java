@@ -22,7 +22,7 @@ public class SimulationController {
     public void initializeSimulation(SimulationRequest simulationRequest) throws IOException {
 
         ArrayList<Operation> operations;
-        if(simulationRequest.getOperationsFile() == null){
+        if(simulationRequest.isSimulationThroughOperationFile()){
             operations = operationsFileManager.generateOperations(simulationRequest.getRandomSeed(), simulationRequest.getNumberOfOperations(), simulationRequest.getNumberOfProcesses());
         }else{
             operations = operationsFileManager.retrieveOperationsFromFile(simulationRequest.getOperationsFile());
@@ -33,11 +33,12 @@ public class SimulationController {
                 simulationRequest.getNumberOfOperations(),
                 simulationRequest.getNumberOfProcesses(),
                 operations,
-                simulationRequest.getOperationsFile() == null);
+                simulationRequest.isSimulationThroughOperationFile());
 
         //TODO: Extract the list of PIDs to initialize GUI. Right now filled by dummy data.
         Main.UISimulationController.initializeSimulationDetails(
                 simulationRequest.getPagingAlgorithm(),
+                simulationRequest.isSimulationThroughOperationFile(),
                 simulationRequest.getNumberOfOperations(),
                 simulationRequest.getNumberOfProcesses(),
                 dummyDataUtil.getPIDs());
