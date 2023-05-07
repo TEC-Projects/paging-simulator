@@ -150,7 +150,7 @@ public class Simulation {
 
 
             Platform.runLater(this::updateSimulationDataOnGUI);
-            Thread.sleep(250);
+            Thread.sleep(1000);
         }
         Platform.runLater(Main.UISimulationController::handleSimulationCompleted);
     }
@@ -174,15 +174,15 @@ public class Simulation {
         simulationUpdateOPT.setRAMUsageMapping(ramUsageMappingOPT);
 
         // TIME LINE RAM OPT
-        if(ramUsageHistoricalOPT.size() == 60){
+        if(ramUsageHistoricalOPT.size() == 61){
             ramUsageHistoricalOPT.remove(0);
         }
         System.out.println("ALV   ---------------- : " + ramUsageHistoricalOPT);
         ramUsageHistoricalOPT.add(optimalAlgorithmStatus.getRamUsage());
-        simulationUpdateOPT.setVirtualRAMUsageTimeline(ramUsageHistoricalOPT.toArray());
+        simulationUpdateOPT.setRAMUsageTimeline(ramUsageHistoricalOPT.toArray());
 
         // TIME LINE VRAM OPT
-        if(vramUsageHistoricalOPT.size() == 60){
+        if(vramUsageHistoricalOPT.size() == 61){
             vramUsageHistoricalOPT.remove(0);
         }
         vramUsageHistoricalOPT.add(optimalAlgorithmStatus.getVRamUsage());
@@ -208,14 +208,14 @@ public class Simulation {
         simulationUpdateOther.setRAMUsageMapping(ramUsageMappingOther);
 
         // TIME LINE RAM OTHER
-        if(ramUsageHistoricalOther.size() == 60){
+        if(ramUsageHistoricalOther.size() == 61){
             ramUsageHistoricalOther.remove(0);
         }
         ramUsageHistoricalOther.add(otherAlgorithmStatus.getRamUsage());
-        simulationUpdateOther.setVirtualRAMUsageTimeline(ramUsageHistoricalOther.toArray());
+        simulationUpdateOther.setRAMUsageTimeline(ramUsageHistoricalOther.toArray());
 
         // TIME LINE VRAM OTHER
-        if(vramUsageHistoricalOther.size() == 60){
+        if(vramUsageHistoricalOther.size() == 61){
             vramUsageHistoricalOther.remove(0);
         }
         vramUsageHistoricalOther.add(otherAlgorithmStatus.getVRamUsage());
