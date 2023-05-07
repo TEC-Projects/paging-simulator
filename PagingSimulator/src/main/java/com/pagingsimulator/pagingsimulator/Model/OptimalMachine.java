@@ -19,18 +19,22 @@ public class OptimalMachine extends Machine{
         futureMemoryMap = new HashMap<>();
         allProcesses = new ArrayList<>();
 
+        // COUNTERS
         int pageCount = 0;
         int ptrCount = 0;
         int instructionCount = 0;
+
+        // ITERATION OVER THE WHOLE OPERATION LIST
         for (Operation operation : operations) {
             switch (operation.getName()) {
                 case "new" -> {
+                    // ADD NEW PROCESS ID TO LIST
                     if(!allProcesses.contains(operation.getParameters().get(0))){
                         allProcesses.add(operation.getParameters().get(0));
                     }
 
+                    // IDENTIFY ALL NEEDED PAGES TO SUPPLY THE MEMORY ALLOCATION REQUEST
                     ArrayList<Integer> createdPages = new ArrayList<>();
-
                     for (int i = 0; i < Math.ceil(operation.getParameters().get(1)*1.0/pageSize); i++) {
                         Page page = new Page(pageCount, operation.getParameters().get(0), -1, -1,-1, -1);
                         futurePages.add(page);
@@ -41,15 +45,10 @@ public class OptimalMachine extends Machine{
                     futureMemoryMap.put(ptrCount++, createdPages);
                 }
                 case "use" -> {
+                    // REGISTER IN ALL THE PAGES THAT BELONG TO THE PTR ITS ACCESSES FOR FURTHER CONSULT
                     for(Integer pageId : futureMemoryMap.get(operation.getParameters().get(0))){
                         earliestAccessToPages.get(pageId).add(instructionCount);
                     }
-                }
-                case "delete" -> {
-                    //TODO: DUNNO IF I NEED TO DO SOMETHING
-                }
-                case "kill" -> {
-                    //TODO: DUNNO IF I NEED TO DO SOMETHING
                 }
                 default -> {
                 }
@@ -105,16 +104,14 @@ public class OptimalMachine extends Machine{
         int latestAccessIndex = -1;
         int latestInstructionCount = 0;
         int realMemoryIndex = 0;
+        // ITERATE OVER REAL MEMORY PAGES
         for(Integer pageId : realMemory){
-            Page page = pages.get(pageId);
             LinkedList<Integer> accessesToPage = earliestAccessToPages.get(pageId);
+            // IF THE PAGE DOESNT HAVE MORE ACCESSES IN THE FUTURE, SELECT IT
             if(accessesToPage.isEmpty()){
-                System.out.println("Page id " + pageId);
-                System.out.println("RM: " + realMemory);
-                System.out.println("EarliestAccess " + earliestAccessToPages);
-                System.out.println("Chosen : " + realMemory.get(realMemoryIndex) + ", idx : " + realMemoryIndex);
                 return realMemoryIndex;
             }
+            // COMPARE THE LATEST ACCESS FOUND WITH THE NEXT ACCESS FOR THE CURRENT PAGE
             int instructionCount = accessesToPage.peek();
             if(instructionCount > latestInstructionCount && instructionCount != currentInstruction){
                 latestAccessIndex = realMemoryIndex;
@@ -122,8 +119,6 @@ public class OptimalMachine extends Machine{
             }
             realMemoryIndex++;
         };
-        System.out.println("EarliestAccess " + earliestAccessToPages);
-        System.out.println("Chosen : " + realMemory.get(latestAccessIndex) + ", idx : " + latestAccessIndex);
         return latestAccessIndex;
     }
 
