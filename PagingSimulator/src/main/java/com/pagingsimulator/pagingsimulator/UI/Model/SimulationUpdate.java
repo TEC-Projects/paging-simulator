@@ -71,7 +71,6 @@ public class SimulationUpdate {
             // TODO: CHECK IF THE GRAPH STARTS AT 0 OR 1, CODE RN STARTS ON 1
             temp.add(new Pair<>(++usageIdx, (Integer) usage));
         }
-
         this.virtualRAMUsageTimeline = temp;
     }
 }
