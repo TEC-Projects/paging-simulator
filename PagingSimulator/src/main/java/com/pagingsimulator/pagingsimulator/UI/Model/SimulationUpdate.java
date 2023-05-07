@@ -11,7 +11,6 @@ public class SimulationUpdate {
     private ArrayList<Integer> RAMUsageMapping;
     private ArrayList<Pair<Integer, Integer>> RAMUsageTimeline;
     private ArrayList<Pair<Integer, Integer>> virtualRAMUsageTimeline;
-
     private String currentOperation;
 
 

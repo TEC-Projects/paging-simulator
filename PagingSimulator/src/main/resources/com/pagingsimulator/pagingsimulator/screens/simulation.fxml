@@ -8,7 +8,7 @@
 
 <VBox prefWidth="1200.0" style="-fx-background-color: fff;" stylesheets="@../Css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pagingsimulator.pagingsimulator.UI.Controller.UISimulationController">
    <children>
-      <HBox alignment="CENTER_LEFT" spacing="25.0">
+      <HBox alignment="CENTER_LEFT" spacing="50.0">
          <children>
             <VBox alignment="CENTER_LEFT">
                <children>
@@ -23,9 +23,26 @@
                   <Insets />
                </HBox.margin>
             </VBox>
+            <VBox alignment="CENTER_LEFT">
+               <children>
+                  <Label styleClass="strong" text="Refresh rate: " />
+                  <HBox alignment="CENTER_LEFT" spacing="15.0">
+                     <children>
+                        <RadioButton fx:id="oneXRadioButton" mnemonicParsing="false" onMouseClicked="#oneXRadioButtonEvent" text="1X" />
+                        <RadioButton fx:id="twoXRadioButton" layoutX="52.0" layoutY="34.0" mnemonicParsing="false" onMouseClicked="#twoXRadioButtonEvent" text="2X" />
+                        <RadioButton fx:id="threeXRadioButton" mnemonicParsing="false" onMouseClicked="#threeXRadioButtonEvent" text="4X" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label styleClass="strong" text="Current operation:" />
+                  <Label fx:id="currentOperationLabel" text="None" />
+               </children>
+            </VBox>
             <StackPane fx:id="snackBarPane" alignment="CENTER_LEFT" maxHeight="25.0" prefWidth="250.0" visible="false">
                <HBox.margin>
-                  <Insets right="250.0" />
+                  <Insets />
                </HBox.margin>
                <children>
                   <Label fx:id="snackBarMessage" text="Label" />
