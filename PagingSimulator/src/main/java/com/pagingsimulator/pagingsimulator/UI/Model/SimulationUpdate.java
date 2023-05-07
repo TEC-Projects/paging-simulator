@@ -12,6 +12,8 @@ public class SimulationUpdate {
     private ArrayList<Pair<Integer, Integer>> RAMUsageTimeline;
     private ArrayList<Pair<Integer, Integer>> virtualRAMUsageTimeline;
 
+    private String currentOperation;
+
 
     public SimulationUpdate() {
         this.algorithmStatusUpdate = null;
@@ -72,5 +74,13 @@ public class SimulationUpdate {
             temp.add(new Pair<>(usageIdx++, (Integer) usage));
         }
         this.virtualRAMUsageTimeline = temp;
+    }
+
+    public String getCurrentOperation() {
+        return currentOperation;
+    }
+
+    public void setCurrentOperation(String currentOperation) {
+        this.currentOperation = currentOperation;
     }
 }
