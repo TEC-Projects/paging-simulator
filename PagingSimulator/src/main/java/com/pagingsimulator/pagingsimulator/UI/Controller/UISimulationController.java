@@ -182,10 +182,6 @@ public class UISimulationController extends ScreenController implements Initiali
             otherMMUTable.getItems().add(page);
         }
 
-        // Chart data update
-        otherRAMChart.getData().setAll(simulationUtil.plottingDataFormatter(simulationUpdate.getRAMUsageTimeline()));
-        otherVirtualRAMChart.getData().setAll(simulationUtil.plottingDataFormatter(simulationUpdate.getVirtualRAMUsageTimeline()));
-
         // RAM distribution update
         otherRAMDistribution.getChildren().clear();
         otherRAMDistribution.getChildren().addAll(simulationUtil.RAMUsageMappingFormatter(simulationUpdate.getRAMUsageMapping(), processColors));
@@ -236,8 +232,16 @@ public class UISimulationController extends ScreenController implements Initiali
         }
 
         // Chart data update
-        optimalRAMChart.getData().setAll(simulationUtil.plottingDataFormatter(simulationUpdate.getRAMUsageTimeline()));
-        optimalVirtualRAMChart.getData().setAll(simulationUtil.plottingDataFormatter(simulationUpdate.getVirtualRAMUsageTimeline()));
+
+        if(!optimalRAMChart.getData().isEmpty()){
+            optimalRAMChart.getData().remove((optimalRAMChart.getData().size()-1),0);
+        }
+        if(!optimalVirtualRAMChart.getData().isEmpty()){
+            optimalVirtualRAMChart.getData().remove((optimalVirtualRAMChart.getData().size()-1),0);
+        }
+
+        optimalRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getRAMUsageTimeline()));
+        optimalVirtualRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getVirtualRAMUsageTimeline()));
 
         // RAM distribution update
         optimalRAMDistribution.getChildren().clear();
@@ -293,11 +297,7 @@ public class UISimulationController extends ScreenController implements Initiali
                 if (page == null) {
                     setStyle("");
                 } else {
-                    setStyle(
-                            "-fx-background-color:" + processColors.get(page.getPID()) + "; -fx-opacity: 0.8;" +
-                                    "-fx-text-fill: #000000;" +
-                                    "-fx-fill: #000000;"
-                    );
+                    setStyle("-fx-background-color:" + processColors.get(page.getPID()) + ";");
                 }
             }
         });
@@ -309,11 +309,7 @@ public class UISimulationController extends ScreenController implements Initiali
                 if (page == null) {
                     setStyle("");
                 } else {
-                    setStyle(
-                            "-fx-background-color:" + processColors.get(page.getPID()) + ";" +
-                                    "-fx-text-fill: #fff;" +
-                                    "-fx-fill: #fff;"
-                    );
+                    setStyle("-fx-background-color:" + processColors.get(page.getPID()) + ";");
                 }
             }
         });
@@ -330,6 +326,8 @@ public class UISimulationController extends ScreenController implements Initiali
         configurePlotXAxis(optimalVirtualRAMXAxis);
         configurePlotXAxis(otherRAMXAxis);
         configurePlotXAxis(otherVirtualRAMXAxis);
+        optimalRAMChart.setAnimated(false);
+        otherRAMChart.setAnimated(false);
     }
 
     private void configurePlotXAxis(NumberAxis axis){
@@ -337,6 +335,7 @@ public class UISimulationController extends ScreenController implements Initiali
         axis.setLowerBound(0);
         axis.setUpperBound(60);
         axis.setTickUnit(5);
+        axis.setAnimated(false);
     }
 
     private void initializeRAMMapping(){

@@ -38,6 +38,9 @@ public class SimulationUtil {
     }
 
     public XYChart.Series plottingDataFormatter(ArrayList<Pair<Integer, Integer>> plotData){
+
+        System.out.println("PLOT DATA: " + plotData.size());
+
         XYChart.Series series = new XYChart.Series<>();
         for (Pair<Integer, Integer> point : plotData) {
             series.getData().add(new XYChart.Data<Number, Number>(point.getKey(), point.getValue()));
@@ -51,7 +54,7 @@ public class SimulationUtil {
         for (int i = 1; i < RAMUsage.size(); i++) {
             Rectangle memorySector = new Rectangle(3, 20);
             if(RAMUsage.get(i) != -1){
-                memorySector.setStyle("-fx-fill:" + processColors.get(RAMUsage.get(i)) + "; -fx-opacity: 0.8;");
+                memorySector.setStyle("-fx-fill:" + processColors.get(RAMUsage.get(i)) + ";");
             }else{
                 memorySector.setStyle("-fx-fill: #e1e1e1;");
             }

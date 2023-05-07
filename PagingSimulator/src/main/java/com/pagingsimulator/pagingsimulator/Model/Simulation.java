@@ -93,8 +93,6 @@ public class Simulation {
                 Thread.sleep(1000);
             }
 
-            System.out.println(operation);
-
             switch (operation.getName()) {
                 case "new" -> {
                     otherMachine.newAlloc(operation.getParameters().get(0), operation.getParameters().get(1));
@@ -128,7 +126,6 @@ public class Simulation {
                     (otherMachine.getPages().size() - otherMachine.virtualMemory.size()),
                     otherMachine.virtualMemory.size()
             );
-            System.out.println("Other " + otherAlgorithmStatus);
 
             int ramUsageOPT = (OPTMachine.getPages().size() - OPTMachine.virtualMemory.size())*(OPTMachine.getPageSize()/1000);
 
@@ -146,7 +143,6 @@ public class Simulation {
 
 
 
-            System.out.println("OPT " + optimalAlgorithmStatus);
             Platform.runLater(this::updateSimulationDataOnGUI);
             Thread.sleep(250);
         }
