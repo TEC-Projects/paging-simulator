@@ -93,7 +93,9 @@ public class Simulation {
                 Thread.sleep(1000);
             }
 
-            System.out.println(operation);
+            System.out.println("Other op: " + operation);
+            System.out.println("Other pages " + otherMachine.pages.size());
+            System.out.println("OPT pages " + OPTMachine.pages.size());
 
             switch (operation.getName()) {
                 case "new" -> {
@@ -113,8 +115,6 @@ public class Simulation {
             }
             OPTMachine.next();
 
-            //TODO: Add simulated processes count to the status update. Attribute already included in model.
-
             int ramUsageOther = (otherMachine.getPages().size() - otherMachine.virtualMemory.size())*(otherMachine.getPageSize()/1000);
 
             updateOtherAlgorithmStatus(
@@ -128,7 +128,6 @@ public class Simulation {
                     (otherMachine.getPages().size() - otherMachine.virtualMemory.size()),
                     otherMachine.virtualMemory.size()
             );
-            System.out.println("Other " + otherAlgorithmStatus);
 
             int ramUsageOPT = (OPTMachine.getPages().size() - OPTMachine.virtualMemory.size())*(OPTMachine.getPageSize()/1000);
 
@@ -146,11 +145,10 @@ public class Simulation {
 
 
 
-            System.out.println("OPT " + optimalAlgorithmStatus);
             Platform.runLater(this::updateSimulationDataOnGUI);
             Thread.sleep(250);
         }
-        Main.UISimulationController.handleSimulationCompleted();
+        Platform.runLater(Main.UISimulationController::handleSimulationCompleted);
     }
 
     private void updateSimulationDataOnGUI(){

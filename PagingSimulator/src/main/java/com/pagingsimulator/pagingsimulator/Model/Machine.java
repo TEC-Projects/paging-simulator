@@ -161,12 +161,13 @@ abstract class Machine {
 
     public void newAlloc(int pid, int allocSize) {
 
+        System.out.println("PID: " + pid + " ALLOC SIZE " + pid);
         double pagesCount = Math.ceil(allocSize * 1.0 / pageSize);
 
         ArrayList<Integer> createdPages = new ArrayList<>();
 
         for (int i = 0; i < pagesCount; i++) {
-            if (usedRam == realMemory.size()){
+            if (pages.size() - virtualMemory.size() == realMemory.size()){
                 int pageReplacedIndex = selectPageToVRAM();
                 int pageReplacedId = realMemory.get(pageReplacedIndex);
                 pages.get(pageReplacedId).sendPageToVirtualMemory();
@@ -189,7 +190,7 @@ abstract class Machine {
             }
         }
         memoryMap.put(ptrCount, new Allocation(ptrCount, pid , createdPages));
-        System.out.println("Created ptr " + ptrCount +  " with pages " + createdPages + " mem " + realMemory);
+//        System.out.println("Created ptr " + ptrCount +  " with pages " + createdPages + " mem " + realMemory);
         addPtrToProcess(pid, ptrCount++);
     }
 
@@ -218,7 +219,7 @@ abstract class Machine {
                         System.out.println("Virtual memory "  + virtualMemory);
                     }
                 }
-                System.out.println("Page ID begin used : " + pageId);
+//                System.out.println("Page ID begin used : " + pageId);
                 realMemory.set(pageReplacedIndex, virtualMemory.remove(virtualMemory.indexOf(pageId)));
                 pages.get(realMemory.get(pageReplacedIndex)).sendPageToRealMemory(pageReplacedIndex, time);
 
@@ -237,9 +238,9 @@ abstract class Machine {
         Allocation allocation = memoryMap.get(ptr);
         for (int pageId : allocation.getPageIds()){
             Page page = pages.get(pageId);
-            System.out.println("DELETING PAGEID " + pageId + " CUZ PTR " + ptr);
-            if(page.isLoaded() && realMemory.contains(page.getPageId())){
-                System.out.println("SETTING REAL MEMORY IDX TO -1, IDX = " + page.getMemoryAddress());
+//            System.out.println("DELETING PAGEID " + pageId + " CUZ PTR " + ptr);
+            if(page.isLoaded() && realMemory.contains((Integer) page.getPageId())){
+//                System.out.println("SETTING REAL MEMORY IDX TO -1, IDX = " + page.getMemoryAddress());
                 realMemory.set(page.getMemoryAddress(), -1);
                 usedRam--;
             }else{
@@ -251,7 +252,7 @@ abstract class Machine {
         if(!isKill){
             deletePtrFromProcess(allocation.getPid(), ptr);
         }
-        System.out.println("Delete ptr " + ptr);
+//        System.out.println("Delete ptr " + ptr);
         memoryMap.remove(ptr);
     }
 
@@ -263,6 +264,6 @@ abstract class Machine {
             }
             processes.remove(pid);
         }
-        System.out.println("DELETED PROCES " + pid + " mem " + realMemory);
+//        System.out.println("DELETED PROCES " + pid + " mem " + realMemory);
     }
 }
