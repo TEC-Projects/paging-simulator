@@ -150,6 +150,7 @@ public class Simulation {
             Platform.runLater(this::updateSimulationDataOnGUI);
             Thread.sleep(250);
         }
+        Main.UISimulationController.handleSimulationCompleted();
     }
 
     private void updateSimulationDataOnGUI(){
