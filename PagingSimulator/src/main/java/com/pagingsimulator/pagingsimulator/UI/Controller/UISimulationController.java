@@ -7,6 +7,8 @@ import com.pagingsimulator.pagingsimulator.UI.Model.SimulationUpdate;
 import com.pagingsimulator.pagingsimulator.UI.Utils.DummyDataUtil;
 import com.pagingsimulator.pagingsimulator.UI.Utils.SimulationUtil;
 import com.pagingsimulator.pagingsimulator.UI.Utils.SnackBarUtil;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -249,7 +251,7 @@ public class UISimulationController extends ScreenController implements Initiali
 
     }
 
-    private void setMMUTableColumns(TableView<Page> table){
+    private void setMMUTableColumns(TableView<Page> table, Label simTimeLabel){
         TableColumn<Page,Integer> pageIdColumn = new TableColumn<>("Page ID");
         pageIdColumn.setCellValueFactory(new PropertyValueFactory<Page, Integer>("pageId"));
 
@@ -268,8 +270,12 @@ public class UISimulationController extends ScreenController implements Initiali
         TableColumn<Page,Integer> dAddressColumn = new TableColumn<>("D-add");
         dAddressColumn.setCellValueFactory(new PropertyValueFactory<Page, Integer>("diskAddress"));
 
-        TableColumn<Page,Integer> loadTimeColumn = new TableColumn<>("L-Time");
-        loadTimeColumn.setCellValueFactory(new PropertyValueFactory<Page, Integer>("loadedAt"));
+        TableColumn<Page,String> loadTimeColumn = new TableColumn<>("L-Time");
+
+        loadTimeColumn.setCellValueFactory(f -> {
+            return new ReadOnlyStringWrapper(String.valueOf(Integer.parseInt(simTimeLabel.getText().replace(" s", "")) - f.getValue().getLoadedAt()) + " s") ;
+        });
+//        loadTimeColumn.setCellValueFactory(new PropertyValueFactory<Page, Integer>("loadedAt"));
 
         TableColumn<Page,String> markColumn = new TableColumn<>("Mark");
         markColumn.setCellValueFactory(new PropertyValueFactory<Page, String>("mark"));
@@ -288,8 +294,8 @@ public class UISimulationController extends ScreenController implements Initiali
     }
 
     private void initializeTables(){
-        setMMUTableColumns(optimalMMUTable);
-        setMMUTableColumns(otherMMUTable);
+        setMMUTableColumns(optimalMMUTable, optimalSimulationTime);
+        setMMUTableColumns(otherMMUTable, otherSimulationTime);
     }
 
     private void initializeCharts(){
