@@ -9,6 +9,7 @@ import java.util.*;
 public class Simulation {
 
     private boolean paused;
+    private int refreshRate;
     private long randomSeed;
     private int numberOfOperations;
     private int numberOfProcesses;
@@ -21,9 +22,11 @@ public class Simulation {
     private LinkedList<Integer> ramUsageHistoricalOther;
     private LinkedList<Integer> vramUsageHistoricalOPT;
     private LinkedList<Integer> vramUsageHistoricalOther;
+    private Operation currentOperation;
 
     public Simulation(String pagingAlgorithm, long randomSeed, int numberOfOperations, int numberOfProcesses, ArrayList<Operation> operations, boolean isFileLoaded) {
         this.paused = false;
+        refreshRate = 1000;
         this.numberOfOperations = numberOfOperations;
         this.numberOfProcesses = numberOfProcesses;
         this.randomSeed = randomSeed;
@@ -97,6 +100,8 @@ public class Simulation {
                 Thread.sleep(1000);
             }
 
+            currentOperation = operation;
+
             System.out.println("Other op: " + operation);
             System.out.println("Other pages " + otherMachine.pages.size());
             System.out.println("OPT pages " + OPTMachine.pages.size());
@@ -150,7 +155,7 @@ public class Simulation {
 
 
             Platform.runLater(this::updateSimulationDataOnGUI);
-            Thread.sleep(1000);
+            Thread.sleep(refreshRate);
         }
         Platform.runLater(Main.UISimulationController::handleSimulationCompleted);
     }
@@ -188,6 +193,8 @@ public class Simulation {
         vramUsageHistoricalOPT.add(optimalAlgorithmStatus.getVRamUsage());
         simulationUpdateOPT.setVirtualRAMUsageTimeline(vramUsageHistoricalOPT.toArray());
 
+        simulationUpdateOPT.setCurrentOperation(currentOperation.toString());
+
         Main.UISimulationController.updateOptimalSimulationData(simulationUpdateOPT);
 
         // ------------- OTHER --------------
@@ -220,12 +227,21 @@ public class Simulation {
         }
         vramUsageHistoricalOther.add(otherAlgorithmStatus.getVRamUsage());
         simulationUpdateOther.setVirtualRAMUsageTimeline(vramUsageHistoricalOther.toArray());
-
+        System.out.println(currentOperation.toString());
+        simulationUpdateOther.setCurrentOperation(currentOperation.toString());
 
         Main.UISimulationController.updateOtherSimulationData(simulationUpdateOther);
     }
 
     public ArrayList<Integer> getAllProcesses(){
         return OPTMachine.getAllProcesses();
+    }
+
+    public int getRefreshRate() {
+        return refreshRate;
+    }
+
+    public void setRefreshRate(int refreshRate) {
+        this.refreshRate = refreshRate;
     }
 }

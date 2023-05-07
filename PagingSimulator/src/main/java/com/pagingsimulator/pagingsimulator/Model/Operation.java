@@ -41,9 +41,6 @@ public class Operation {
 
     @Override
     public String toString() {
-        return "Operation{" +
-                "name='" + name + '\'' +
-                ", parameters=" + parameters +
-                '}';
+        return name + parameters.toString().replace("]", ")").replace("[", "(").replace(" ", "");
     }
 }

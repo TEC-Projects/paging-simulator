@@ -58,4 +58,8 @@ public class SimulationController {
     public void pauseResumeSimulation(){
         simulation.setPaused(!simulation.isPaused());
     }
+
+    public void selectRefreshRate(String refreshRate){
+        simulation.setRefreshRate(Integer.parseInt(refreshRate.replace("x", ""))*1000);
+    }
 }
