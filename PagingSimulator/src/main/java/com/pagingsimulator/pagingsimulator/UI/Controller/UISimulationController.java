@@ -266,11 +266,11 @@ public class UISimulationController extends ScreenController implements Initiali
 
         TableColumn<Page,String> loadTimeColumn = new TableColumn<>("L-Time");
         loadTimeColumn.setCellValueFactory(f -> {
-            return new ReadOnlyStringWrapper(String.valueOf(Integer.parseInt(simTimeLabel.getText().replace(" s", "")) - f.getValue().getLoadedAt()) + " s") ;
+            return new ReadOnlyStringWrapper(Integer.parseInt(simTimeLabel.getText().replace(" s", "")) - f.getValue().getLoadedAt() + " s") ;
         });
 
         TableColumn<Page,String> markColumn = new TableColumn<>("Mark");
-        markColumn.setCellValueFactory(new PropertyValueFactory<Page, String>("mark"));
+        markColumn.setCellValueFactory(new PropertyValueFactory<>("mark"));
 
         table.getColumns().addAll(
                 pageIdColumn,
@@ -285,9 +285,44 @@ public class UISimulationController extends ScreenController implements Initiali
 
     }
 
+    private void setRowStyleMMUTables(){
+        optimalMMUTable.setRowFactory(tv -> new TableRow<>() {
+            @Override
+            protected void updateItem(Page page, boolean empty) {
+                super.updateItem(page, empty);
+                if (page == null) {
+                    setStyle("");
+                } else {
+                    setStyle(
+                            "-fx-background-color:" + processColors.get(page.getPID()) + "; -fx-opacity: 0.8;" +
+                                    "-fx-text-fill: #000000;" +
+                                    "-fx-fill: #000000;"
+                    );
+                }
+            }
+        });
+
+        otherMMUTable.setRowFactory(tv -> new TableRow<>() {
+            @Override
+            protected void updateItem(Page page, boolean empty) {
+                super.updateItem(page, empty);
+                if (page == null) {
+                    setStyle("");
+                } else {
+                    setStyle(
+                            "-fx-background-color:" + processColors.get(page.getPID()) + ";" +
+                                    "-fx-text-fill: #fff;" +
+                                    "-fx-fill: #fff;"
+                    );
+                }
+            }
+        });
+    }
+
     private void initializeTables(){
         setMMUTableColumns(optimalMMUTable, optimalSimulationTime);
         setMMUTableColumns(otherMMUTable, otherSimulationTime);
+        setRowStyleMMUTables();
     }
 
     private void initializeCharts(){
@@ -324,6 +359,13 @@ public class UISimulationController extends ScreenController implements Initiali
         }
     }
 
+    public TableView<Page> getOptimalMMUTable() {
+        return optimalMMUTable;
+    }
+
+    public TableView<Page> getOtherMMUTable() {
+        return otherMMUTable;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

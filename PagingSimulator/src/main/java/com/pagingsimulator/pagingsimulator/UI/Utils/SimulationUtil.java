@@ -1,7 +1,11 @@
 package com.pagingsimulator.pagingsimulator.UI.Utils;
 
+import com.pagingsimulator.pagingsimulator.Model.Page;
+import com.pagingsimulator.pagingsimulator.UI.Controller.UISimulationController;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
 
@@ -76,5 +80,4 @@ public class SimulationUtil {
             thrashingPercentageTitle.getStyleClass().addAll("text-default");
         }
     }
-
 }
