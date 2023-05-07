@@ -182,10 +182,6 @@ public class UISimulationController extends ScreenController implements Initiali
             otherMMUTable.getItems().add(page);
         }
 
-        // Chart data update
-        otherRAMChart.getData().setAll(simulationUtil.plottingDataFormatter(simulationUpdate.getRAMUsageTimeline()));
-        otherVirtualRAMChart.getData().setAll(simulationUtil.plottingDataFormatter(simulationUpdate.getVirtualRAMUsageTimeline()));
-
         // RAM distribution update
         otherRAMDistribution.getChildren().clear();
         otherRAMDistribution.getChildren().addAll(simulationUtil.RAMUsageMappingFormatter(simulationUpdate.getRAMUsageMapping(), processColors));
@@ -227,6 +223,12 @@ public class UISimulationController extends ScreenController implements Initiali
                 optimalThrashingLevelPercentage,
                 optimalThrashingLevelPercentageTitle);
 
+        // Chart data update
+        otherRAMChart.getData().clear();
+        otherRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getRAMUsageTimeline()));
+        otherVirtualRAMChart.getData().clear();
+        otherVirtualRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getVirtualRAMUsageTimeline()));
+
         // Pages table update
         if(!optimalMMUTable.getItems().isEmpty()){
             optimalMMUTable.getItems().clear();
@@ -236,8 +238,10 @@ public class UISimulationController extends ScreenController implements Initiali
         }
 
         // Chart data update
-        optimalRAMChart.getData().setAll(simulationUtil.plottingDataFormatter(simulationUpdate.getRAMUsageTimeline()));
-        optimalVirtualRAMChart.getData().setAll(simulationUtil.plottingDataFormatter(simulationUpdate.getVirtualRAMUsageTimeline()));
+        optimalRAMChart.getData().clear();
+        optimalRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getRAMUsageTimeline()));
+        optimalVirtualRAMChart.getData().clear();
+        optimalVirtualRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getVirtualRAMUsageTimeline()));
 
         // RAM distribution update
         optimalRAMDistribution.getChildren().clear();
@@ -293,11 +297,7 @@ public class UISimulationController extends ScreenController implements Initiali
                 if (page == null) {
                     setStyle("");
                 } else {
-                    setStyle(
-                            "-fx-background-color:" + processColors.get(page.getPID()) + "; -fx-opacity: 0.8;" +
-                                    "-fx-text-fill: #000000;" +
-                                    "-fx-fill: #000000;"
-                    );
+                    setStyle("-fx-background-color:" + processColors.get(page.getPID()) + ";");
                 }
             }
         });
@@ -309,11 +309,7 @@ public class UISimulationController extends ScreenController implements Initiali
                 if (page == null) {
                     setStyle("");
                 } else {
-                    setStyle(
-                            "-fx-background-color:" + processColors.get(page.getPID()) + ";" +
-                                    "-fx-text-fill: #fff;" +
-                                    "-fx-fill: #fff;"
-                    );
+                    setStyle("-fx-background-color:" + processColors.get(page.getPID()) + ";");
                 }
             }
         });
@@ -330,6 +326,10 @@ public class UISimulationController extends ScreenController implements Initiali
         configurePlotXAxis(optimalVirtualRAMXAxis);
         configurePlotXAxis(otherRAMXAxis);
         configurePlotXAxis(otherVirtualRAMXAxis);
+        optimalRAMChart.setAnimated(false);
+        optimalVirtualRAMChart.setAnimated(false);
+        otherRAMChart.setAnimated(false);
+        otherVirtualRAMChart.setAnimated(false);
     }
 
     private void configurePlotXAxis(NumberAxis axis){
@@ -337,6 +337,7 @@ public class UISimulationController extends ScreenController implements Initiali
         axis.setLowerBound(0);
         axis.setUpperBound(60);
         axis.setTickUnit(5);
+        axis.setAnimated(false);
     }
 
     private void initializeRAMMapping(){

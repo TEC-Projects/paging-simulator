@@ -51,7 +51,7 @@ public class SimulationUtil {
         for (int i = 1; i < RAMUsage.size(); i++) {
             Rectangle memorySector = new Rectangle(3, 20);
             if(RAMUsage.get(i) != -1){
-                memorySector.setStyle("-fx-fill:" + processColors.get(RAMUsage.get(i)) + "; -fx-opacity: 0.8;");
+                memorySector.setStyle("-fx-fill:" + processColors.get(RAMUsage.get(i)) + ";");
             }else{
                 memorySector.setStyle("-fx-fill: #e1e1e1;");
             }

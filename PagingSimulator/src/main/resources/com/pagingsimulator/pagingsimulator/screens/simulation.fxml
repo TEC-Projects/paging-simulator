@@ -81,7 +81,7 @@
                                  <String fx:value="h5" />
                               </styleClass>
                            </Label>
-                           <AreaChart fx:id="optimalRAMChart" maxHeight="150.0" prefHeight="150.0">
+                           <AreaChart fx:id="optimalRAMChart" maxHeight="150.0" prefHeight="150.0" styleClass="RAMUsageTheme">
                              <xAxis>
                                <NumberAxis fx:id="optimalRAMXAxis" />
                              </xAxis>
@@ -304,7 +304,7 @@
                                     <String fx:value="strong" />
                                     <String fx:value="h5" />
                                  </styleClass></Label>
-                              <AreaChart fx:id="otherRAMChart" maxHeight="150.0" prefHeight="150.0">
+                              <AreaChart fx:id="otherRAMChart" maxHeight="150.0" prefHeight="150.0" styleClass="RAMUsageTheme">
                                  <xAxis>
                                     <NumberAxis fx:id="otherRAMXAxis" side="BOTTOM" />
                                  </xAxis>
