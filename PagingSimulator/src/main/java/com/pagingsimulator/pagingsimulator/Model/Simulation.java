@@ -12,13 +12,15 @@ public class Simulation {
     private long randomSeed;
     private int numberOfOperations;
     private int numberOfProcesses;
-    private Machine otherMachine;
-    private OptimalMachine OPTMachine;
-    private PagingAlgorithmSimulationStatus optimalAlgorithmStatus;
-    private PagingAlgorithmSimulationStatus otherAlgorithmStatus;
-    private ArrayList<Operation> operations;
-    private Queue<Integer> ramUsageHistorical;
-    private Queue<Integer> vramUsageHistorical;
+    private final Machine otherMachine;
+    private final OptimalMachine OPTMachine;
+    private final PagingAlgorithmSimulationStatus optimalAlgorithmStatus;
+    private final PagingAlgorithmSimulationStatus otherAlgorithmStatus;
+    private final ArrayList<Operation> operations;
+    private LinkedList<Integer> ramUsageHistoricalOPT;
+    private LinkedList<Integer> ramUsageHistoricalOther;
+    private LinkedList<Integer> vramUsageHistoricalOPT;
+    private LinkedList<Integer> vramUsageHistoricalOther;
 
     public Simulation(String pagingAlgorithm, long randomSeed, int numberOfOperations, int numberOfProcesses, ArrayList<Operation> operations, boolean isFileLoaded) {
         this.paused = false;
@@ -50,8 +52,10 @@ public class Simulation {
         otherAlgorithmStatus = new PagingAlgorithmSimulationStatus();
         optimalAlgorithmStatus = new PagingAlgorithmSimulationStatus();
 
-        ramUsageHistorical = new LinkedList<>();
-        vramUsageHistorical = new LinkedList<>();
+        ramUsageHistoricalOther = new LinkedList<>();
+        ramUsageHistoricalOPT = new LinkedList<>();
+        vramUsageHistoricalOther = new LinkedList<>();
+        vramUsageHistoricalOPT = new LinkedList<>();
     }
 
     public boolean isPaused() {
@@ -111,8 +115,6 @@ public class Simulation {
             }
             OPTMachine.next();
 
-            //TODO: Add simulated processes count to the status update. Attribute already included in model.
-
             int ramUsageOther = (otherMachine.getPages().size() - otherMachine.virtualMemory.size())*(otherMachine.getPageSize()/1000);
 
             updateOtherAlgorithmStatus(
@@ -144,14 +146,19 @@ public class Simulation {
 
 
             Platform.runLater(this::updateSimulationDataOnGUI);
-            Thread.sleep(250);
+            Thread.sleep(100);
         }
-        Main.UISimulationController.handleSimulationCompleted();
+        Platform.runLater(Main.UISimulationController::handleSimulationCompleted);
     }
 
     private void updateSimulationDataOnGUI(){
+        // ------------- OPT --------------
+
+        // INIT
         SimulationUpdate simulationUpdateOPT = new SimulationUpdate();
         simulationUpdateOPT.setAlgorithmStatusUpdate(optimalAlgorithmStatus);
+
+        // REAL MEMORY PROCESSES MAP OPT
         ArrayList<Integer> ramUsageMappingOPT = new ArrayList<>();
         for (Integer pageId : OPTMachine.realMemory){
             if(pageId == -1){
@@ -162,14 +169,30 @@ public class Simulation {
         }
         simulationUpdateOPT.setRAMUsageMapping(ramUsageMappingOPT);
 
-        //TODO: DO THIS SHIT
-        simulationUpdateOPT.setRAMUsageTimeline(ramUsageHistorical.toArray());
-//        simulationUpdateOPT.setVirtualRAMUsageTimeline();
+        // TIME LINE RAM OPT
+        if(ramUsageHistoricalOPT.size() == 61){
+            ramUsageHistoricalOPT.remove(0);
+        }
+        System.out.println("ALV   ---------------- : " + ramUsageHistoricalOPT);
+        ramUsageHistoricalOPT.add(optimalAlgorithmStatus.getRamUsage());
+        simulationUpdateOPT.setRAMUsageTimeline(ramUsageHistoricalOPT.toArray());
+
+        // TIME LINE VRAM OPT
+        if(vramUsageHistoricalOPT.size() == 61){
+            vramUsageHistoricalOPT.remove(0);
+        }
+        vramUsageHistoricalOPT.add(optimalAlgorithmStatus.getVRamUsage());
+        simulationUpdateOPT.setVirtualRAMUsageTimeline(vramUsageHistoricalOPT.toArray());
 
         Main.UISimulationController.updateOptimalSimulationData(simulationUpdateOPT);
 
+        // ------------- OTHER --------------
+
+        //INIT
         SimulationUpdate simulationUpdateOther = new SimulationUpdate();
         simulationUpdateOther.setAlgorithmStatusUpdate(otherAlgorithmStatus);
+
+        // REAL MEMORY PROCESSES MAP OPT
         ArrayList<Integer> ramUsageMappingOther = new ArrayList<>();
         for (Integer pageId : otherMachine.realMemory){
             if(pageId == -1){
@@ -178,8 +201,22 @@ public class Simulation {
                 ramUsageMappingOther.add(otherMachine.pages.get(pageId).getPID());
             }
         }
-
         simulationUpdateOther.setRAMUsageMapping(ramUsageMappingOther);
+
+        // TIME LINE RAM OTHER
+        if(ramUsageHistoricalOther.size() == 61){
+            ramUsageHistoricalOther.remove(0);
+        }
+        ramUsageHistoricalOther.add(otherAlgorithmStatus.getRamUsage());
+        simulationUpdateOther.setRAMUsageTimeline(ramUsageHistoricalOther.toArray());
+
+        // TIME LINE VRAM OTHER
+        if(vramUsageHistoricalOther.size() == 61){
+            vramUsageHistoricalOther.remove(0);
+        }
+        vramUsageHistoricalOther.add(otherAlgorithmStatus.getVRamUsage());
+        simulationUpdateOther.setVirtualRAMUsageTimeline(vramUsageHistoricalOther.toArray());
+
 
         Main.UISimulationController.updateOtherSimulationData(simulationUpdateOther);
     }

@@ -223,6 +223,12 @@ public class UISimulationController extends ScreenController implements Initiali
                 optimalThrashingLevelPercentage,
                 optimalThrashingLevelPercentageTitle);
 
+        // Chart data update
+        otherRAMChart.getData().clear();
+        otherRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getRAMUsageTimeline()));
+        otherVirtualRAMChart.getData().clear();
+        otherVirtualRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getVirtualRAMUsageTimeline()));
+
         // Pages table update
         if(!optimalMMUTable.getItems().isEmpty()){
             optimalMMUTable.getItems().clear();
@@ -232,15 +238,9 @@ public class UISimulationController extends ScreenController implements Initiali
         }
 
         // Chart data update
-
-        if(!optimalRAMChart.getData().isEmpty()){
-            optimalRAMChart.getData().remove((optimalRAMChart.getData().size()-1),0);
-        }
-        if(!optimalVirtualRAMChart.getData().isEmpty()){
-            optimalVirtualRAMChart.getData().remove((optimalVirtualRAMChart.getData().size()-1),0);
-        }
-
+        optimalRAMChart.getData().clear();
         optimalRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getRAMUsageTimeline()));
+        optimalVirtualRAMChart.getData().clear();
         optimalVirtualRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getVirtualRAMUsageTimeline()));
 
         // RAM distribution update
@@ -327,7 +327,9 @@ public class UISimulationController extends ScreenController implements Initiali
         configurePlotXAxis(otherRAMXAxis);
         configurePlotXAxis(otherVirtualRAMXAxis);
         optimalRAMChart.setAnimated(false);
+        optimalVirtualRAMChart.setAnimated(false);
         otherRAMChart.setAnimated(false);
+        otherVirtualRAMChart.setAnimated(false);
     }
 
     private void configurePlotXAxis(NumberAxis axis){

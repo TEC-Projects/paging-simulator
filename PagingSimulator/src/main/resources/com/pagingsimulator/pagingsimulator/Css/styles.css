@@ -1382,4 +1382,13 @@ a.badge:hover, a.badge:focused {
     -fx-border-color: #ffffff;
 }
 
+
+.RAMUsageTheme *.chart-area-symbol { -fx-background-color: #212ecc, #fff; }
+
+.RAMUsageTheme *.chart-series-area-line { -fx-stroke: #212ecc; }
+
+.RAMUsageTheme *.chart-series-area-fill { -fx-fill: #bec1e555; }
+
+
+
 /*# sourceMappingURL=bootstrapfx.css.map */

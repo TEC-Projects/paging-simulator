@@ -1,16 +1,10 @@
 package com.pagingsimulator.pagingsimulator.Model;
 
-import javafx.util.Pair;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.concurrent.Future;
+import java.util.*;
 
 public class OptimalMachine extends Machine{
     private ArrayList<Integer> allProcesses;
-    private HashMap<Integer, Queue<Integer>> earliestAccessToPages;
+    private HashMap<Integer, LinkedList<Integer>> earliestAccessToPages;
     private int currentInstruction;
     private ArrayList<Operation> operations;
     private ArrayList<Page> futurePages;
@@ -37,12 +31,11 @@ public class OptimalMachine extends Machine{
 
                     ArrayList<Integer> createdPages = new ArrayList<>();
 
-                    for (int i = 0; i < Math.ceil(operation.getParameters().get(1)/4000.0); i++) {
+                    for (int i = 0; i < Math.ceil(operation.getParameters().get(1)*1.0/pageSize); i++) {
                         Page page = new Page(pageCount, operation.getParameters().get(0), -1, -1,-1, -1);
                         futurePages.add(page);
                         createdPages.add(pageCount);
-                        earliestAccessToPages.put(pageCount++, new PriorityQueue<>() {
-                        });
+                        earliestAccessToPages.put(pageCount++, new LinkedList<>());
                     }
 
                     futureMemoryMap.put(ptrCount++, createdPages);
@@ -67,6 +60,7 @@ public class OptimalMachine extends Machine{
 
     public void next(){
         Operation operation = operations.get(currentInstruction);
+        System.out.println("OPT op: " + operation);
         switch (operation.getName()) {
             case "new" -> {
                 newAlloc(operation.getParameters().get(0), operation.getParameters().get(1));
@@ -74,18 +68,30 @@ public class OptimalMachine extends Machine{
             case "use" -> {
                 use(operation.getParameters().get(0));
                 for(Queue<Integer> uses : earliestAccessToPages.values()){
+
                     if(uses.isEmpty()){
                         continue;
                     }
                     if(uses.peek() == currentInstruction){
-                        uses.remove();
+                        uses.remove(uses.peek());
                     }
                 }
             }
             case "delete" -> {
+                for(Integer pageId : memoryMap.get(operation.getParameters().get(0)).getPageIds()){
+                    earliestAccessToPages.remove(pageId);
+                }
                 delete(operation.getParameters().get(0), false);
             }
             case "kill" -> {
+                if (processes.get(operation.getParameters().get(0)) != null){
+                    for(Integer ptr : processes.get(operation.getParameters().get(0)).getPtrs()){
+                        for(Integer pageId : memoryMap.get(ptr).getPageIds()){
+                            earliestAccessToPages.remove(pageId);
+                        }
+                    }
+                }
+
                 kill(operation.getParameters().get(0));
             }
             default -> {
@@ -101,8 +107,12 @@ public class OptimalMachine extends Machine{
         int realMemoryIndex = 0;
         for(Integer pageId : realMemory){
             Page page = pages.get(pageId);
-            Queue<Integer> accessesToPage = earliestAccessToPages.get(pageId);
+            LinkedList<Integer> accessesToPage = earliestAccessToPages.get(pageId);
             if(accessesToPage.isEmpty()){
+                System.out.println("Page id " + pageId);
+                System.out.println("RM: " + realMemory);
+                System.out.println("EarliestAccess " + earliestAccessToPages);
+                System.out.println("Chosen : " + realMemory.get(realMemoryIndex) + ", idx : " + realMemoryIndex);
                 return realMemoryIndex;
             }
             int instructionCount = accessesToPage.peek();
@@ -112,6 +122,8 @@ public class OptimalMachine extends Machine{
             }
             realMemoryIndex++;
         };
+        System.out.println("EarliestAccess " + earliestAccessToPages);
+        System.out.println("Chosen : " + realMemory.get(latestAccessIndex) + ", idx : " + latestAccessIndex);
         return latestAccessIndex;
     }
 
@@ -133,11 +145,11 @@ public class OptimalMachine extends Machine{
         this.allProcesses = allProcesses;
     }
 
-    public HashMap<Integer, Queue<Integer>> getEarliestAccessToPages() {
+    public HashMap<Integer, LinkedList<Integer>> getEarliestAccessToPages() {
         return earliestAccessToPages;
     }
 
-    public void setEarliestAccessToPages(HashMap<Integer, Queue<Integer>> earliestAccessToPages) {
+    public void setEarliestAccessToPages(HashMap<Integer, LinkedList<Integer>> earliestAccessToPages) {
         this.earliestAccessToPages = earliestAccessToPages;
     }
 

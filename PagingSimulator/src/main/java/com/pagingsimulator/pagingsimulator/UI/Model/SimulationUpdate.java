@@ -53,7 +53,7 @@ public class SimulationUpdate {
         int usageIdx = 0;
         for(Object usage : RAMUsageTimeline){
             // TODO: CHECK IF THE GRAPH STARTS AT 0 OR 1, CODE RN STARTS ON 1
-            temp.add(new Pair<>(++usageIdx, (Integer) usage));
+            temp.add(new Pair<>(usageIdx++, (Integer) usage));
         }
 
         this.RAMUsageTimeline = temp;
@@ -69,9 +69,8 @@ public class SimulationUpdate {
         int usageIdx = 0;
         for(Object usage : virtualRAMUsageTimeline){
             // TODO: CHECK IF THE GRAPH STARTS AT 0 OR 1, CODE RN STARTS ON 1
-            temp.add(new Pair<>(++usageIdx, (Integer) usage));
+            temp.add(new Pair<>(usageIdx++, (Integer) usage));
         }
-
         this.virtualRAMUsageTimeline = temp;
     }
 }
