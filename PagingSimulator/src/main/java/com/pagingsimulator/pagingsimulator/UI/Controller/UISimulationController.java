@@ -109,9 +109,6 @@ public class UISimulationController extends ScreenController implements Initiali
             }
         }
 
-//        updateOptimalSimulationData(dummyDataUtil.getDummyOptimalSimulationUpdate());
-//        updateOtherSimulationData(dummyDataUtil.getDummyOtherSimulationUpdate());
-
     }
 
     public void handleSimulationCompleted(){
@@ -120,7 +117,6 @@ public class UISimulationController extends ScreenController implements Initiali
     }
 
     private void handlePauseSimulation(){
-        //TODO: Uncomment simulation pause function
         Main.simulationController.pauseResumeSimulation();
         snackBarUtil.showSnackBar("Simulation paused", "info", snackBarPane, snackBarMessage, false);
         isPaused = true;
@@ -129,7 +125,6 @@ public class UISimulationController extends ScreenController implements Initiali
     }
 
     private void handleResumeSimulation(){
-        //TODO: Uncomment simulation resume function
         Main.simulationController.pauseResumeSimulation();
         snackBarUtil.hideSnackBar(snackBarPane);
         isPaused = false;
@@ -138,7 +133,6 @@ public class UISimulationController extends ScreenController implements Initiali
     }
 
     private void handleStartSimulation(){
-        //TODO: Uncomment simulation start function
         Main.simulationController.startSimulation();
         hasStarted = true;
         generalSimulationButton.getStyleClass().setAll("btn", "btn-danger");
@@ -271,11 +265,9 @@ public class UISimulationController extends ScreenController implements Initiali
         dAddressColumn.setCellValueFactory(new PropertyValueFactory<Page, Integer>("diskAddress"));
 
         TableColumn<Page,String> loadTimeColumn = new TableColumn<>("L-Time");
-
         loadTimeColumn.setCellValueFactory(f -> {
             return new ReadOnlyStringWrapper(String.valueOf(Integer.parseInt(simTimeLabel.getText().replace(" s", "")) - f.getValue().getLoadedAt()) + " s") ;
         });
-//        loadTimeColumn.setCellValueFactory(new PropertyValueFactory<Page, Integer>("loadedAt"));
 
         TableColumn<Page,String> markColumn = new TableColumn<>("Mark");
         markColumn.setCellValueFactory(new PropertyValueFactory<Page, String>("mark"));
@@ -314,7 +306,7 @@ public class UISimulationController extends ScreenController implements Initiali
 
     private void initializeRAMMapping(){
 
-        ArrayList<Integer> emptyRAM = new ArrayList<Integer>(Collections.nCopies(100, -1));
+        ArrayList<Integer> emptyRAM = new ArrayList<>(Collections.nCopies(100, -1));
 
         optimalRAMDistribution.getChildren().addAll(simulationUtil.RAMUsageMappingFormatter(emptyRAM, processColors));
         otherRAMDistribution.getChildren().addAll(simulationUtil.RAMUsageMappingFormatter(emptyRAM, processColors));
