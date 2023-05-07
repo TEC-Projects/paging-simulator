@@ -4,6 +4,7 @@ import com.pagingsimulator.pagingsimulator.Model.PagingAlgorithmSimulationStatus
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SimulationUpdate {
     private PagingAlgorithmSimulationStatus algorithmStatusUpdate;
@@ -46,15 +47,31 @@ public class SimulationUpdate {
         return RAMUsageTimeline;
     }
 
-    public void setRAMUsageTimeline(ArrayList<Pair<Integer, Integer>> RAMUsageTimeline) {
-        this.RAMUsageTimeline = RAMUsageTimeline;
+    public void setRAMUsageTimeline(Object[] RAMUsageTimeline) {
+        ArrayList<Pair<Integer, Integer>> temp = new ArrayList<>();
+
+        int usageIdx = 0;
+        for(Object usage : RAMUsageTimeline){
+            // TODO: CHECK IF THE GRAPH STARTS AT 0 OR 1, CODE RN STARTS ON 1
+            temp.add(new Pair<>(++usageIdx, (Integer) usage));
+        }
+
+        this.RAMUsageTimeline = temp;
     }
 
     public ArrayList<Pair<Integer, Integer>> getVirtualRAMUsageTimeline() {
         return virtualRAMUsageTimeline;
     }
 
-    public void setVirtualRAMUsageTimeline(ArrayList<Pair<Integer, Integer>> virtualRAMUsageTimeline) {
-        this.virtualRAMUsageTimeline = virtualRAMUsageTimeline;
+    public void setVirtualRAMUsageTimeline(Object[] virtualRAMUsageTimeline) {
+        ArrayList<Pair<Integer, Integer>> temp = new ArrayList<>();
+
+        int usageIdx = 0;
+        for(Object usage : virtualRAMUsageTimeline){
+            // TODO: CHECK IF THE GRAPH STARTS AT 0 OR 1, CODE RN STARTS ON 1
+            temp.add(new Pair<>(++usageIdx, (Integer) usage));
+        }
+
+        this.virtualRAMUsageTimeline = temp;
     }
 }

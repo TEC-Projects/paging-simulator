@@ -1,6 +1,7 @@
 package com.pagingsimulator.pagingsimulator.UI.Model;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class SimulationRequest {
     private String pagingAlgorithm;
@@ -9,6 +10,7 @@ public class SimulationRequest {
     private File operationsFile;
     private int numberOfProcesses;
     private int numberOfOperations;
+    private ArrayList<Integer> processes;
 
     public SimulationRequest(){
         simulationThroughOperationFile = true;
@@ -69,5 +71,17 @@ public class SimulationRequest {
 
     public void setNumberOfOperations(int numberOfOperations) {
         this.numberOfOperations = numberOfOperations;
+    }
+
+    public Boolean getSimulationThroughOperationFile() {
+        return simulationThroughOperationFile;
+    }
+
+    public ArrayList<Integer> getProcesses() {
+        return processes;
+    }
+
+    public void setProcesses(ArrayList<Integer> processes) {
+        this.processes = processes;
     }
 }

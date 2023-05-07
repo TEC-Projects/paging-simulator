@@ -1,5 +1,6 @@
 package com.pagingsimulator.pagingsimulator.Controller;
 
+import com.pagingsimulator.pagingsimulator.Controller.Utils.DummyDataUtil;
 import com.pagingsimulator.pagingsimulator.Controller.Utils.OperationsFileManager;
 import com.pagingsimulator.pagingsimulator.Main;
 import com.pagingsimulator.pagingsimulator.Model.Operation;
@@ -12,17 +13,20 @@ import java.util.ArrayList;
 public class SimulationController {
     private Simulation simulation;
     private OperationsFileManager operationsFileManager;
+    private DummyDataUtil dummyDataUtil;
+
     public SimulationController(){
         operationsFileManager = new OperationsFileManager();
+        dummyDataUtil = new DummyDataUtil();
     }
     public void initializeSimulation(SimulationRequest simulationRequest) throws IOException {
 
-        Main.UISimulationController.initializeSimulationDetails(simulationRequest.getPagingAlgorithm(), simulationRequest.getNumberOfOperations(), simulationRequest.getNumberOfProcesses());
         ArrayList<Operation> operations;
-        if(simulationRequest.getOperationsFile() == null){
-            operations = operationsFileManager.generateOperations(simulationRequest.getRandomSeed(), simulationRequest.getNumberOfOperations(), simulationRequest.getNumberOfProcesses());
-        }else{
+        if(simulationRequest.isSimulationThroughOperationFile()){
             operations = operationsFileManager.retrieveOperationsFromFile(simulationRequest.getOperationsFile());
+        }else{
+            operations = operationsFileManager.generateOperations(simulationRequest.getRandomSeed(), simulationRequest.getNumberOfOperations(), simulationRequest.getNumberOfProcesses());
+
         }
         simulation = new Simulation(
                 simulationRequest.getPagingAlgorithm(),
@@ -30,7 +34,15 @@ public class SimulationController {
                 simulationRequest.getNumberOfOperations(),
                 simulationRequest.getNumberOfProcesses(),
                 operations,
-                simulationRequest.getOperationsFile() == null);
+                simulationRequest.isSimulationThroughOperationFile());
+
+        Main.UISimulationController.initializeSimulationDetails(
+                simulationRequest.getPagingAlgorithm(),
+                simulationRequest.isSimulationThroughOperationFile(),
+                simulationRequest.getNumberOfOperations(),
+                simulationRequest.getNumberOfProcesses(),
+                simulation.getAllProcesses());
+
     }
 
     public void startSimulation(){
@@ -43,7 +55,7 @@ public class SimulationController {
         }).start();
     }
 
-    public void pauseSimulation(){
+    public void pauseResumeSimulation(){
         simulation.setPaused(!simulation.isPaused());
     }
 }

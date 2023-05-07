@@ -1,10 +1,13 @@
 package com.pagingsimulator.pagingsimulator.UI.Utils;
 
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class SimulationUtil {
@@ -12,14 +15,14 @@ public class SimulationUtil {
     public SimulationUtil() {
     }
 
-    public ArrayList<String> getProcessesColors(int numberOfProcesses){
+    public HashMap<Integer, String> generateProcessesColors(ArrayList<Integer> PIDs){
 
-        ArrayList<String> processesColors = new ArrayList<>();
+        HashMap<Integer, String> processesColors = new HashMap<>();
 
         Random rand = new Random();
 
-        for (int i = 0; i < numberOfProcesses; i++) {
-            processesColors.add(String.format("#%06x", rand.nextInt(0xffffff + 1)));
+        for (Integer PID: PIDs) {
+            processesColors.put(PID, String.format("#%06x", rand.nextInt(0xffffff + 1)));
         }
 
         return processesColors;
@@ -38,22 +41,40 @@ public class SimulationUtil {
         return series;
     }
 
-    public ArrayList<Rectangle> RAMUsageMappingFormatter(ArrayList<Integer> RAMUsage){
-        ArrayList<Rectangle> tempList = new ArrayList<>();
+    public ArrayList<Rectangle> RAMUsageMappingFormatter(ArrayList<Integer> RAMUsage, HashMap<Integer, String> processColors){
+        ArrayList<Rectangle> RAMMapping = new ArrayList<>();
 
         for (int i = 1; i < RAMUsage.size(); i++) {
-            Rectangle tempPane = new Rectangle(3, 20);
-            if(RAMUsage.get(i) > 0){
-//                tempPane.setStyle("-fx-fill:" + processColors.get(procedures.get(i)-1) + "; -fx-opacity: 0.8;");
+            Rectangle memorySector = new Rectangle(3, 20);
+            if(RAMUsage.get(i) != -1){
+                memorySector.setStyle("-fx-fill:" + processColors.get(RAMUsage.get(i)) + "; -fx-opacity: 0.8;");
             }else{
-                tempPane.setStyle("-fx-fill: #e1e1e1;");
+                memorySector.setStyle("-fx-fill: #e1e1e1;");
             }
 
-            tempList.add(tempPane);
+            RAMMapping.add(memorySector);
 
         }
 
-        return tempList;
+        return RAMMapping;
+    }
+
+    public String percentageStringFormatter(double number){
+        return new DecimalFormat("#.##").format(number * 100) + "%";
+    }
+
+    public void thrashingColorFormatter(int thrashingLevel, int simulationElapsedTime, Label thrashingTime, Label thrashingPercentage, Label thrashingTimeTitle, Label thrashingPercentageTitle){
+        if((double) thrashingLevel / simulationElapsedTime > 0.49){
+            thrashingTime.getStyleClass().addAll("text-danger");
+            thrashingTimeTitle.getStyleClass().addAll("text-danger");
+            thrashingPercentage.getStyleClass().addAll("text-danger");
+            thrashingPercentageTitle.getStyleClass().addAll("text-danger");
+        }else{
+            thrashingTime.getStyleClass().addAll("text-default");
+            thrashingTimeTitle.getStyleClass().addAll("text-default");
+            thrashingPercentage.getStyleClass().addAll("text-default");
+            thrashingPercentageTitle.getStyleClass().addAll("text-default");
+        }
     }
 
 }

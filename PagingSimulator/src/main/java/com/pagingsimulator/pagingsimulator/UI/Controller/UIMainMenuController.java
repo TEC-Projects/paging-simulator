@@ -87,14 +87,20 @@ public class UIMainMenuController extends ScreenController implements Initializa
     private void loadOperationsFileButtonEvent(){
         try{
             simulationRequest.setOperationsFile(fileUtil.loadSimulationFile());
-            operationsFileNameTextField.setText(simulationRequest.getOperationsFile().getName());
         }catch (Exception e){
             snackBarUtil.showSnackBar(e.getMessage(), "warning", snackBarPane, snackBarMessage, true);
+        }
+
+        try{
+            operationsFileNameTextField.setText(simulationRequest.getOperationsFile().getName());
+        }catch(Exception e){
+            snackBarUtil.showSnackBar(e.getMessage(), "Error loading simulation file", snackBarPane, snackBarMessage, true);
         }
     }
 
     @FXML
-    private void downloadSimulationFileButtonEvent() {
+    private void downloadSimulationFileButtonEvent() throws Exception {
+
         try{
             fileUtil.generateSimulationFile(
                     Integer.parseInt(numberOfOperationsComboBox.getValue()),
@@ -135,8 +141,9 @@ public class UIMainMenuController extends ScreenController implements Initializa
         }
 
         //TODO: Remove these hardcoded parameters
-        simulationRequest.setNumberOfProcesses(10);
-        simulationRequest.setNumberOfOperations(5000);
+        simulationRequest.setSimulationThroughOperationFile(false);
+        simulationRequest.setNumberOfProcesses(50);
+        simulationRequest.setNumberOfOperations(1000);
         simulationRequest.setRandomSeed(1L);
 
         //TODO: Move the following lines to try block

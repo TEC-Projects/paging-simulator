@@ -5,14 +5,18 @@ import java.util.LinkedList;
 
 public class PagingAlgorithmSimulationStatus {
     private Collection<Page> pages;
+    private int simulatedProcesses;
     private int simulationElapsedTime;
     private int thrashingTime;
     private int ramUsage;
     private int vRamUsage;
     private int internalFragmentationVolume;
+    private int loadedPages;
+    private int unloadedPages;
 
     public PagingAlgorithmSimulationStatus(Collection<Page> pages) {
         this.pages = pages;
+        this.simulatedProcesses = 0;
         this.simulationElapsedTime = 0;
         this.thrashingTime = 0;
         this.ramUsage = 0;
@@ -22,6 +26,7 @@ public class PagingAlgorithmSimulationStatus {
 
     public PagingAlgorithmSimulationStatus() {
         this.pages = null;
+        this.simulatedProcesses = 0;
         this.simulationElapsedTime = 0;
         this.thrashingTime = 0;
         this.ramUsage = 0;
@@ -75,6 +80,38 @@ public class PagingAlgorithmSimulationStatus {
 
     public void setInternalFragmentationVolume(int internalFragmentationVolume) {
         this.internalFragmentationVolume = internalFragmentationVolume;
+    }
+
+    public int getSimulatedProcesses() {
+        return simulatedProcesses;
+    }
+
+    public void setSimulatedProcesses(int simulatedProcesses) {
+        this.simulatedProcesses = simulatedProcesses;
+    }
+
+    public int getvRamUsage() {
+        return vRamUsage;
+    }
+
+    public void setvRamUsage(int vRamUsage) {
+        this.vRamUsage = vRamUsage;
+    }
+
+    public int getLoadedPages() {
+        return loadedPages;
+    }
+
+    public void setLoadedPages(int loadedPages) {
+        this.loadedPages = loadedPages;
+    }
+
+    public int getUnloadedPages() {
+        return unloadedPages;
+    }
+
+    public void setUnloadedPages(int unloadedPages) {
+        this.unloadedPages = unloadedPages;
     }
 
     @Override

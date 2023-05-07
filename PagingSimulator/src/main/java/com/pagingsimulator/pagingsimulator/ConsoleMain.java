@@ -13,17 +13,19 @@ public class ConsoleMain {
         OperationsFileManager operationsFileManager = new OperationsFileManager();
 //        System.out.println(operationsFileManager.retrieveOperationsFromFile(new File("C:\\Users\\joshg\\Documents\\Projects\\paging-simulator\\PagingSimulator\\src\\main\\java\\com\\pagingsimulator\\pagingsimulator\\op.txt")));
 //        System.out.println(operationsFileManager.convertOperationsToFileString(operationsFileManager.generateOperations(1232L, 500, 10)));
-        SimulationController simulationController = new SimulationController();
-        simulationController.initializeSimulation(
-                new SimulationRequest(
-                        "Random",
-                        1232L,
-                        false,
-                        null,
-                        10,
-                        500
-                )
-        );
-        simulationController.startSimulation();
+//        SimulationController simulationController = new SimulationController();
+//        simulationController.initializeSimulation(
+//                new SimulationRequest(
+//                        "Random",
+//                        1232L,
+//                        false,
+//                        null,
+//                        10,
+//                        500
+//                )
+//        );
+//        simulationController.startSimulation();
+//    }
+        System.out.println(Instant.now().getEpochSecond());
     }
 }

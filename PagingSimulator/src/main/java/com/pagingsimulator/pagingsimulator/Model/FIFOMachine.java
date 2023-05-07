@@ -24,12 +24,12 @@ public class FIFOMachine extends Machine{
     }
 
     @Override
-    public long getNewMark() {
-        return Instant.now().getEpochSecond();
+    public long getNewMark(long simTime) {
+        return simTime;
     }
 
     @Override
-    public long getUsedMark(long currentMark) {
+    public long getUsedMark(long currentMark, long simTime) {
         return currentMark;
     }
 }

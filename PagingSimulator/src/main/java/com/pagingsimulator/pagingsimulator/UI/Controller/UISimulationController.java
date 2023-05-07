@@ -1,5 +1,6 @@
 package com.pagingsimulator.pagingsimulator.UI.Controller;
 
+import com.pagingsimulator.pagingsimulator.Main;
 import com.pagingsimulator.pagingsimulator.Model.Page;
 import com.pagingsimulator.pagingsimulator.Model.PagingAlgorithmSimulationStatus;
 import com.pagingsimulator.pagingsimulator.UI.Model.SimulationUpdate;
@@ -18,16 +19,14 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class UISimulationController extends ScreenController implements Initializable {
 
     private SimulationUtil simulationUtil = new SimulationUtil();
     private DummyDataUtil dummyDataUtil = new DummyDataUtil();
     private final SnackBarUtil snackBarUtil = new SnackBarUtil();
-    private ArrayList<String> processColors = new ArrayList<>();
+    private HashMap<Integer, String> processColors = new HashMap<>();
     private int numberOfProcesses;
     private boolean isPaused;
     private boolean hasStarted;
@@ -58,7 +57,9 @@ public class UISimulationController extends ScreenController implements Initiali
             otherSimulatedProcesses,
             otherSimulationTime,
             otherThrashingLevelSeconds,
-            otherThrashingPercentage,
+            otherThrashingLevelSecondsTitle,
+            otherThrashingLevelPercentageTitle,
+            otherThrashingLevelPercentage,
             otherUnloadedPages,
             otherVirtualRAMUsageKB,
             otherVirtualRAMUsagePercentage,
@@ -70,7 +71,9 @@ public class UISimulationController extends ScreenController implements Initiali
             optimalSimulatedProcesses,
             optimalSimulationTime,
             optimalThrashingLevelSeconds,
-            optimalThrashingPercentage,
+            optimalThrashingLevelPercentage,
+            optimalThrashingLevelSecondsTitle,
+            optimalThrashingLevelPercentageTitle,
             optimalUnloadedPages,
             optimalVirtualRAMUsageKB,
             optimalVirtualRAMUsagePercentage,
@@ -104,8 +107,8 @@ public class UISimulationController extends ScreenController implements Initiali
             }
         }
 
-        updateOptimalSimulationData(dummyDataUtil.getDummyOptimalSimulationUpdate());
-        updateOtherSimulationData(dummyDataUtil.getDummyOtherSimulationUpdate());
+//        updateOptimalSimulationData(dummyDataUtil.getDummyOptimalSimulationUpdate());
+//        updateOtherSimulationData(dummyDataUtil.getDummyOtherSimulationUpdate());
 
     }
 
@@ -115,43 +118,134 @@ public class UISimulationController extends ScreenController implements Initiali
     }
 
     private void handlePauseSimulation(){
-        //TODO: Call simulation pause function
+        //TODO: Uncomment simulation pause function
+        Main.simulationController.pauseResumeSimulation();
         snackBarUtil.showSnackBar("Simulation paused", "info", snackBarPane, snackBarMessage, false);
         isPaused = true;
         generalSimulationButton.getStyleClass().setAll("btn", "btn-primary");
         generalSimulationButton.setText("RESUME SIMULATION");
     }
 
-    private void handleStartSimulation(){
-        //TODO: Call simulation start function
-        hasStarted = true;
-        generalSimulationButton.getStyleClass().setAll("btn", "btn-danger");
-        generalSimulationButton.setText("PAUSE SIMULATION");
-    }
-
     private void handleResumeSimulation(){
-        //TODO: Call simulation resume function
+        //TODO: Uncomment simulation resume function
+        Main.simulationController.pauseResumeSimulation();
         snackBarUtil.hideSnackBar(snackBarPane);
         isPaused = false;
         generalSimulationButton.getStyleClass().setAll("btn", "btn-danger");
         generalSimulationButton.setText("PAUSE SIMULATION");
     }
 
-
-    private void updateOtherSimulationData(SimulationUpdate simulationUpdate){
-
+    private void handleStartSimulation(){
+        //TODO: Uncomment simulation start function
+        Main.simulationController.startSimulation();
+        hasStarted = true;
+        generalSimulationButton.getStyleClass().setAll("btn", "btn-danger");
+        generalSimulationButton.setText("PAUSE SIMULATION");
     }
 
-    private void updateOptimalSimulationData(SimulationUpdate simulationUpdate){
-//        optimalRAMUsageKB.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getRamUsage()));
-//        optimalFragmentation.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getInternalFragmentationVolume()));
-//        optimalVirtualRAMUsageKB.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getVRamUsage()));
-//        optimalThrashingLevelSeconds.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getThrashingTime()));
+    public void updateOtherSimulationData(SimulationUpdate simulationUpdate){
+        // Percentage data calculus
+        String RAMUsagePercentage = simulationUtil.percentageStringFormatter(simulationUpdate.getAlgorithmStatusUpdate().getRamUsage() / 400D);
+        String VRAMUsagePercentage = simulationUtil.percentageStringFormatter(simulationUpdate.getAlgorithmStatusUpdate().getVRamUsage() / 400D);
+        String fragmentationPercentage = simulationUtil.percentageStringFormatter(simulationUpdate.getAlgorithmStatusUpdate().getInternalFragmentationVolume() / 400D);
+        String thrashingPercentage = simulationUtil.percentageStringFormatter((double) simulationUpdate.getAlgorithmStatusUpdate().getThrashingTime() / simulationUpdate.getAlgorithmStatusUpdate().getSimulationElapsedTime());
 
-        optimalRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getRAMUsageTimeline()));
-        optimalVirtualRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getVirtualRAMUsageTimeline()));
+        otherSimulationTime.setText(simulationUpdate.getAlgorithmStatusUpdate().getSimulationElapsedTime() + " s");
 
-        optimalRAMDistribution.getChildren().addAll(simulationUtil.RAMUsageMappingFormatter(simulationUpdate.getRAMUsageMapping()));
+        otherSimulatedProcesses.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getSimulatedProcesses()));
+
+        otherRAMUsageKB.setText(simulationUpdate.getAlgorithmStatusUpdate().getRamUsage() + " KB");
+        otherRAMUsagePercentage.setText(RAMUsagePercentage);
+
+        otherVirtualRAMUsageKB.setText(simulationUpdate.getAlgorithmStatusUpdate().getVRamUsage() + " KB");
+        otherVirtualRAMUsagePercentage.setText(VRAMUsagePercentage);
+
+        otherLoadedPages.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getLoadedPages()));
+        otherUnloadedPages.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getUnloadedPages()));
+
+        otherThrashingLevelSeconds.setText(simulationUpdate.getAlgorithmStatusUpdate().getThrashingTime() + " s");
+        otherThrashingLevelPercentage.setText(thrashingPercentage);
+
+        otherFragmentation.setText(simulationUpdate.getAlgorithmStatusUpdate().getInternalFragmentationVolume() + " KB");
+        otherFragmentationPercentage.setText(fragmentationPercentage);
+
+        // Thrashing level color formatting
+        simulationUtil.thrashingColorFormatter(
+                simulationUpdate.getAlgorithmStatusUpdate().getThrashingTime(),
+                simulationUpdate.getAlgorithmStatusUpdate().getSimulationElapsedTime(),
+                otherThrashingLevelSeconds,
+                otherThrashingLevelSecondsTitle,
+                otherThrashingLevelPercentage,
+                otherThrashingLevelPercentageTitle);
+
+        // Pages table update
+        if(!otherMMUTable.getItems().isEmpty()){
+            otherMMUTable.getItems().clear();
+        }
+        for (Page page: simulationUpdate.getAlgorithmStatusUpdate().getPages()) {
+            otherMMUTable.getItems().add(page);
+        }
+
+        // Chart data update
+        otherRAMChart.getData().setAll(simulationUtil.plottingDataFormatter(simulationUpdate.getRAMUsageTimeline()));
+        otherVirtualRAMChart.getData().setAll(simulationUtil.plottingDataFormatter(simulationUpdate.getVirtualRAMUsageTimeline()));
+
+        // RAM distribution update
+        otherRAMDistribution.getChildren().clear();
+        otherRAMDistribution.getChildren().addAll(simulationUtil.RAMUsageMappingFormatter(simulationUpdate.getRAMUsageMapping(), processColors));
+    }
+
+    public void updateOptimalSimulationData(SimulationUpdate simulationUpdate){
+
+        // Percentage data calculus
+        String RAMUsagePercentage = simulationUtil.percentageStringFormatter(simulationUpdate.getAlgorithmStatusUpdate().getRamUsage() / 400D);
+        String VRAMUsagePercentage = simulationUtil.percentageStringFormatter(simulationUpdate.getAlgorithmStatusUpdate().getVRamUsage() / 400D);
+        String fragmentationPercentage = simulationUtil.percentageStringFormatter(simulationUpdate.getAlgorithmStatusUpdate().getInternalFragmentationVolume() / 400D);
+        String thrashingPercentage = simulationUtil.percentageStringFormatter((double) simulationUpdate.getAlgorithmStatusUpdate().getThrashingTime() / simulationUpdate.getAlgorithmStatusUpdate().getSimulationElapsedTime());
+
+        optimalSimulationTime.setText(simulationUpdate.getAlgorithmStatusUpdate().getSimulationElapsedTime() + " s");
+
+        optimalSimulatedProcesses.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getSimulatedProcesses()));
+
+        optimalRAMUsageKB.setText(simulationUpdate.getAlgorithmStatusUpdate().getRamUsage() + " KB");
+        optimalRAMUsagePercentage.setText(RAMUsagePercentage);
+
+        optimalVirtualRAMUsageKB.setText(simulationUpdate.getAlgorithmStatusUpdate().getVRamUsage() + " KB");
+        optimalVirtualRAMUsagePercentage.setText(VRAMUsagePercentage);
+
+        optimalLoadedPages.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getLoadedPages()));
+        optimalUnloadedPages.setText(String.valueOf(simulationUpdate.getAlgorithmStatusUpdate().getUnloadedPages()));
+
+        optimalThrashingLevelSeconds.setText(simulationUpdate.getAlgorithmStatusUpdate().getThrashingTime() + " s");
+        optimalThrashingLevelPercentage.setText(thrashingPercentage);
+
+        optimalFragmentation.setText(simulationUpdate.getAlgorithmStatusUpdate().getInternalFragmentationVolume() + " KB");
+        optimalFragmentationPercentage.setText(fragmentationPercentage);
+
+        // Thrashing level color formatting
+        simulationUtil.thrashingColorFormatter(
+                simulationUpdate.getAlgorithmStatusUpdate().getThrashingTime(),
+                simulationUpdate.getAlgorithmStatusUpdate().getSimulationElapsedTime(),
+                optimalThrashingLevelSeconds,
+                optimalThrashingLevelSecondsTitle,
+                optimalThrashingLevelPercentage,
+                optimalThrashingLevelPercentageTitle);
+
+        // Pages table update
+        if(!optimalMMUTable.getItems().isEmpty()){
+            optimalMMUTable.getItems().clear();
+        }
+        for (Page page: simulationUpdate.getAlgorithmStatusUpdate().getPages()) {
+            optimalMMUTable.getItems().add(page);
+        }
+
+        // Chart data update
+        optimalRAMChart.getData().setAll(simulationUtil.plottingDataFormatter(simulationUpdate.getRAMUsageTimeline()));
+        optimalVirtualRAMChart.getData().setAll(simulationUtil.plottingDataFormatter(simulationUpdate.getVirtualRAMUsageTimeline()));
+
+        // RAM distribution update
+        optimalRAMDistribution.getChildren().clear();
+        optimalRAMDistribution.getChildren().addAll(simulationUtil.RAMUsageMappingFormatter(simulationUpdate.getRAMUsageMapping(), processColors));
 
     }
 
@@ -175,7 +269,7 @@ public class UISimulationController extends ScreenController implements Initiali
         dAddressColumn.setCellValueFactory(new PropertyValueFactory<Page, Integer>("diskAddress"));
 
         TableColumn<Page,Integer> loadTimeColumn = new TableColumn<>("L-Time");
-        loadTimeColumn.setCellValueFactory(new PropertyValueFactory<Page, Integer>("loadTime"));
+        loadTimeColumn.setCellValueFactory(new PropertyValueFactory<Page, Integer>("loadedAt"));
 
         TableColumn<Page,String> markColumn = new TableColumn<>("Mark");
         markColumn.setCellValueFactory(new PropertyValueFactory<Page, String>("mark"));
@@ -193,20 +287,16 @@ public class UISimulationController extends ScreenController implements Initiali
 
     }
 
-    private void initializeMMUTables(){
-
+    private void initializeTables(){
         setMMUTableColumns(optimalMMUTable);
         setMMUTableColumns(otherMMUTable);
-
     }
 
-    private void initializeRAMUsageCharts(){
-
+    private void initializeCharts(){
         configurePlotXAxis(optimalRAMXAxis);
         configurePlotXAxis(optimalVirtualRAMXAxis);
         configurePlotXAxis(otherRAMXAxis);
         configurePlotXAxis(otherVirtualRAMXAxis);
-
     }
 
     private void configurePlotXAxis(NumberAxis axis){
@@ -216,10 +306,24 @@ public class UISimulationController extends ScreenController implements Initiali
         axis.setTickUnit(5);
     }
 
-    public void initializeSimulationDetails(String pagingAlgorithm, int numberOfOperations, int numberOfProcesses){
+    private void initializeRAMMapping(){
+
+        ArrayList<Integer> emptyRAM = new ArrayList<Integer>(Collections.nCopies(100, -1));
+
+        optimalRAMDistribution.getChildren().addAll(simulationUtil.RAMUsageMappingFormatter(emptyRAM, processColors));
+        otherRAMDistribution.getChildren().addAll(simulationUtil.RAMUsageMappingFormatter(emptyRAM, processColors));
+    }
+
+    public void initializeSimulationDetails(String pagingAlgorithm, boolean isOperationsFileLoaded, int numberOfOperations, int numberOfProcesses, ArrayList<Integer> PIDs){
         this.numberOfProcesses = numberOfProcesses;
+        processColors = simulationUtil.generateProcessesColors(PIDs);
         pagingAlgorithmLabel.setText(pagingAlgorithm);
-        simulationSizeLabel.setText(simulationUtil.simulationSizeFormatter(numberOfOperations, numberOfProcesses));
+
+        if(isOperationsFileLoaded){
+            simulationSizeLabel.setText("Custom file simulation");
+        }else{
+            simulationSizeLabel.setText(simulationUtil.simulationSizeFormatter(numberOfOperations, numberOfProcesses));
+        }
     }
 
 
@@ -227,8 +331,8 @@ public class UISimulationController extends ScreenController implements Initiali
     public void initialize(URL url, ResourceBundle resourceBundle) {
         isPaused = false;
         hasStarted = false;
-        processColors = simulationUtil.getProcessesColors(numberOfProcesses);
-        initializeRAMUsageCharts();
-        initializeMMUTables();
+        initializeCharts();
+        initializeTables();
+        initializeRAMMapping();
     }
 }

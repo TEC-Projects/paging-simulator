@@ -10,13 +10,13 @@ public class Page {
     private int loadedAt;
     private long mark;
 
-    public Page(int pageId, int PID, int diskAddress, int loadedAt, long mark) {
+    public Page(int pageId, int PID, int memoryAddress, int ptr, int loadedAt, long mark) {
         this.pageId = pageId;
         this.PID = PID;
         loaded = true;
-        logicalAddress = -1;
-        memoryAddress = -1;
-        this.diskAddress = diskAddress;
+        diskAddress = -1;
+        logicalAddress = ptr;
+        this.memoryAddress = memoryAddress;
         this.loadedAt = loadedAt;
         this.mark = mark;
     }
@@ -87,17 +87,16 @@ public class Page {
 
     public void sendPageToVirtualMemory(){
         loaded = false;
-        this.memoryAddress = pageId;
-        this.diskAddress = -1;
+        memoryAddress = -1;
+        this.diskAddress = pageId;
         this.loadedAt = 0;
     }
 
-    public void sendPageToRealMemory(int diskAddress, int loadedAt){
+    public void sendPageToRealMemory(int memoryAddress, int loadedAt){
         loaded = true;
-        this.diskAddress = diskAddress;
+        diskAddress = -1;
         this.loadedAt = loadedAt;
-        memoryAddress = -1;
-        logicalAddress = -1;
+        this.memoryAddress = memoryAddress;
     }
 
     @Override

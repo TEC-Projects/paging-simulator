@@ -20,12 +20,12 @@ public class MRUMachine extends Machine{
     }
 
     @Override
-    public long getNewMark() {
+    public long getNewMark(long simTime) {
         return 0;
     }
 
     @Override
-    public long getUsedMark(long currentMark) {
-        return currentMark+1;
+    public long getUsedMark(long currentMark, long simTime) {
+        return simTime;
     }
 }

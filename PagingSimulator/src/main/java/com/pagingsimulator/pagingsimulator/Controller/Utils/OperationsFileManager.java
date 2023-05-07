@@ -30,7 +30,7 @@ public class OperationsFileManager {
                 operations.add(new Operation("kill", pid.getPid()));
                 killedProcesses.add(pid.getPid());
             }else if (ptrs.isEmpty()){
-                int newSize = random.nextInt(1, 2000);
+                int newSize = random.nextInt(500, 20000);
                 ProcessTemp processTemp = processes.get(random.nextInt(processes.size()));
                 operations.add(new Operation("new", processTemp.getPid() + "," + newSize));
                 ptrs.add(ptrCount);
@@ -41,7 +41,7 @@ public class OperationsFileManager {
                 int DELETE_PTR = 97;
                 int selection = random.nextInt(0, 100);
                 if (selection <= NEW_PTR){
-                    int newSize = random.nextInt(1, 2000);
+                    int newSize = random.nextInt(500, 20000);
                     ProcessTemp processTemp = processes.get(random.nextInt(processes.size()));
                     operations.add(new Operation("new", processTemp.getPid() + "," + newSize));
                     ptrs.add(ptrCount);

@@ -14,6 +14,8 @@ abstract class Machine {
     protected ArrayList<Integer> virtualMemory;
     protected HashMap<Integer, Page> pages;
     protected HashMap<Integer, Process> processes;
+    protected int totalMemory;
+    private int pageSize;
 
     private void addPtrToProcess(int pid, int ptr){
         Process process = processes.get(pid);
@@ -49,6 +51,8 @@ abstract class Machine {
         processes = new HashMap<>();
         time = 0;
         trashing = 0;
+        this.totalMemory = totalMemory;
+        this.pageSize = pageSize;
         for (int i = 0; i < totalMemory/pageSize; i++) {
             realMemory.add(-1);
         }
@@ -136,12 +140,28 @@ abstract class Machine {
         this.trashing = trashing;
     }
 
-    public abstract long getNewMark();
-    public abstract long getUsedMark(long currentMark);
+    public abstract long getNewMark(long simTime);
+    public abstract long getUsedMark(long currentMark, long simTime);
+
+    public int getTotalMemory() {
+        return totalMemory;
+    }
+
+    public void setTotalMemory(int totalMemory) {
+        this.totalMemory = totalMemory;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
 
     public void newAlloc(int pid, int allocSize) {
 
-        double pagesCount = Math.ceil(allocSize*1.0/40000.0);
+        double pagesCount = Math.ceil(allocSize * 1.0 / pageSize);
 
         ArrayList<Integer> createdPages = new ArrayList<>();
 
@@ -153,14 +173,14 @@ abstract class Machine {
                 virtualMemory.add(pageReplacedId);
                 createdPages.add(pageCount);
                 realMemory.set(pageReplacedIndex, pageCount);
-                pages.put(pageCount, new Page(pageCount++, pid, pageReplacedIndex, time, getNewMark()));
+                pages.put(pageCount, new Page(pageCount++, pid, pageReplacedIndex, ptrCount, time, getNewMark(time)));
                 addTime(0, 1);
             }else{
                 for (int j = 0; j < realMemory.size(); j++) {
                     if(realMemory.get(j) == -1){
                         createdPages.add(pageCount);
                         realMemory.set(j, pageCount);
-                        pages.put(pageCount, new Page(pageCount++, pid, j, time, getNewMark()));
+                        pages.put(pageCount, new Page(pageCount++, pid, j, ptrCount, time, getNewMark(time)));
                         break;
                     }
                 }
@@ -180,7 +200,7 @@ abstract class Machine {
             if (!realMemory.contains(pageId)){
                 int pageReplacedIndex = -1;
 
-                if(usedRam == realMemory.size()){
+                if(pages.size() - virtualMemory.size() == realMemory.size()){
                     pageReplacedIndex = selectPageToVRAM();
                     int pageReplacedId = realMemory.get(pageReplacedIndex);
                     pages.get(pageReplacedId).sendPageToVirtualMemory();
@@ -208,7 +228,7 @@ abstract class Machine {
                 addTime(1, 0);
             };
             Page page = pages.get(pageId);
-            page.setMark(getUsedMark(page.getMark()));
+            page.setMark(getUsedMark(page.getMark(), time));
         }
 
     }
@@ -219,8 +239,8 @@ abstract class Machine {
             Page page = pages.get(pageId);
             System.out.println("DELETING PAGEID " + pageId + " CUZ PTR " + ptr);
             if(page.isLoaded() && realMemory.contains(page.getPageId())){
-                System.out.println("SETTING REAL MEMORY IDX TO -1, IDX = " + page.getDiskAddress());
-                realMemory.set(page.getDiskAddress(), -1);
+                System.out.println("SETTING REAL MEMORY IDX TO -1, IDX = " + page.getMemoryAddress());
+                realMemory.set(page.getMemoryAddress(), -1);
                 usedRam--;
             }else{
                 virtualMemory.remove((Integer) pageId);
