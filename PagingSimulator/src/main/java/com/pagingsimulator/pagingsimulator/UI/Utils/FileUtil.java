@@ -12,7 +12,6 @@ public class FileUtil {
 
     private FileChooser fileChooser = new FileChooser();
 
-
     private ValidatorUtil validatorUtil;
 
     public FileUtil(){

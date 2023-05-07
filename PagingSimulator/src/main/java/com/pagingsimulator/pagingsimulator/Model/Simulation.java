@@ -26,7 +26,7 @@ public class Simulation {
 
     public Simulation(String pagingAlgorithm, long randomSeed, int numberOfOperations, int numberOfProcesses, ArrayList<Operation> operations, boolean isFileLoaded) {
         this.paused = false;
-        refreshRate = 1000;
+        refreshRate = 250;
         this.numberOfOperations = numberOfOperations;
         this.numberOfProcesses = numberOfProcesses;
         this.randomSeed = randomSeed;

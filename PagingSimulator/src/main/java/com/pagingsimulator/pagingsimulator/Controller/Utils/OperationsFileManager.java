@@ -36,9 +36,10 @@ public class OperationsFileManager {
                 ptrs.add(ptrCount);
                 processTemp.addPtr(ptrCount++);
             } else {
-                int NEW_PTR = 30;
-                int USE_PTR = 85;
-                int DELETE_PTR = 95;
+                double NEW_PTR = 37.5;
+                double USE_PTR = 70;
+                double DELETE_PTR = 100 - (numberOfProcesses*1.0/numberOfOperations)*50;
+                System.out.println("DELETEEEEEE " + DELETE_PTR);
                 int selection = random.nextInt(0, 100);
                 if (selection <= NEW_PTR){
                     int newSize = random.nextInt(500, 12000);

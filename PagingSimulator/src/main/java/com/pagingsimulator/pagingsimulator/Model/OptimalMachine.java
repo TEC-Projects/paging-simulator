@@ -66,8 +66,7 @@ public class OptimalMachine extends Machine{
             }
             case "use" -> {
                 use(operation.getParameters().get(0));
-                for(Queue<Integer> uses : earliestAccessToPages.values()){
-
+                for(LinkedList<Integer> uses : earliestAccessToPages.values()){
                     if(uses.isEmpty()){
                         continue;
                     }
