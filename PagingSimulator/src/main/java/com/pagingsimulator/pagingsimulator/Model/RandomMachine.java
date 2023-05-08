@@ -17,11 +17,11 @@ public class RandomMachine extends Machine{
 
     @Override
     public long getNewMark(long simTime) {
-        return -1;
+        return 0;
     }
 
     @Override
     public long getUsedMark(long currentMark, long simTime) {
-        return -1;
+        return 0;
     }
 }
