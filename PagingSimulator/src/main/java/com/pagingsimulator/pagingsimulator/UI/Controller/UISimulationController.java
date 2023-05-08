@@ -204,6 +204,12 @@ public class UISimulationController extends ScreenController implements Initiali
                 otherThrashingLevelPercentage,
                 otherThrashingLevelPercentageTitle);
 
+        // Chart data update
+        otherRAMChart.getData().clear();
+        otherRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getRAMUsageTimeline()));
+        otherVirtualRAMChart.getData().clear();
+        otherVirtualRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getVirtualRAMUsageTimeline()));
+
         // Pages table update
         if(!otherMMUTable.getItems().isEmpty()){
             otherMMUTable.getItems().clear();
@@ -255,12 +261,6 @@ public class UISimulationController extends ScreenController implements Initiali
                 optimalThrashingLevelPercentage,
                 optimalThrashingLevelPercentageTitle);
 
-        // Chart data update
-        otherRAMChart.getData().clear();
-        otherRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getRAMUsageTimeline()));
-        otherVirtualRAMChart.getData().clear();
-        otherVirtualRAMChart.getData().addAll(simulationUtil.plottingDataFormatter(simulationUpdate.getVirtualRAMUsageTimeline()));
-
         // Pages table update
         if(!optimalMMUTable.getItems().isEmpty()){
             optimalMMUTable.getItems().clear();
@@ -286,19 +286,19 @@ public class UISimulationController extends ScreenController implements Initiali
         pageIdColumn.setCellValueFactory(new PropertyValueFactory<Page, Integer>("pageId"));
 
         TableColumn<Page,Integer> PIDColumn = new TableColumn<>("PID");
-        PIDColumn.setCellValueFactory(new PropertyValueFactory<Page, Integer>("PID"));
+        PIDColumn.setCellValueFactory(new PropertyValueFactory<>("PID"));
 
         TableColumn<Page,String> loadedColumn = new TableColumn<>("Loaded");
-        loadedColumn.setCellValueFactory(new PropertyValueFactory<Page, String>("loaded"));
+        loadedColumn.setCellValueFactory(f -> new ReadOnlyStringWrapper(f.getValue().isLoaded() ? "Yes" : "No"));
 
         TableColumn<Page,Integer> lAddressColumn = new TableColumn<>("L-add");
-        lAddressColumn.setCellValueFactory(new PropertyValueFactory<Page, Integer>("logicalAddress"));
+        lAddressColumn.setCellValueFactory(new PropertyValueFactory<>("logicalAddress"));
 
-        TableColumn<Page,Integer> mAddressColumn = new TableColumn<>("M-add");
-        mAddressColumn.setCellValueFactory(new PropertyValueFactory<Page, Integer>("memoryAddress"));
+        TableColumn<Page,String> mAddressColumn = new TableColumn<>("M-add");
+        mAddressColumn.setCellValueFactory(f -> new ReadOnlyStringWrapper(f.getValue().getMemoryAddress() == -1 ? "None" : String.valueOf(f.getValue().getMemoryAddress())));
 
-        TableColumn<Page,Integer> dAddressColumn = new TableColumn<>("D-add");
-        dAddressColumn.setCellValueFactory(new PropertyValueFactory<Page, Integer>("diskAddress"));
+        TableColumn<Page,String> dAddressColumn = new TableColumn<>("D-add");
+        dAddressColumn.setCellValueFactory(f -> new ReadOnlyStringWrapper(f.getValue().getDiskAddress() == -1 ? "None" : String.valueOf(f.getValue().getDiskAddress())));
 
         TableColumn<Page,String> loadTimeColumn = new TableColumn<>("L-Time");
         loadTimeColumn.setCellValueFactory(f -> {
