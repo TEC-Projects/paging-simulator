@@ -9,12 +9,15 @@ import com.pagingsimulator.pagingsimulator.UI.Utils.SimulationUtil;
 import com.pagingsimulator.pagingsimulator.UI.Utils.SnackBarUtil;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
@@ -51,7 +54,16 @@ public class UISimulationController extends ScreenController implements Initiali
     private StackPane snackBarPane;
 
     @FXML
+    private RadioButton
+        oneXRadioButton,
+        twoXRadioButton,
+        threeXRadioButton;
+
+    private ToggleGroup refreshRateToggleGroup;
+
+    @FXML
     private Label
+            currentOperationLabel,
             pagingAlgorithmLabel,
             simulationSizeLabel,
             otherRAMUsageKB,
@@ -109,6 +121,24 @@ public class UISimulationController extends ScreenController implements Initiali
             }
         }
 
+    }
+
+    @FXML
+    private void oneXRadioButtonEvent(){
+//        twoXRadioButton.setSelected(false);
+//        threeXRadioButton.setSelected(false);
+    }
+
+    @FXML
+    private void twoXRadioButtonEvent(){
+//        oneXRadioButton.setSelected(false);
+//        threeXRadioButton.setSelected(false);
+    }
+
+    @FXML
+    private void threeXRadioButtonEvent(){
+//        twoXRadioButton.setSelected(false);
+//        oneXRadioButton.setSelected(false);
     }
 
     public void handleSimulationCompleted(){
@@ -214,6 +244,8 @@ public class UISimulationController extends ScreenController implements Initiali
         optimalFragmentation.setText(simulationUpdate.getAlgorithmStatusUpdate().getInternalFragmentationVolume() + " KB");
         optimalFragmentationPercentage.setText(fragmentationPercentage);
 
+        currentOperationLabel.setText(simulationUpdate.getCurrentOperation());
+
         // Thrashing level color formatting
         simulationUtil.thrashingColorFormatter(
                 simulationUpdate.getAlgorithmStatusUpdate().getThrashingTime(),
@@ -270,7 +302,11 @@ public class UISimulationController extends ScreenController implements Initiali
 
         TableColumn<Page,String> loadTimeColumn = new TableColumn<>("L-Time");
         loadTimeColumn.setCellValueFactory(f -> {
-            return new ReadOnlyStringWrapper(Integer.parseInt(simTimeLabel.getText().replace(" s", "")) - f.getValue().getLoadedAt() + " s") ;
+            if (f.getValue().isLoaded()){
+                return new ReadOnlyStringWrapper(Integer.parseInt(simTimeLabel.getText().replace(" s", "")) - f.getValue().getLoadedAt() + " s") ;
+            }else{
+                return new ReadOnlyStringWrapper("0 s");
+            }
         });
 
         TableColumn<Page,String> markColumn = new TableColumn<>("Mark");
@@ -348,6 +384,27 @@ public class UISimulationController extends ScreenController implements Initiali
         otherRAMDistribution.getChildren().addAll(simulationUtil.RAMUsageMappingFormatter(emptyRAM, processColors));
     }
 
+    private void initializeToggleButtons(){
+
+        refreshRateToggleGroup = new ToggleGroup();
+
+        oneXRadioButton.setSelected(true);
+        oneXRadioButton.setToggleGroup(refreshRateToggleGroup);
+        twoXRadioButton.setToggleGroup(refreshRateToggleGroup);
+        threeXRadioButton.setToggleGroup(refreshRateToggleGroup);
+
+
+        refreshRateToggleGroup.selectedToggleProperty().addListener((ov, old_toggle, new_toggle) -> {
+            RadioButton selectedRefreshRate = (RadioButton) refreshRateToggleGroup.getSelectedToggle();
+            switch (selectedRefreshRate.getText()){
+                case "1X" -> Main.simulationController.selectRefreshRate(1000);
+                case "2X" -> Main.simulationController.selectRefreshRate(500);
+                case "4X" -> Main.simulationController.selectRefreshRate(250);
+            }
+        });
+
+    }
+
     public void initializeSimulationDetails(String pagingAlgorithm, boolean isOperationsFileLoaded, int numberOfOperations, int numberOfProcesses, ArrayList<Integer> PIDs){
         this.numberOfProcesses = numberOfProcesses;
         processColors = simulationUtil.generateProcessesColors(PIDs);
@@ -372,6 +429,7 @@ public class UISimulationController extends ScreenController implements Initiali
     public void initialize(URL url, ResourceBundle resourceBundle) {
         isPaused = false;
         hasStarted = false;
+        initializeToggleButtons();
         initializeCharts();
         initializeTables();
         initializeRAMMapping();

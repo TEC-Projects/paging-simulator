@@ -11,7 +11,6 @@ public class SimulationUpdate {
     private ArrayList<Integer> RAMUsageMapping;
     private ArrayList<Pair<Integer, Integer>> RAMUsageTimeline;
     private ArrayList<Pair<Integer, Integer>> virtualRAMUsageTimeline;
-
     private String currentOperation;
 
 
@@ -54,7 +53,6 @@ public class SimulationUpdate {
 
         int usageIdx = 0;
         for(Object usage : RAMUsageTimeline){
-            // TODO: CHECK IF THE GRAPH STARTS AT 0 OR 1, CODE RN STARTS ON 1
             temp.add(new Pair<>(usageIdx++, (Integer) usage));
         }
 
@@ -70,7 +68,6 @@ public class SimulationUpdate {
 
         int usageIdx = 0;
         for(Object usage : virtualRAMUsageTimeline){
-            // TODO: CHECK IF THE GRAPH STARTS AT 0 OR 1, CODE RN STARTS ON 1
             temp.add(new Pair<>(usageIdx++, (Integer) usage));
         }
         this.virtualRAMUsageTimeline = temp;

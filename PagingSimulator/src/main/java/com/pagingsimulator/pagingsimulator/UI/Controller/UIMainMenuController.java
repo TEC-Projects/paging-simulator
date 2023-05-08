@@ -134,22 +134,12 @@ public class UIMainMenuController extends ScreenController implements Initializa
                 simulationRequest.setRandomSeed(Long.valueOf(randomSeedTextField.getText()));
                 simulationRequest.setSimulationThroughOperationFile(false);
             }
-
+            Main.sceneManager.navigate(event, "/com/pagingsimulator/pagingsimulator/screens/simulation.fxml");
+            Main.simulationController.initializeSimulation(simulationRequest);
 
         }catch (Exception e){
             snackBarUtil.showSnackBar(e.getMessage(), "warning", snackBarPane, snackBarMessage, true);
         }
-
-        //TODO: Remove these hardcoded parameters
-        simulationRequest.setSimulationThroughOperationFile(false);
-        simulationRequest.setNumberOfProcesses(50);
-        simulationRequest.setNumberOfOperations(1000);
-        simulationRequest.setRandomSeed(1L);
-
-        //TODO: Move the following lines to try block
-        Main.sceneManager.navigate(event, "/com/pagingsimulator/pagingsimulator/screens/simulation.fxml");
-        Main.simulationController.initializeSimulation(simulationRequest);
-
     }
 
     @Override
